@@ -1,1 +1,1 @@
-# DeepDarkFantasy_Vanilla
+# VanillaPlus

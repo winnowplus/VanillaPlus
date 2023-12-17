@@ -2,6 +2,7 @@
 	
 	<Script file="VanillaPlus_Common.lua"/>
 
+	<Script file="Predicates.lua"/>
 	<Script file="Mixin.lua"/>
 	<Script file="Log.lua"/>
 

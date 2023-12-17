@@ -2,8 +2,9 @@
 
 local Namespace				= VanillaPlus;
 local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
+local DefaultLogLevel		= Namespace.LogLevel;
 
--------------------------------------------------  Variables  -------------------------------------------------
+-----------------------------------------------  Declarations  ------------------------------------------------
 
 local LoggerMixin		= {};
 local TempOutputTable	= {};
@@ -84,5 +85,5 @@ function LoggerMixin:Error(...)
 end
 
 function Namespace.GetLogger(name, level)
-    return CreateAndInitFromMixin(LoggerMixin, name, level or Namespace.LogLevel);
+    return CreateAndInitFromMixin(LoggerMixin, name or "VanillaPlus", level or DefaultLogLevel);
 end

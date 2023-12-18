@@ -34,7 +34,7 @@ function Namespace.InformNewBattlefieldZoneIndex()
     local expectIndex = 1;
     local zone = _G["BattlefieldZone" .. tostring(expectIndex + 1)];
 
-    while(zone ~= nil) then
+    while(zone ~= nil) do
         local _, _, _, indexStr = string.find(zone:GetText(), BATTLEFIELD_ZONE_NAME_REGEX);
         local index = tonumber(indexStr);
 

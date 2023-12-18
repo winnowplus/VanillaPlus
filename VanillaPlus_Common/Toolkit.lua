@@ -42,10 +42,10 @@ function Namespace.InformNewBattlefieldZoneIndex()
             break;
         else
             expectIndex = expectIndex + 1;
-            zone = _G["BattlefieldZone2" .. tostring(expectIndex + 1)];
+            zone = _G["BattlefieldZone" .. tostring(expectIndex + 1)];
         end
     end
     
-    Logger:Info("New zone would be: ", expectIndex);
+    Logger:Info("New zone would be ", expectIndex);
     return;
 end

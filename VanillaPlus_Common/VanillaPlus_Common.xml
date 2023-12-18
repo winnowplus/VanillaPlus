@@ -6,6 +6,8 @@
 	<Script file="Mixin.lua"/>
 	<Script file="Log.lua"/>
 
+	<Script file="Toolkit.lua">
+
 	<GameTooltip name="VanillaPlusTooltip" frameStrata="TOOLTIP" hidden="true" inherits="GameTooltipTemplate">
 		<Scripts>
 			<OnLoad>

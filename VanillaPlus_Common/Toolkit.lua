@@ -29,16 +29,19 @@ local function PrivateSelectTWBattlefield(twBattlefieldIndex, twBattlefieldName)
 end
 
 local function PrivateInformTWBattlefieldNewInstances()
-    local offset = 0;
     local instances = {};
+    local offset = 0;
     local numInstances = GetNumBattlefields();
 
     for instanceIndex = 1, numInstances do
         local instanceId = GetBattlefieldInstanceInfo(instanceIndex);
+        local expectId = instanceIndex + offset;
 
-        if(instanceId ~= instanceIndex + offset) then
-            table.insert(instances, instanceIndex + offset);
-            offset = offset + 1;
+        if(expectId < instanceId) then
+            for missId = expectId, instanceId - 1 do
+                table.insert(instances, missId);
+                offset = offset + 1;
+            end
         end
     end
 

@@ -45,7 +45,7 @@ local function PrivateInformTWBattlefieldNewInstances()
         end
     end
 
-    table.insert(instances, tostring(numInstances + offset + 1) .. "+");
+    table.insert(instances, tostring(numInstances + offset + 1) .. "...");
 
     Logger:Info("New Instance would be ", table.concat(instances, ", "));
 end

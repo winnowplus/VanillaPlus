@@ -17,10 +17,10 @@ local function NameIncludes(actual, except)
     return actual and except and string.find(actual, except) and true or false;
 end
 
-local function PrivateSelectTWBattlefield(twBattlefieldIndex, twBattlefieldName)
+local function PrivateSelectTWBattlefield(twBattlefieldIndex, twBattlefieldNamee)
     local dropDownListButton = _G["DropDownList1Button" .. tostring(twBattlefieldIndex)];
 
-    if(DropDownList1:IsShown() and dropDownListButton and NameIncludes(dropDownListButton:GetText(), twBattlefieldName)) then
+    if(DropDownList1:IsShown() and dropDownListButton and NameIncludes(dropDownListButton:GetText(), twBattlefieldNamee)) then
         dropDownListButton:Click();
     else
         TWMiniMapBattlefieldFrame:Click();
@@ -28,7 +28,7 @@ local function PrivateSelectTWBattlefield(twBattlefieldIndex, twBattlefieldName)
     end
 end
 
-local function PrivateInformTWBattlefieldNewInstances()
+local function PrivateInformTWBattlefieldNewInstances(battlefieldName)
     local instances = {};
     local offset = 0;
     local numInstances = GetNumBattlefields();
@@ -47,26 +47,26 @@ local function PrivateInformTWBattlefieldNewInstances()
 
     table.insert(instances, tostring(numInstances + offset + 1) .. "...");
 
-    Logger:Info("New Instance would be ", table.concat(instances, ", "));
+    Logger:Info("New Instance would be ", battlefieldName, " ", table.concat(instances, ", "));
 end
 
-function Namespace.ShowTWBattlefield(twBattlefieldIndex, twBattlefieldNam, informNewInstances)
-    local currBattlefield = GetBattlefieldInfo();
+function Namespace.ShowTWBattlefield(twBattlefieldIndex, twBattlefieldName, informNewInstances)
+    local currBattlefieldName = GetBattlefieldInfo();
 
-    if(not BattlefieldFrame:IsShown() or not NameIncludes(currBattlefield, twBattlefieldNam)) then
-        PrivateSelectTWBattlefield(twBattlefieldIndex, twBattlefieldNam);
+    if(not BattlefieldFrame:IsShown() or not NameIncludes(currBattlefieldName, twBattlefieldName)) then
+        PrivateSelectTWBattlefield(twBattlefieldIndex, twBattlefieldName);
     elseif(informNewInstances) then
-        PrivateInformTWBattlefieldNewInstances();
+        PrivateInformTWBattlefieldNewInstances(currBattlefieldName);
     end
 end
 
-function Namespace.JoinTWBattlefield(twBattlefieldIndex, twBattlefieldNam, informNewInstances)
-    local currBattlefield = GetBattlefieldInfo();
+function Namespace.JoinTWBattlefield(twBattlefieldIndex, twBattlefieldName, informNewInstances)
+    local currBattlefieldName = GetBattlefieldInfo();
 
-    if(not BattlefieldFrame:IsShown() or not NameIncludes(currBattlefield, twBattlefieldNam)) then
-        PrivateSelectTWBattlefield(twBattlefieldIndex, twBattlefieldNam);
+    if(not BattlefieldFrame:IsShown() or not NameIncludes(currBattlefieldName, twBattlefieldName)) then
+        PrivateSelectTWBattlefield(twBattlefieldIndex, twBattlefieldName);
     elseif(informNewInstances) then
-        PrivateInformTWBattlefieldNewInstances();
+        PrivateInformTWBattlefieldNewInstances(currBattlefieldName);
         BattlefieldFrameJoinButton:Click();
     else
         BattlefieldFrameJoinButton:Click();

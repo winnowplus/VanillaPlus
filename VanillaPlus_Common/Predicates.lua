@@ -17,10 +17,18 @@ function Predicates.ALWAYS_FALSE(...)
     return false;
 end
 
-function Predicates.AURA_NAME_EQUALS(aura, expectName)
-    return aura and aura.name == expectName or false;
+function Predicates.EQUALS(one, another)
+    return one == another;
 end
 
-function Predicates.AURA_NAME_INCLUDES(aura, expectName)
-    return aura and aura.name and expectName and string.find(aura.name, expectName) and true or false;
+function Predicates.STRING_CONTAINS(str, subStr)
+    return str and subStr and string.find(str, subStr) and true or false;
+end
+
+function Predicates.AURA_NAME_EQUALS(aura, expectName)
+    return aura and Predicates.EQUALS(aura.name, expectName) or false;
+end
+
+function Predicates.AURA_NAME_CONTAINS(aura, expectName)
+    return aura and Predicates.STRING_CONTAINS(aura.name, expectName) or false;
 end

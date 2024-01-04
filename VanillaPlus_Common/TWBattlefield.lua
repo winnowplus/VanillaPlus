@@ -143,5 +143,3 @@ function Namespace.JoinTWBattlefield(expectName)
         Namespace.ShowTWBattlefieldList(expectName);
     end
 end
-
-function Namespace.

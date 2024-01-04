@@ -54,10 +54,9 @@ local function UpdateBattlefieldInstances()
     for instanceIndex = 1, numInstances do
         local instanceId = GetBattlefieldInstanceInfo(instanceIndex);
         local expectId = instanceIndex + offset;
+        exist[instanceId] = battlefieldData.exist[instanceId] or systime;
 
-        if(expectId == instanceId) then
-            exist[instanceId] = battlefieldData.exist[instanceId] or systime;
-        else
+        if(expectId < instanceId) then
             for missId = expectId, instanceId - 1 do
                 table.insert(expect, missId);
                 offset = offset + 1;
@@ -144,3 +143,5 @@ function Namespace.JoinTWBattlefield(expectName)
         Namespace.ShowTWBattlefieldList(expectName);
     end
 end
+
+function Namespace.

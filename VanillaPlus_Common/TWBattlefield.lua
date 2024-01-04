@@ -143,3 +143,23 @@ function Namespace.JoinTWBattlefield(expectName)
         Namespace.ShowTWBattlefieldList(expectName);
     end
 end
+
+function Namespace.AutoRejoinTWBattlefield(expectName)
+    local shown, battlefieldName = Namespace.IsBattlefieldListShown(expectName);
+
+    if(shown) then
+        UpdateBattlefieldInstances();
+
+        local systime = time();
+        local battlefieldData = GetBattlefieldData(battlefieldName);
+        local index, status, mapName, instanceID = GetBattlefieldStatusByName(expectName);
+
+        if(status == "confirm" and battlefieldData.exist[instanceID] and systime - battlefieldData.exist[instanceID] > 90) then
+            AcceptBattlefieldPort(index, 0);
+        end
+
+        BattlefieldFrameJoinButton:Click();
+    else
+        Namespace.ShowTWBattlefieldList(expectName);
+    end
+end

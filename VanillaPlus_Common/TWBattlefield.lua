@@ -152,7 +152,7 @@ function Namespace.AutoRejoinTWBattlefield(expectName)
 
         local systime = time();
         local battlefieldData = GetBattlefieldData(battlefieldName);
-        local index, status, mapName, instanceID = GetBattlefieldStatusByName(expectName);
+        local index, status, mapName, instanceID = Namespace.GetBattlefieldStatusByName(expectName);
 
         if(status == "confirm" and battlefieldData.exist[instanceID] and systime - battlefieldData.exist[instanceID] > 90) then
             AcceptBattlefieldPort(index, 0);

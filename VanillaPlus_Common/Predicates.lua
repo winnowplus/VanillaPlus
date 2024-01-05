@@ -25,10 +25,10 @@ function Predicates.STRING_CONTAINS(str, subStr)
     return str and subStr and string.find(str, subStr) and true or false;
 end
 
-function Predicates.AURA_NAME_EQUALS(aura, expectName)
-    return aura and Predicates.EQUALS(aura.name, expectName) or false;
+function Predicates.AURA_NAME_EQUALS(aura, expect)
+    return aura and Predicates.EQUALS(aura.name, expect) or false;
 end
 
-function Predicates.AURA_NAME_CONTAINS(aura, expectName)
-    return aura and Predicates.STRING_CONTAINS(aura.name, expectName) or false;
+function Predicates.AURA_NAME_CONTAINS(aura, expect)
+    return aura and Predicates.STRING_CONTAINS(aura.name, expect) or false;
 end

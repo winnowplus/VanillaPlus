@@ -1,7 +1,7 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace = VanillaPlus;
-local Predicates = Namespace.Predicates;
+local STRING_CONTAINS = Namespace.Predicates.STRING_CONTAINS;
 local GetLogger = Namespace.GetLogger;
 
 local GetBattlefieldInfo = GetBattlefieldInfo;
@@ -26,11 +26,10 @@ local function GetBattlefieldData(battlefieldName)
         battlefieldData = {
             exist   = {},
             expect  = {},
-            expectDesc = "",
+            estimate = "",
             report = false,
             reportInterval = 10,
-            reportedAt = 0,
-            autoQueue = false
+            reportedAt = 0
         };
 
         BattlefieldDataSet[battlefieldName] = battlefieldData;
@@ -39,44 +38,49 @@ local function GetBattlefieldData(battlefieldName)
     return battlefieldData;
 end
 
-local function UpdateBattlefieldInstances()
+local function UpdateBattlefieldInstances(expectBattlefieldName)
     local battlefieldName = GetBattlefieldInfo();
-    if(not battlefieldName) then
+
+    if(battlefieldName ~= expectBattlefieldName) then
         return;
     end
 
     -- Iterate Battlefield Instances
     local systime = time();
-    local exist, expect, offset = {}, {}, 0;
-    local battlefieldData = GetBattlefieldData(battlefieldName);
+    local exist, miss, offset = {}, {}, 0;
     local numInstances = GetNumBattlefields();
+    local battlefieldData = GetBattlefieldData(battlefieldName);
 
     for instanceIndex = 1, numInstances do
         local instanceId = GetBattlefieldInstanceInfo(instanceIndex);
         local expectId = instanceIndex + offset;
         exist[instanceId] = battlefieldData.exist[instanceId] or systime;
 
+        -- update zone text
+
         if(expectId < instanceId) then
             for missId = expectId, instanceId - 1 do
-                table.insert(expect, missId);
+                table.insert(miss, missId);
+                battlefieldData.expect[missId] = systime;
                 offset = offset + 1;
             end
         end
     end
 
-    table.insert(expect, numInstances + offset + 1);
-    local expectDesc = table.concat(expect, ", ") .. "...";
+    local lastMissId = numInstances + offset + 1;
+    table.insert(miss, lastMissId);
+    battlefieldData.expect[lastMissId] = systime;
+    local estimate = table.concat(miss, ", ") .. "...";
 
     -- Report
-    if(battlefieldData.report and (expectDesc ~= battlefieldData.expectDesc or systime - battlefieldData.reportedAt > battlefieldData.reportInterval)) then
-        Logger:Info("New Instance would be ", battlefieldName, " ", expectDesc);
+    if(battlefieldData.report and (estimate ~= battlefieldData.estimate or systime - battlefieldData.reportedAt > battlefieldData.reportInterval)) then
+        Logger:Info("New Instance would be ", battlefieldName, " ", estimate);
         battlefieldData.reportedAt = systime;
     end
 
     -- Save Battlefield Instances Data
     battlefieldData.exist = exist;
-    battlefieldData.expect = expect;
-    battlefieldData.expectDesc = expectDesc;
+    battlefieldData.estimate = estimate;
 end
 
 function Namespace.GetBattlefieldProperty(battlefieldName, key)
@@ -97,21 +101,19 @@ function Namespace.SetBattlefieldProperty(battlefieldName, key, value)
     battlefieldData[key] = value;
 end
 
-function Namespace.IsBattlefieldListShown(expectName)
+function Namespace.IsBattlefieldListShown(battlefieldShortName)
     local battlefieldName = GetBattlefieldInfo();
-    local shown = BattlefieldFrame and BattlefieldFrame:IsShown() and Predicates.STRING_CONTAINS(battlefieldName, expectName) or false;
+    local shown = BattlefieldFrame and BattlefieldFrame:IsShown() and STRING_CONTAINS(battlefieldName, battlefieldShortName) or false;
 
     return shown, battlefieldName;
 end
 
-function Namespace.GetBattlefieldStatusByName(expectName)
-    local status, mapName, instanceID;
-
+function Namespace.GetBattlefieldStatusByName(battlefieldShortName)
     for index = 1, MAX_BATTLEFIELD_QUEUES do
-        status, mapName, instanceID = GetBattlefieldStatus(index);
+        local status, battlefieldName, instanceID = GetBattlefieldStatus(index);
 
-        if(Predicates.STRING_CONTAINS(mapName, expectName)) then
-            return index, status, mapName, instanceID;
+        if(STRING_CONTAINS(battlefieldName, battlefieldShortName)) then
+            return index, status, battlefieldName, instanceID;
         end
     end
 
@@ -120,46 +122,50 @@ end
 
 --------------------------------------------  Turtle WoW Specific  --------------------------------------------
 
-function Namespace.ShowTWBattlefieldList(expectName)
+function Namespace.ShowTWBattlefieldList(battlefieldShortName)
     TWMiniMapBattlefieldFrame:Click();
 
     for index = 1, 10 do
         local dropDownListButton = _G["DropDownList1Button" .. tostring(index)];
 
-        if(dropDownListButton and Predicates.STRING_CONTAINS(dropDownListButton:GetText(), expectName)) then
+        if(dropDownListButton and STRING_CONTAINS(dropDownListButton:GetText(), battlefieldShortName)) then
             dropDownListButton:Click();
             return true;
         end
     end
 end
 
-function Namespace.JoinTWBattlefield(expectName)
-    local shown, battlefieldName = Namespace.IsBattlefieldListShown(expectName);
+function Namespace.JoinTWBattlefield(battlefieldShortName)
+    local shown, battlefieldName = Namespace.IsBattlefieldListShown(battlefieldShortName);
 
     if(shown) then
-        UpdateBattlefieldInstances();
+        UpdateBattlefieldInstances(battlefieldName);
         BattlefieldFrameJoinButton:Click();
     else
-        Namespace.ShowTWBattlefieldList(expectName);
+        Namespace.ShowTWBattlefieldList(battlefieldShortName);
     end
 end
 
-function Namespace.AutoRejoinTWBattlefield(expectName)
-    local shown, battlefieldName = Namespace.IsBattlefieldListShown(expectName);
+function Namespace.AutoRejoinTWBattlefield(battlefieldShortName)
+    local shown, battlefieldName = Namespace.IsBattlefieldListShown(battlefieldShortName);
 
     if(shown) then
-        UpdateBattlefieldInstances();
+        UpdateBattlefieldInstances(battlefieldName);
 
         local systime = time();
         local battlefieldData = GetBattlefieldData(battlefieldName);
-        local index, status, mapName, instanceID = Namespace.GetBattlefieldStatusByName(expectName);
+        local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldShortName);
 
-        if(status == "confirm" and battlefieldData.exist[instanceID] and systime - battlefieldData.exist[instanceID] > 120) then
-            AcceptBattlefieldPort(index, 0);
+        if(status == "confirm") then
+            local expectAt = battlefieldData.expect[instanceID];
+
+            if(not expectAt or expectAt < systime - 120) then
+                AcceptBattlefieldPort(index, 0);
+            end
         end
 
         BattlefieldFrameJoinButton:Click();
     else
-        Namespace.ShowTWBattlefieldList(expectName);
+        Namespace.ShowTWBattlefieldList(battlefieldShortName);
     end
 end

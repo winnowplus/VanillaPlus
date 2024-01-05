@@ -24,5 +24,6 @@ Namespace.CreateFromMixins = PrivateCreateFromMixins;
 function Namespace.CreateAndInitFromMixin(mixin, ...)
 	local object = PrivateCreateFromMixins(mixin);
 	object:Init(unpack(arg));
+	
 	return object;
 end

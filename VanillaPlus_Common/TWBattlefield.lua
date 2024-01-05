@@ -52,15 +52,9 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
     local battlefieldData = GetBattlefieldData(battlefieldName);
 
     for instanceIndex = 1, numInstances do
-        local instanceButton = _G["BattlefieldZone" .. tostring(instanceIndex + 1)];
         local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
         local expectID = instanceIndex + offset;
         exist[instanceID] = battlefieldData.exist[instanceID] or systime;
-
-        -- Update InstanceButton Text
-        if(instanceButton) then
-            instanceButton:SetText(string.format("%s%d  (%s)", battlefieldName, instanceID, date("%H:%M:%S",exist[instanceID])));
-        end
 
         if(expectID < instanceID) then
             for missID = expectID, instanceID - 1 do

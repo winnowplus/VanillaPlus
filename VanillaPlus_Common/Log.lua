@@ -21,13 +21,13 @@ local function Serialize(data)
 	elseif(type(data) == "boolean") then
 		return data and "true" or "false";
 	elseif(type(data) == "table") then
-		local tmp = {};
-		local i = 0;
+		local index, tmp = 1, {};
+
 		for key, value in pairs(data) do
-			i = i + 1;
-			tmp[i] = string.format(type(key) == "number" and "[%s]=%s" or "%s=%s", Serialize(key), 
-									type(value) == "string" and '"' .. Serialize(value) .. '"' or Serialize(value));
+			tmp[index] = string.format(type(key) == "number" and "[%s]=%s" or "%s=%s", Serialize(key), type(value) == "string" and '"' .. Serialize(value) .. '"' or Serialize(value));
+			index = index + 1;
 		end
+
 		return string.format("{%s}", table.concat(tmp, ", "));
 	else
 		return string.format("<%s>", type(data) or "UNKNOWN");
@@ -40,14 +40,14 @@ local function Output(...)
 	end
 	
 	table.wipe(TempOutputTable);
-	local n = arg.n;
+	local numArgs = arg.n;
 	
-	if(n == 0) then
+	if(numArgs == 0) then
 		DEFAULT_CHAT_FRAME:AddMessage("nil");
 	else
-		for i = 1, n do
-			local v = arg[i];
-			TempOutputTable[i] = Serialize(v);
+		for index = 1, numArgs do
+			local value = arg[index];
+			TempOutputTable[index] = Serialize(value);
 		end
 		
 		DEFAULT_CHAT_FRAME:AddMessage(table.concat(TempOutputTable));

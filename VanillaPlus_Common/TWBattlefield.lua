@@ -52,24 +52,28 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
     local battlefieldData = GetBattlefieldData(battlefieldName);
 
     for instanceIndex = 1, numInstances do
-        local instanceId = GetBattlefieldInstanceInfo(instanceIndex);
-        local expectId = instanceIndex + offset;
-        exist[instanceId] = battlefieldData.exist[instanceId] or systime;
+        local instanceButton = _G["BattlefieldZone" .. tostring(instanceIndex + 1)];
+        local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
+        local expectID = instanceIndex + offset;
+        exist[instanceID] = battlefieldData.exist[instanceID] or systime;
 
-        -- update zone text
+        -- Update InstanceButton Text
+        if(instanceButton) then
+            instanceButton:SetText(string.format("%s%d  (%s)", battlefieldName, instanceID, date("%H:%M:%S",exist[instanceID])));
+        end
 
-        if(expectId < instanceId) then
-            for missId = expectId, instanceId - 1 do
-                table.insert(miss, missId);
-                battlefieldData.expect[missId] = systime;
+        if(expectID < instanceID) then
+            for missID = expectID, instanceID - 1 do
+                battlefieldData.expect[missID] = systime;
+                table.insert(miss, missID);
                 offset = offset + 1;
             end
         end
     end
 
-    local lastMissId = numInstances + offset + 1;
-    table.insert(miss, lastMissId);
-    battlefieldData.expect[lastMissId] = systime;
+    local lastMissID = numInstances + offset + 1;
+    battlefieldData.expect[lastMissID] = systime;
+    table.insert(miss, lastMissID);
     local estimate = table.concat(miss, ", ") .. "...";
 
     -- Report

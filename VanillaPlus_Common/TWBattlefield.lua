@@ -47,7 +47,7 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
 
     -- Iterate Battlefield Instances
     local systime = time();
-    local exist, miss, offset = {}, {}, 0;
+    local exist, expect, offset = {}, {}, 0;
     local numInstances = GetNumBattlefields();
     local battlefieldData = GetBattlefieldData(battlefieldName);
 
@@ -58,17 +58,15 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
 
         if(expectID < instanceID) then
             for missID = expectID, instanceID - 1 do
-                battlefieldData.expect[missID] = systime;
-                table.insert(miss, missID);
+                table.insert(expect, missID);
                 offset = offset + 1;
             end
         end
     end
 
     local lastMissID = numInstances + offset + 1;
-    battlefieldData.expect[lastMissID] = systime;
-    table.insert(miss, lastMissID);
-    local estimate = table.concat(miss, ", ") .. "...";
+    table.insert(expect, lastMissID);
+    local estimate = table.concat(expect, ", ") .. "...";
 
     -- Report
     if(battlefieldData.report and (estimate ~= battlefieldData.estimate or systime - battlefieldData.reportedAt > battlefieldData.reportInterval)) then
@@ -78,6 +76,7 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
 
     -- Save Battlefield Instances Data
     battlefieldData.exist = exist;
+    battlefieldData.expect = expect;
     battlefieldData.estimate = estimate;
 end
 
@@ -155,9 +154,9 @@ function Namespace.AutoRejoinTWBattlefield(battlefieldShortName)
         local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldShortName);
 
         if(status == "confirm") then
-            local expectAt = battlefieldData.expect[instanceID];
+            local seen = battlefieldData.exist[instanceID];
 
-            if(not expectAt or expectAt < systime - 120) then
+            if(seen and seen < systime - 120) then
                 AcceptBattlefieldPort(index, 0);
             end
         end

@@ -117,6 +117,15 @@ function Namespace.GetBattlefieldStatusByName(battlefieldShortName)
     return 0;
 end
 
+function Namespace.AcceptBattlefieldPortByName(battlefieldShortName, acceptCode)
+    local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldShortName);
+
+    if(index > 0) then
+        AcceptBattlefieldPort(index, acceptCode);
+    end
+end
+
+
 --------------------------------------------  Turtle WoW Specific  --------------------------------------------
 
 function Namespace.ShowTWBattlefieldList(battlefieldShortName)

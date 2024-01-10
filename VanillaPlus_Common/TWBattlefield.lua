@@ -145,8 +145,14 @@ function Namespace.JoinTWBattlefield(battlefieldShortName)
     local shown, battlefieldName = Namespace.IsBattlefieldListShown(battlefieldShortName);
 
     if(shown) then
+        local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldName);
         UpdateBattlefieldInstances(battlefieldName);
-        BattlefieldFrameJoinButton:Click();
+
+        if(index > 0) then
+            BattlefieldFrameCloseButton:Click();
+        else
+            BattlefieldFrameJoinButton:Click();
+        end
     else
         Namespace.ShowTWBattlefieldList(battlefieldShortName);
     end
@@ -156,21 +162,19 @@ function Namespace.AutoRejoinTWBattlefield(battlefieldShortName)
     local shown, battlefieldName = Namespace.IsBattlefieldListShown(battlefieldShortName);
 
     if(shown) then
-        UpdateBattlefieldInstances(battlefieldName);
-
         local systime = time();
         local battlefieldData = GetBattlefieldData(battlefieldName);
-        local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldShortName);
+        local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldName);
+        UpdateBattlefieldInstances(battlefieldName);
 
-        if(status == "confirm") then
-            local seen = battlefieldData.exist[instanceID];
-
-            if(seen and seen < systime - 100) then
-                AcceptBattlefieldPort(index, 0);
-            end
+        if(status == "confirm" and battlefieldData.exist[instanceID] and battlefieldData.exist[instanceID] < systime - 100) then
+            AcceptBattlefieldPort(index, 0);
+            BattlefieldFrameJoinButton:Click();
+        elseif(index > 0) then
+            BattlefieldFrameCloseButton:Click();
+        else
+            BattlefieldFrameJoinButton:Click();
         end
-
-        BattlefieldFrameJoinButton:Click();
     else
         Namespace.ShowTWBattlefieldList(battlefieldShortName);
     end

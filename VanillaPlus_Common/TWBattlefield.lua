@@ -152,11 +152,11 @@ function Namespace.JoinTWBattlefield(battlefieldShortName)
         local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldName);
         UpdateBattlefieldInstances(battlefieldName);
 
-        if(index > 0) then
-            BattlefieldFrameCloseButton:Click();
-        else
-            BattlefieldFrameJoinButton:Click();
+        if(index == 0) then
+            JoinBattlefield(0);
         end
+
+        BattlefieldFrameCloseButton:Click();
     else
         Namespace.ShowTWBattlefieldList(battlefieldShortName);
     end
@@ -176,18 +176,18 @@ function Namespace.JoinNewestTWBattlefield(battlefieldShortName, expireSeconds)
         for existInstanceID, existInstanceTime in pairs(battlefieldData.exist) do
             if(existInstanceTime > newestInstanceTime and existInstanceTime > systime - expireSeconds) then
                 newestInstanceID = existInstanceID;
+                newestInstanceTime = existInstanceTime;
             end
         end
 
         if(newestInstanceID > 0 and newestInstanceID ~= instanceID) then
             AcceptBattlefieldPort(index, 0);
-            SetSelectedBattlefield(battlefieldData.indexMap[newestInstanceID] or 0);
-            BattlefieldFrameJoinButton:Click();
-        elseif(index > 0) then
-            BattlefieldFrameCloseButton:Click();
-        else
-            BattlefieldFrameJoinButton:Click();
+            JoinBattlefield(battlefieldData.indexMap[newestInstanceID] or 0);
+        elseif(index == 0) then
+            JoinBattlefield(0);
         end
+
+        BattlefieldFrameCloseButton:Click();
     else
         Namespace.ShowTWBattlefieldList(battlefieldShortName);
     end
@@ -205,12 +205,12 @@ function Namespace.AutoRejoinTWBattlefield(battlefieldShortName, expireSeconds)
 
         if(status == "confirm" and battlefieldData.exist[instanceID] and battlefieldData.exist[instanceID] < systime - expireSeconds) then
             AcceptBattlefieldPort(index, 0);
-            BattlefieldFrameJoinButton:Click();
-        elseif(index > 0) then
-            BattlefieldFrameCloseButton:Click();
-        else
-            BattlefieldFrameJoinButton:Click();
+            JoinBattlefield(0);
+        elseif(index == 0) then
+            JoinBattlefield(0);
         end
+
+        BattlefieldFrameCloseButton:Click();
     else
         Namespace.ShowTWBattlefieldList(battlefieldShortName);
     end

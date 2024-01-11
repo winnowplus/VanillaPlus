@@ -182,6 +182,7 @@ function Namespace.JoinNewestTWBattlefield(battlefieldShortName, expireSeconds)
 
         if(newestInstanceID > 0 and newestInstanceID ~= instanceID) then
             AcceptBattlefieldPort(index, 0);
+            Logger:Info("Join ", battlefieldName, " ", newestInstanceID, " ", battlefieldData.indexMap[newestInstanceID]);
             JoinBattlefield(battlefieldData.indexMap[newestInstanceID] or 0);
         elseif(index == 0) then
             JoinBattlefield(0);

@@ -22,6 +22,7 @@ local BattlefieldDataSet= {};
 local function GetBattlefieldData(battlefieldName)
     local battlefieldData = BattlefieldDataSet[battlefieldName];
 
+
     if(not battlefieldData) then
         battlefieldData = {
             exist   = {},
@@ -47,7 +48,7 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
 
     -- Iterate Battlefield Instances
     local systime = time();
-    local exist, expect, offset = {}, {}, 0;
+    local exist, miss, offset = {}, {}, 0;
     local numInstances = GetNumBattlefields();
     local battlefieldData = GetBattlefieldData(battlefieldName);
 
@@ -58,15 +59,17 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
 
         if(expectID < instanceID) then
             for missID = expectID, instanceID - 1 do
-                table.insert(expect, missID);
+                table.insert(miss, missID);
+                battlefieldData.expect[missID] = systime;
                 offset = offset + 1;
             end
         end
     end
 
     local lastMissID = numInstances + offset + 1;
-    table.insert(expect, lastMissID);
-    local estimate = table.concat(expect, ", ") .. "...";
+    table.insert(miss, lastMissID);
+    battlefieldData.expect[lastMissID] = systime;
+    local estimate = table.concat(miss, ", ") .. "...";
 
     -- Report
     if(battlefieldData.report and (estimate ~= battlefieldData.estimate or systime - battlefieldData.reportedAt > battlefieldData.reportInterval)) then
@@ -76,7 +79,6 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
 
     -- Save Battlefield Instances Data
     battlefieldData.exist = exist;
-    battlefieldData.expect = expect;
     battlefieldData.estimate = estimate;
 end
 

@@ -80,6 +80,7 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
     end
 
     -- Save Battlefield Instances Data
+    battlefieldData.indexMap = indexMap;
     battlefieldData.exist = exist;
     battlefieldData.estimate = estimate;
 end

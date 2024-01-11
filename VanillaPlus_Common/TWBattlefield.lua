@@ -25,6 +25,7 @@ local function GetBattlefieldData(battlefieldName)
 
     if(not battlefieldData) then
         battlefieldData = {
+            indexMap = {},
             exist   = {},
             expect  = {},
             estimate = "",
@@ -48,13 +49,14 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
 
     -- Iterate Battlefield Instances
     local systime = time();
-    local exist, miss, offset = {}, {}, 0;
+    local indexMap, exist, miss, offset = {}, {}, {}, 0;
     local numInstances = GetNumBattlefields();
     local battlefieldData = GetBattlefieldData(battlefieldName);
 
     for instanceIndex = 1, numInstances do
         local expectID = instanceIndex + offset;
         local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
+        indexMap[instanceID] = instanceIndex;
         exist[instanceID] = battlefieldData.exist[instanceID] or systime;
 
         if(expectID < instanceID) then
@@ -160,8 +162,40 @@ function Namespace.JoinTWBattlefield(battlefieldShortName)
     end
 end
 
-function Namespace.AutoRejoinTWBattlefield(battlefieldShortName)
+function Namespace.JoinNewestTWBattlefield(battlefieldShortName, expireSeconds)
     local shown, battlefieldName = Namespace.IsBattlefieldListShown(battlefieldShortName);
+    expireSeconds = expireSeconds or 100;
+
+    if(shown) then
+        UpdateBattlefieldInstances(battlefieldName);
+        local systime = time();
+        local battlefieldData = GetBattlefieldData(battlefieldName);
+        local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldName);
+        local newestInstanceID, newestInstanceTime = 0, 0;
+
+        for existInstanceID, existInstanceTime in pairs(battlefieldData.exist) do
+            if(existInstanceTime > newestInstanceTime and existInstanceTime > systime - expireSeconds) then
+                newestInstanceID = existInstanceID;
+            end
+        end
+
+        if(newestInstanceID > 0 and newestInstanceID ~= instanceID) then
+            AcceptBattlefieldPort(index, 0);
+            SetSelectedBattlefield(battlefieldData.indexMap[newestInstanceID] or 0);
+            BattlefieldFrameJoinButton:Click();
+        elseif(index > 0) then
+            BattlefieldFrameCloseButton:Click();
+        else
+            BattlefieldFrameJoinButton:Click();
+        end
+    else
+        Namespace.ShowTWBattlefieldList(battlefieldShortName);
+    end
+end
+
+function Namespace.AutoRejoinTWBattlefield(battlefieldShortName, expireSeconds)
+    local shown, battlefieldName = Namespace.IsBattlefieldListShown(battlefieldShortName);
+    expireSeconds = expireSeconds or 100;
 
     if(shown) then
         local systime = time();
@@ -169,7 +203,7 @@ function Namespace.AutoRejoinTWBattlefield(battlefieldShortName)
         local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldName);
         UpdateBattlefieldInstances(battlefieldName);
 
-        if(status == "confirm" and battlefieldData.exist[instanceID] and battlefieldData.exist[instanceID] < systime - 100) then
+        if(status == "confirm" and battlefieldData.exist[instanceID] and battlefieldData.exist[instanceID] < systime - expireSeconds) then
             AcceptBattlefieldPort(index, 0);
             BattlefieldFrameJoinButton:Click();
         elseif(index > 0) then

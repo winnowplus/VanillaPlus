@@ -53,8 +53,8 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
     local battlefieldData = GetBattlefieldData(battlefieldName);
 
     for instanceIndex = 1, numInstances do
-        local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
         local expectID = instanceIndex + offset;
+        local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
         exist[instanceID] = battlefieldData.exist[instanceID] or systime;
 
         if(expectID < instanceID) then

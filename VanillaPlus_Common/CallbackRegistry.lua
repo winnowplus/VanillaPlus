@@ -72,5 +72,6 @@ function CallbackRegistryMixin:TriggerEvent(event, ...)
 end
 
 if(VanillaPlusTooltip) then
-	Namespace.HasVanillaPlusTooltip = true;
+	Namespace.IsEventRegistered = type(VanillaPlusTooltip.IsEventRegistered);
+	Namespace.RegisterEvent = type(VanillaPlusTooltip.RegisterEvent);
 end

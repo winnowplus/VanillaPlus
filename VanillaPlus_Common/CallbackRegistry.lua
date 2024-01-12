@@ -70,3 +70,7 @@ function CallbackRegistryMixin:TriggerEvent(event, ...)
 		end
 	end
 end
+
+if(VanillaPlusTooltip) then
+	Namespace.HasVanillaPlusTooltip = true;
+end

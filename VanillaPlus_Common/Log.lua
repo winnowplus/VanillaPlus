@@ -6,8 +6,8 @@ local DefaultLogLevel		= Namespace.LogLevel;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local LoggerMixin		= {};
-local TempOutputTable	= {};
+local LoggerMixin			= {};
+local TempOutputTable		= {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
 

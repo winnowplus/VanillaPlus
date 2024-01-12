@@ -74,9 +74,14 @@ local function UpdateBattlefieldInstances(expectBattlefieldName)
     local estimate = table.concat(miss, ", ") .. "...";
 
     -- Report
-    if(battlefieldData.report and (estimate ~= battlefieldData.estimate or systime - battlefieldData.reportedAt > battlefieldData.reportInterval)) then
-        Logger:Info("New Instance would be ", battlefieldName, " ", estimate);
-        battlefieldData.reportedAt = systime;
+    if(battlefieldData.report) then
+        if(estimate ~= battlefieldData.estimate) then
+            Logger:Info("New Instance would be ", battlefieldName, " ", RED_FONT_COLOR_CODE, estimate);
+            battlefieldData.reportedAt = systime;
+        elseif(systime - battlefieldData.reportedAt > battlefieldData.reportInterval) then
+            Logger:Info("New Instance would be ", battlefieldName, " ", estimate);
+            battlefieldData.reportedAt = systime;
+        end
     end
 
     -- Save Battlefield Instances Data

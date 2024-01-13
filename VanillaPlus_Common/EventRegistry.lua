@@ -33,7 +33,7 @@ function EventRegistryMixin:RegisterFrameEventAndCallback(frameEvent, func, owne
     local current = self.callbackCount[frameEvent];
 
     if(current == 1 and original ~= 1) then
-        eventFrame:RegisterEvent(frameEvent);
+        self.eventFrame:RegisterEvent(frameEvent);
     end
 end
 
@@ -43,7 +43,7 @@ function EventRegistryMixin:UnregisterFrameEventAndCallback(frameEvent, owner)
     local current = self.callbackCount[frameEvent];
 
     if(current == 0 and original ~= 0)then
-        eventFrame:UnregisterEvent(frameEvent);
+        self.eventFrame:UnregisterEvent(frameEvent);
     end
 end
 

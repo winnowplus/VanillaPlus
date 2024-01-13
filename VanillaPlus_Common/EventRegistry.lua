@@ -25,7 +25,7 @@ function EventRegistryMixin:Init(eventFrame)
     _this.eventFrame:SetScript("OnEvent", function()
 		_this:TriggerEvent(event);
 	end);
-    _this.eventFrame:SetScript("OnUpdate", function()
+    _this.eventFrame:SetScript("OnUpdate", function(_self)
 		_this:TriggerEvent("OnUpdate", GetTime());
 	end);
     --OnUpdate

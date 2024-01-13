@@ -50,3 +50,8 @@ end
 -------------------------------------------  Default EventRegistry  -------------------------------------------
 
 Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlusTooltip);
+
+local function TestCallback1()
+end
+
+Namespace.EventRegistry:RegisterFrameEventAndCallback("BATTLEFIELDS_SHOW", TestCallback1);

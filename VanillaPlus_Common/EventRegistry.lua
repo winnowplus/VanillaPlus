@@ -54,4 +54,4 @@ Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlus
 local function TestCallback1()
 end
 
-Namespace.EventRegistry:RegisterFrameEventAndCallback("BATTLEFIELDS_SHOW", TestCallback1);
+Namespace.EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", TestCallback1);

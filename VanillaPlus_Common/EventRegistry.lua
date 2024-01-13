@@ -57,7 +57,8 @@ end
 
 -------------------------------------------  Default EventRegistry  -------------------------------------------
 
-Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, CreateFrame("Frame", "VanillaPlusEventFrame"));
+--Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, CreateFrame("Frame", "VanillaPlusEventFrame"));
+Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlusEventFrame);
 
 local lastUpdate = 0;
 

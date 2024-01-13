@@ -2,7 +2,7 @@
 	
 	<Frame name="VanillaPlusEventFrame" parent="UIParent"/>
 
-	<GameTooltip name="VanillaPlusTooltip" frameStrata="TOOLTIP" hidden="true" inherits="GameTooltipTemplate">
+	<GameTooltip name="VanillaPlusTooltip" frameStrata="TOOLTIP" hidden="true" inherits="GameTooltipTemplate" parent="UIParent">
 		<Scripts>
 			<OnLoad>
 				this:SetOwner(WorldFrame, "ANCHOR_NONE")

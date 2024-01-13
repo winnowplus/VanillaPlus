@@ -52,24 +52,3 @@ end
 -------------------------------------------  Default EventRegistry  -------------------------------------------
 
 Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlusTooltip);
-
-
-
------- Test code
-local function TestCallback1(...)
-end
-
-local owner1 = Namespace.EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", TestCallback1);
-
-local function TestCallback2()
-    DEFAULT_CHAT_FRAME:AddMessage((event or "nilevent") .. tostring(arg1));
-end
-
-local owner2 = Namespace.EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", TestCallback2);
-
-local function TestCallback3(...)
-    DEFAULT_CHAT_FRAME:AddMessage("TestCallback3");
-end
-
-local owner3 = Namespace.EventRegistry:RegisterFrameEventAndCallback("BATTLEFIELDS_SHOW", TestCallback3);
-Namespace.EventRegistry:UnregisterFrameEventAndCallback("BATTLEFIELDS_SHOW", owner3);

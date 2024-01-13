@@ -27,22 +27,26 @@ end
 
 function EventRegistryMixin:RegisterFrameEventAndCallback(frameEvent, func, owner)
     local original = self.callbackCount[frameEvent];
-    self:RegisterCallback(frameEvent, func, owner);
+    local result = self:RegisterCallback(frameEvent, func, owner);
     local current = self.callbackCount[frameEvent];
 
     if(current == 1 and original ~= 1) then
         self.eventFrame:RegisterEvent(frameEvent);
     end
+
+    return result;
 end
 
 function EventRegistryMixin:UnregisterFrameEventAndCallback(frameEvent, owner)
     local original = self.callbackCount[frameEvent];
-    self:UnregisterCallback(frameEvent, owner);
+    local result = self:UnregisterCallback(frameEvent, owner);
     local current = self.callbackCount[frameEvent];
 
     if(current == 0 and original ~= 0)then
         self.eventFrame:UnregisterEvent(frameEvent);
     end
+
+    return result;
 end
 
 -------------------------------------------  Default EventRegistry  -------------------------------------------

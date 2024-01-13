@@ -5,6 +5,8 @@ local CallbackRegistryMixin = Namespace.CallbackRegistryMixin;
 local CreateFromMixins      = Namespace.CreateFromMixins;
 local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
 
+local GetTime               = GetTime;
+
 -----------------------------------------------  Declarations  ------------------------------------------------
 
 local EventRegistryMixin    = CreateFromMixins(CallbackRegistryMixin);
@@ -21,6 +23,9 @@ function EventRegistryMixin:Init(eventFrame)
     self.eventFrame = eventFrame;
     self.eventFrame:SetScript("OnEvent", function()
 		self:TriggerEvent(event);
+	end);
+    self.eventFrame:SetScript("OnUpdate", function()
+		self:TriggerEvent("OnUpdate", GetTime());
 	end);
     --OnUpdate
 end
@@ -52,3 +57,13 @@ end
 -------------------------------------------  Default EventRegistry  -------------------------------------------
 
 Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlusTooltip);
+
+local lastUpdate = 0;
+
+local function TestOnUpdate(uptime)
+    if (uptime - lastUpdate) < 0.1 then return end
+
+    DEFAULT_CHAT_FRAME:AddMessage(tostring(uptime));
+end
+
+Namespace.EventRegistry:RegisterCallback("OnUpdate", TestOnUpdate);

@@ -3,6 +3,7 @@
 local Namespace = VanillaPlus;
 local STRING_CONTAINS = Namespace.Predicates.STRING_CONTAINS;
 local GetLogger = Namespace.GetLogger;
+local EventRegistry = Namespace.EventRegistry;
 
 local GetBattlefieldInfo = GetBattlefieldInfo;
 local GetNumBattlefields = GetNumBattlefields;
@@ -10,7 +11,6 @@ local GetBattlefieldInstanceInfo = GetBattlefieldInstanceInfo;
 local GetBattlefieldStatus = GetBattlefieldStatus;
 
 local time = time;
-local uptime = GetTime;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -221,3 +221,11 @@ function Namespace.AutoRejoinTWBattlefield(battlefieldShortName, expireSeconds)
         Namespace.ShowTWBattlefieldList(battlefieldShortName);
     end
 end
+
+----------------------------------------------  Event Callbacks  ----------------------------------------------
+
+local function OnBattlefieldsShow()
+    DEFAULT_CHAT_FRAME:AddMessage(event .. tostring(arg1));
+end
+
+EventRegistry:RegisterFrameEventAndCallback("BATTLEFIELDS_SHOW", OnBattlefieldsShow);

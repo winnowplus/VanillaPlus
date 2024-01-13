@@ -22,6 +22,7 @@ function EventRegistryMixin:Init(eventFrame)
     local onEvent = function(...)
         DEFAULT_CHAT_FRAME:AddMessage(event);
         DEFAULT_CHAT_FRAME:AddMessage(type(arg));
+        DEFAULT_CHAT_FRAME:AddMessage(tostring(arg1));
         
         for key, value in pairs(arg) do
             DEFAULT_CHAT_FRAME:AddMessage(tostring(key) .. " - " .. tostring(value));

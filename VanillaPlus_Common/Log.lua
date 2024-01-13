@@ -1,8 +1,8 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace				= VanillaPlus;
-local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
 local DefaultLogLevel		= Namespace.LogLevel;
+local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 

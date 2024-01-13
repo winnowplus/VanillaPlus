@@ -21,14 +21,14 @@ function Predicates.EQUALS(one, another)
     return one == another;
 end
 
-function Predicates.STRING_CONTAINS(str, subStr)
-    return str and subStr and string.find(str, subStr) and true or false;
+function Predicates.STRING_CONTAINS(str, substr)
+    return str and substr and string.find(str, substr) and true or false;
 end
 
 function Predicates.AURA_NAME_EQUALS(aura, expect)
-    return aura and Predicates.EQUALS(aura.name, expect) or false;
+    return aura and aura.name == expect or false;
 end
 
 function Predicates.AURA_NAME_CONTAINS(aura, expect)
-    return aura and Predicates.STRING_CONTAINS(aura.name, expect) or false;
+    return aura and aura.name and expect and string.find(aura.name, expect) and true or false;
 end

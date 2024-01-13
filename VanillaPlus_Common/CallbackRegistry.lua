@@ -21,15 +21,12 @@ local function GenerateInternalOwner()
 end
 
 local function IsInternalOwner(owner)
-	if(type(owner) ~= "string") then
-		return false;
-	end
-
-	return EQUALS(owner, string.match(owner, INTERNAL_OWNER_PATTERN));
+	return type(owner) == "string" and EQUALS(owner, string.match(owner, INTERNAL_OWNER_PATTERN));
 end
 
 function CallbackRegistryMixin:Init()
 	self.callbackTable = {};
+	self.callbackCount = {};
 end
 
 function CallbackRegistryMixin:RegisterCallback(event, func, owner)
@@ -41,6 +38,11 @@ function CallbackRegistryMixin:RegisterCallback(event, func, owner)
 	end
 
 	self.callbackTable[event] = self.callbackTable[event] or {};
+
+	if(self.callbackTable[event][owner] == nil) then
+		self.callbackCount[event] = (self.callbackCount[event] or 0) + 1;
+	end
+
 	self.callbackTable[event][owner] = func;
 
 	return owner;
@@ -51,6 +53,10 @@ function CallbackRegistryMixin:UnregisterCallback(event, owner)
 	assert(owner ~= nil, "Illegal owner: " .. tostring(owner) .. ".");
 
 	if(self.callbackTable[event]) then
+		if(self.callbackTable[event][owner] ~= nil) then
+			self.callbackCount[event] = self.callbackCount[event] and (self.callbackCount[event] - 1) or 0;
+		end
+
 		self.callbackTable[event][owner] = nil;
 	end
 end
@@ -69,9 +75,4 @@ function CallbackRegistryMixin:TriggerEvent(event, ...)
 			end
 		end
 	end
-end
-
-if(VanillaPlusTooltip) then
-	Namespace.IsEventRegistered = type(VanillaPlusTooltip.IsEventRegistered);
-	Namespace.RegisterEvent = type(VanillaPlusTooltip.RegisterEvent);
 end

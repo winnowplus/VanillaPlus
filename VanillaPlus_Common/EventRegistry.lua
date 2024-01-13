@@ -18,19 +18,10 @@ function EventRegistryMixin:Init(eventFrame)
     assert(eventFrame:IsObjectType("Frame") == 1, "Illegal eventFrame: " .. tostring(eventFrame) .. ", a Frame is required.");
 
     CallbackRegistryMixin.Init(self);
-
-    local onEvent = function(...)
-        DEFAULT_CHAT_FRAME:AddMessage(event);
-        DEFAULT_CHAT_FRAME:AddMessage(type(arg));
-        DEFAULT_CHAT_FRAME:AddMessage(tostring(arg1));
-        
-        for key, value in pairs(arg) do
-            DEFAULT_CHAT_FRAME:AddMessage(tostring(key) .. " - " .. tostring(value));
-        end
-    end
-
     self.eventFrame = eventFrame;
-    self.eventFrame:SetScript("OnEvent", onEvent);
+    self.eventFrame:SetScript("OnEvent", function(...)
+		self:TriggerEvent(event, unpack(arg));
+	end);
 end
 
 function EventRegistryMixin:RegisterFrameEventAndCallback(frameEvent, func, owner)
@@ -57,7 +48,8 @@ end
 
 Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlusTooltip);
 
-local function TestCallback1()
+local function TestCallback1(...)
+    DEFAULT_CHAT_FRAME:AddMessage(tostring(arg1));
 end
 
 Namespace.EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", TestCallback1);

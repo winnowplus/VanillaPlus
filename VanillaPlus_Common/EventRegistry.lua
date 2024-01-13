@@ -62,10 +62,9 @@ Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlus
 local lastUpdate = 0;
 
 local function TestOnUpdate(uptime)
-    local uptime = GetTime();
     if (uptime - lastUpdate) < 1 then return end
     
-    DEFAULT_CHAT_FRAME:AddMessage(tostring(uptime));
+    DEFAULT_CHAT_FRAME:AddMessage("TestOnUpdate" .. tostring(uptime));
     lastUpdate = uptime;
 end
 

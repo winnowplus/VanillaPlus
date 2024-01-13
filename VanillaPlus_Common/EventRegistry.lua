@@ -20,7 +20,9 @@ function EventRegistryMixin:Init(eventFrame)
     CallbackRegistryMixin.Init(self);
 
     local onEvent = function(...)
-        DEFAULT_CHAT_FRAME:AddMessage(event, arg1);
+        DEFAULT_CHAT_FRAME:AddMessage(event);
+        DEFAULT_CHAT_FRAME:AddMessage(type(arg));
+        DEFAULT_CHAT_FRAME:AddMessage(tostring(arg[1]));
     end
 
     self.eventFrame = eventFrame;

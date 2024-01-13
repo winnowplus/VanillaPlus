@@ -19,7 +19,7 @@ function EventRegistryMixin:Init(eventFrame)
 
     CallbackRegistryMixin.Init(self);
     self.eventFrame = eventFrame;
-    self.eventFrame:SetScript("OnEvent", function(...)
+    self.eventFrame:SetScript("OnEvent", function()
 		self:TriggerEvent(event, unpack(arg));
 	end);
     --OnUpdate

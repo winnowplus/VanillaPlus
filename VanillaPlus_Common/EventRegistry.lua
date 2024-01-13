@@ -57,7 +57,7 @@ end
 
 -------------------------------------------  Default EventRegistry  -------------------------------------------
 
-Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlusTooltip);
+Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, CreateFrame("VanillaPlusEventFrame"));
 
 local lastUpdate = 0;
 

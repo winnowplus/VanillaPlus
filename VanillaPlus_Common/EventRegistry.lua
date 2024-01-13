@@ -19,16 +19,14 @@ function EventRegistryMixin:Init(eventFrame)
     assert(type(eventFrame.IsObjectType) == "function", "Illegal eventFrame: " .. tostring(eventFrame) .. ", a Frame is required.");
     assert(eventFrame:IsObjectType("Frame") == 1, "Illegal eventFrame: " .. tostring(eventFrame) .. ", a Frame is required.");
 
-    local _this = self;
-    CallbackRegistryMixin.Init(_this);
-    _this.eventFrame = eventFrame;
-    _this.eventFrame:SetScript("OnEvent", function()
-		_this:TriggerEvent(event);
+    CallbackRegistryMixin.Init(self);
+    self.eventFrame = eventFrame;
+    self.eventFrame:SetScript("OnEvent", function()
+		self:TriggerEvent(event);
 	end);
-    _this.eventFrame:SetScript("OnUpdate", function()
-		_this:TriggerEvent("OnUpdate", GetTime());
+    self.eventFrame:SetScript("OnUpdate", function()
+		self:TriggerEvent("OnUpdate", GetTime());
 	end);
-    --OnUpdate
 end
 
 function EventRegistryMixin:RegisterFrameEventAndCallback(frameEvent, func, owner)
@@ -57,7 +55,6 @@ end
 
 -------------------------------------------  Default EventRegistry  -------------------------------------------
 
---Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, CreateFrame("Frame", "VanillaPlusEventFrame"));
 Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlusEventFrame);
 
 local lastUpdate = 0;

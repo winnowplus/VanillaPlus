@@ -62,8 +62,8 @@ end
 
 local owner1 = Namespace.EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", TestCallback1);
 
-local function TestCallback2(x, y, z)
-    DEFAULT_CHAT_FRAME:AddMessage(tostring(x) .. tostring(y) .. tostring(z));
+local function TestCallback2()
+    DEFAULT_CHAT_FRAME:AddMessage("TestCallback2" .. (event or "nilevent") .. tostring(arg1));
 end
 
 local owner2 = Namespace.EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", TestCallback2);

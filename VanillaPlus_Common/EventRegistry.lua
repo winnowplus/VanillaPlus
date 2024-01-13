@@ -57,7 +57,6 @@ Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlus
 
 ------ Test code
 local function TestCallback1(...)
-    DEFAULT_CHAT_FRAME:AddMessage((event or "nilevent") .. tostring(arg1));
 end
 
 local owner1 = Namespace.EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", TestCallback1);

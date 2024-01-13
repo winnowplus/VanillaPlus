@@ -25,7 +25,7 @@ function EventRegistryMixin:Init(eventFrame)
     _this.eventFrame:SetScript("OnEvent", function()
 		_this:TriggerEvent(event);
 	end);
-    _this.eventFrame:SetScript("OnUpdate", function(_self)
+    _this.eventFrame:SetScript("OnUpdate", function()
 		_this:TriggerEvent("OnUpdate", GetTime());
 	end);
     --OnUpdate
@@ -62,7 +62,8 @@ Namespace.EventRegistry = CreateAndInitFromMixin(EventRegistryMixin, VanillaPlus
 local lastUpdate = 0;
 
 local function TestOnUpdate(uptime)
-    if (uptime - lastUpdate) < 0.1 then return end
+    local uptime = GetTime();
+    if (uptime - lastUpdate) < 1 then return end
     
     DEFAULT_CHAT_FRAME:AddMessage(tostring(uptime));
     lastUpdate = uptime;

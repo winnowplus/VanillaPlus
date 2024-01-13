@@ -62,8 +62,9 @@ local lastUpdate = 0;
 
 local function TestOnUpdate(uptime)
     if (uptime - lastUpdate) < 0.1 then return end
-
+    
     DEFAULT_CHAT_FRAME:AddMessage(tostring(uptime));
+    lastUpdate = uptime;
 end
 
 Namespace.EventRegistry:RegisterCallback("OnUpdate", TestOnUpdate);

@@ -225,7 +225,8 @@ end
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function OnBattlefieldsShow()
-    DEFAULT_CHAT_FRAME:AddMessage(event .. tostring(arg1));
+    local battlefieldName = GetBattlefieldInfo();
+    DEFAULT_CHAT_FRAME:AddMessage(event .. battlefieldName);
 end
 
 EventRegistry:RegisterFrameEventAndCallback("BATTLEFIELDS_SHOW", OnBattlefieldsShow);

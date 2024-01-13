@@ -64,10 +64,8 @@ end
 function CallbackRegistryMixin:TriggerEvent(event, ...)
 	assert(type(event) == "string", "Illegal event: " .. tostring(event) .. ", a string is required.");
 
-	local callbacks = self.callbackTable[event];
-
-	if(callbacks) then
-		for owner, func in pairs(callbacks) do
+	if(self.callbackTable[event]) then
+		for owner, func in pairs(self.callbackTable[event]) do
 			if(IsInternalOwner(owner)) then
 				func(unpack(arg));
 			else

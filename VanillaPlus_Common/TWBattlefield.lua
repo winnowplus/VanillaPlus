@@ -1,21 +1,21 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
-local Namespace = VanillaPlus;
-local STRING_CONTAINS = Namespace.Predicates.STRING_CONTAINS;
-local GetLogger = Namespace.GetLogger;
-local EventRegistry = Namespace.EventRegistry;
+local Namespace                 = VanillaPlus;
+local STRING_CONTAINS           = Namespace.Predicates.STRING_CONTAINS;
+local GetLogger                 = Namespace.GetLogger;
+local EventRegistry             = Namespace.EventRegistry;
 
-local GetBattlefieldInfo = GetBattlefieldInfo;
-local GetNumBattlefields = GetNumBattlefields;
-local GetBattlefieldInstanceInfo = GetBattlefieldInstanceInfo;
-local GetBattlefieldStatus = GetBattlefieldStatus;
+local GetBattlefieldInfo        = GetBattlefieldInfo;
+local GetNumBattlefields        = GetNumBattlefields;
+local GetBattlefieldInstanceInfo= GetBattlefieldInstanceInfo;
+local GetBattlefieldStatus      = GetBattlefieldStatus;
 
 local time = time;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local Logger            = GetLogger();
-local BattlefieldDataSet= {};
+local Logger                    = GetLogger();
+local BattlefieldDataSet        = {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
@@ -40,11 +40,13 @@ end
 
 function Namespace.GetBattlefieldProperty(battlefieldName, key)
 	assert(type(battlefieldName) == "string", "Illegal battlefieldName: " .. tostring(battlefieldName) .. ", a string is required.");
+
     return GetBattlefieldData(battlefieldName)[key];
 end
 
 function Namespace.SetBattlefieldProperty(battlefieldName, key, value)
 	assert(type(battlefieldName) == "string", "Illegal battlefieldName: " .. tostring(battlefieldName) .. ", a string is required.");
+
     GetBattlefieldData(battlefieldName)[key] = value;
 end
 
@@ -83,8 +85,9 @@ function Namespace.ShowTWBattlefieldList(battlefieldShortName)
 
     for index = 1, 10 do
         local dropDownListButton = _G["DropDownList1Button" .. tostring(index)];
+        local dropDownListButtonText = dropDownListButton and dropDownListButton:GetText() or nil;
 
-        if(dropDownListButton and STRING_CONTAINS(dropDownListButton:GetText(), battlefieldShortName)) then
+        if(dropDownListButtonText and STRING_CONTAINS(dropDownListButtonText, battlefieldShortName)) then
             dropDownListButton:Click();
             return true;
         end

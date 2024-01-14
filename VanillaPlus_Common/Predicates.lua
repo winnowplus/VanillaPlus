@@ -22,13 +22,22 @@ function Predicates.EQUALS(one, another)
 end
 
 function Predicates.STRING_CONTAINS(str, substr)
-    return str and substr and string.find(str, substr) and true or false;
+    assert(type(str) == "string", "Illegal str: " .. tostring(str) .. ", a string is required.");
+    assert(type(substr) == "string", "Illegal substr: " .. tostring(substr) .. ", a string is required.");
+
+    return string.find(str, substr) and true or false;
 end
 
 function Predicates.AURA_NAME_EQUALS(aura, expect)
-    return aura and aura.name == expect or false;
+    assert(type(aura) == "table", "Illegal aura: " .. tostring(aura) .. ", a table is required.");
+
+    return aura.name == expect or false;
 end
 
 function Predicates.AURA_NAME_CONTAINS(aura, expect)
-    return aura and aura.name and expect and string.find(aura.name, expect) and true or false;
+    assert(type(aura) == "table", "Illegal aura: " .. tostring(aura) .. ", a table is required.");
+    assert(type(aura.name) == "string", "Illegal aura.name: " .. tostring(aura.name) .. ", a string is required.");
+    assert(type(expect) == "string", "Illegal expect: " .. tostring(expect) .. ", a string is required.");
+    
+    return string.find(aura.name, expect) and true or false;
 end

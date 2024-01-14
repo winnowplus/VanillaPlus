@@ -16,6 +16,7 @@ Namespace.CallbackRegistryMixin = CallbackRegistryMixin;
 
 local function GenerateInternalOwner()
 	INTERNAL_OWNER_COUNT = INTERNAL_OWNER_COUNT + 1;
+	
 	return string.format(INTERNAL_OWNER_FORMAT, INTERNAL_OWNER_COUNT);
 end
 
@@ -53,7 +54,7 @@ function CallbackRegistryMixin:UnregisterCallback(event, owner)
 
 	if(self.callbackTable[event]) then
 		if(self.callbackTable[event][owner] ~= nil) then
-			self.callbackCount[event] = self.callbackCount[event] and (self.callbackCount[event] - 1) or 0;
+			self.callbackCount[event] = self.callbackCount[event] - 1;
 		end
 
 		self.callbackTable[event][owner] = nil;

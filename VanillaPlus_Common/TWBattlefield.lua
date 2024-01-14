@@ -176,10 +176,21 @@ local function OnBattlefieldsShow()
     for instanceIndex = 1, numInstances do
         local expectID = instanceIndex + offset;
         local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
+        local instanceTime = battlefieldData.exist[instanceID] or systime;
         
         indexMap[instanceID] = instanceIndex;
-        exist[instanceID] = battlefieldData.exist[instanceID] or systime;
+        exist[instanceID] = instanceTime;
 
+        -- Update BattlefieldZone Text
+        if(battlefieldData.baseTime and instanceTime > battlefieldData.baseTime) then
+            local instanceButton = _G["BattlefieldZone" .. tostring(instanceIndex + 1)];
+
+            if(instanceButton) then
+                instanceButton:SetText(string.format("%s%d  (%s)", battlefieldName, instanceID, date("%H:%M:%S", instanceTime)));
+            end
+        end
+
+        -- Collect MissID
         if(expectID < instanceID) then
             for missID = expectID, instanceID - 1 do
                 table.insert(miss, missID);
@@ -207,6 +218,7 @@ local function OnBattlefieldsShow()
     battlefieldData.indexMap = indexMap;
     battlefieldData.exist = exist;
     battlefieldData.estimate = estimate;
+    battlefieldData.baseTime = battlefieldData.baseTime or systime;
 end
 
 EventRegistry:RegisterFrameEventAndCallback("BATTLEFIELDS_SHOW", OnBattlefieldsShow);

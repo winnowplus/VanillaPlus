@@ -186,7 +186,7 @@ local function OnBattlefieldsShow()
             local instanceButton = _G["BattlefieldZone" .. tostring(instanceIndex + 1)];
 
             if(instanceButton) then
-                instanceButton:SetText(string.format("%s%d  (%s)", battlefieldName, instanceID, date("%H:%M:%S", instanceTime)));
+                instanceButton:SetText(string.format("%s %d (%s)", battlefieldName, instanceID, date("%H:%M:%S", instanceTime)));
             end
         end
 

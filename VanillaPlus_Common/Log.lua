@@ -6,21 +6,25 @@ local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local LoggerMixin			= {};
 local TempOutputTable		= {};
+local LoggerMixin			= {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
 local function Serialize(data)
 	if(data == nil) then
 		return "nil";
-	elseif(type(data) == "number") then
+	end
+
+	local dataType = type(data);
+
+	if(dataType == "number") then
 		return tostring(data);
-	elseif(type(data) == "string") then
+	elseif(dataType == "string") then
 		return data;
-	elseif(type(data) == "boolean") then
+	elseif(dataType == "boolean") then
 		return data and "true" or "false";
-	elseif(type(data) == "table") then
+	elseif(dataType == "table") then
 		local index, tmp = 1, {};
 
 		for key, value in pairs(data) do
@@ -30,7 +34,7 @@ local function Serialize(data)
 
 		return string.format("{%s}", table.concat(tmp, ", "));
 	else
-		return string.format("<%s>", type(data) or "UNKNOWN");
+		return string.format("<%s>", dataType or "UNKNOWN");
 	end
 end
 
@@ -46,8 +50,7 @@ local function Output(...)
 		DEFAULT_CHAT_FRAME:AddMessage("nil");
 	else
 		for index = 1, numArgs do
-			local value = arg[index];
-			TempOutputTable[index] = Serialize(value);
+			TempOutputTable[index] = Serialize(arg[index]);
 		end
 		
 		DEFAULT_CHAT_FRAME:AddMessage(table.concat(TempOutputTable));

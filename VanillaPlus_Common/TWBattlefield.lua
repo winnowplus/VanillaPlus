@@ -22,12 +22,10 @@ local BattlefieldDataSet= {};
 local function GetBattlefieldData(battlefieldName)
     local battlefieldData = BattlefieldDataSet[battlefieldName];
 
-
-    if(not battlefieldData) then
+    if(type(battlefieldData) ~= "table") then
         battlefieldData = {
             indexMap = {},
             exist   = {},
-            expect  = {},
             estimate = "",
             report = false,
             reportInterval = 10,
@@ -40,72 +38,14 @@ local function GetBattlefieldData(battlefieldName)
     return battlefieldData;
 end
 
-local function UpdateBattlefieldInstances(expectBattlefieldName)
-    local battlefieldName = GetBattlefieldInfo();
-
-    if(battlefieldName ~= expectBattlefieldName) then
-        return;
-    end
-
-    -- Iterate Battlefield Instances
-    local systime = time();
-    local indexMap, exist, miss, offset = {}, {}, {}, 0;
-    local numInstances = GetNumBattlefields();
-    local battlefieldData = GetBattlefieldData(battlefieldName);
-
-    for instanceIndex = 1, numInstances do
-        local expectID = instanceIndex + offset;
-        local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
-        indexMap[instanceID] = instanceIndex;
-        exist[instanceID] = battlefieldData.exist[instanceID] or systime;
-
-        if(expectID < instanceID) then
-            for missID = expectID, instanceID - 1 do
-                table.insert(miss, missID);
-                battlefieldData.expect[missID] = systime;
-                offset = offset + 1;
-            end
-        end
-    end
-
-    local lastMissID = numInstances + offset + 1;
-    table.insert(miss, lastMissID);
-    battlefieldData.expect[lastMissID] = systime;
-    local estimate = table.concat(miss, ", ") .. "...";
-
-    -- Report
-    if(battlefieldData.report) then
-        if(estimate ~= battlefieldData.estimate) then
-            Logger:Info("New Instance would be ", battlefieldName, " ", RED_FONT_COLOR_CODE, estimate);
-            battlefieldData.reportedAt = systime;
-        elseif(systime - battlefieldData.reportedAt > battlefieldData.reportInterval) then
-            Logger:Info("New Instance would be ", battlefieldName, " ", estimate);
-            battlefieldData.reportedAt = systime;
-        end
-    end
-
-    -- Save Battlefield Instances Data
-    battlefieldData.indexMap = indexMap;
-    battlefieldData.exist = exist;
-    battlefieldData.estimate = estimate;
-end
-
 function Namespace.GetBattlefieldProperty(battlefieldName, key)
-    if(not battlefieldName) then
-        return;
-    end
-
-    local battlefieldData = GetBattlefieldData(battlefieldName);
-    return battlefieldData[key];
+	assert(type(battlefieldName) == "string", "Illegal battlefieldName: " .. tostring(battlefieldName) .. ", a string is required.");
+    return GetBattlefieldData(battlefieldName)[key];
 end
 
 function Namespace.SetBattlefieldProperty(battlefieldName, key, value)
-    if(not battlefieldName) then
-        return;
-    end
-
-    local battlefieldData = GetBattlefieldData(battlefieldName);
-    battlefieldData[key] = value;
+	assert(type(battlefieldName) == "string", "Illegal battlefieldName: " .. tostring(battlefieldName) .. ", a string is required.");
+    GetBattlefieldData(battlefieldName)[key] = value;
 end
 
 function Namespace.IsBattlefieldListShown(battlefieldShortName)
@@ -156,7 +96,6 @@ function Namespace.JoinTWBattlefield(battlefieldShortName)
 
     if(shown) then
         local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldName);
-        UpdateBattlefieldInstances(battlefieldName);
 
         if(index == 0) then
             JoinBattlefield(0);
@@ -173,7 +112,6 @@ function Namespace.JoinNewestTWBattlefield(battlefieldShortName, expireSeconds)
     expireSeconds = expireSeconds or 100;
 
     if(shown) then
-        UpdateBattlefieldInstances(battlefieldName);
         local systime = time();
         local battlefieldData = GetBattlefieldData(battlefieldName);
         local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldName);
@@ -207,7 +145,6 @@ function Namespace.AutoRejoinTWBattlefield(battlefieldShortName, expireSeconds)
         local systime = time();
         local battlefieldData = GetBattlefieldData(battlefieldName);
         local index, status, _, instanceID = Namespace.GetBattlefieldStatusByName(battlefieldName);
-        UpdateBattlefieldInstances(battlefieldName);
 
         if(status == "confirm" and battlefieldData.exist[instanceID] and battlefieldData.exist[instanceID] < systime - expireSeconds) then
             AcceptBattlefieldPort(index, 0);
@@ -225,7 +162,48 @@ end
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function OnBattlefieldsShow()
-    --local battlefieldName = GetBattlefieldInfo();
+    local battlefieldName = GetBattlefieldInfo();
+    local battlefieldData = GetBattlefieldData(battlefieldName);
+
+    -- Iterate Battlefield Instances
+    local systime = time();
+    local numInstances = GetNumBattlefields();
+    local indexMap, exist, miss, offset = {}, {}, {}, 0;
+
+    for instanceIndex = 1, numInstances do
+        local expectID = instanceIndex + offset;
+        local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
+        
+        indexMap[instanceID] = instanceIndex;
+        exist[instanceID] = battlefieldData.exist[instanceID] or systime;
+
+        if(expectID < instanceID) then
+            for missID = expectID, instanceID - 1 do
+                table.insert(miss, missID);
+                offset = offset + 1;
+            end
+        end
+    end
+
+    local lastMissID = numInstances + offset + 1;
+    table.insert(miss, lastMissID);
+    local estimate = table.concat(miss, ", ") .. "...";
+
+    -- Report
+    if(battlefieldData.report) then
+        if(estimate ~= battlefieldData.estimate) then
+            Logger:Info("New Instance would be ", battlefieldName, " ", RED_FONT_COLOR_CODE, estimate);
+            battlefieldData.reportedAt = systime;
+        elseif(systime - battlefieldData.reportedAt > battlefieldData.reportInterval) then
+            Logger:Info("New Instance would be ", battlefieldName, " ", estimate);
+            battlefieldData.reportedAt = systime;
+        end
+    end
+
+    -- Save Battlefield Instances Data
+    battlefieldData.indexMap = indexMap;
+    battlefieldData.exist = exist;
+    battlefieldData.estimate = estimate;
 end
 
 EventRegistry:RegisterFrameEventAndCallback("BATTLEFIELDS_SHOW", OnBattlefieldsShow);

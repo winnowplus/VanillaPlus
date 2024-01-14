@@ -16,7 +16,6 @@ Namespace.CallbackRegistryMixin = CallbackRegistryMixin;
 
 local function GenerateInternalOwner()
 	INTERNAL_OWNER_COUNT = INTERNAL_OWNER_COUNT + 1;
-	
 	return string.format(INTERNAL_OWNER_FORMAT, INTERNAL_OWNER_COUNT);
 end
 

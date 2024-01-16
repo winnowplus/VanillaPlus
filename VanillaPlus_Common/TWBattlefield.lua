@@ -165,13 +165,13 @@ end
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function OnBattlefieldsShow()
-    -- Set Base Time
-    local systime = time();
-    battlefieldData.baseTime = battlefieldData.baseTime or systime;
-
     -- Get Battlefield Info
     local battlefieldName = GetBattlefieldInfo();
     local battlefieldData = GetBattlefieldData(battlefieldName);
+
+    -- Set Base Time
+    local systime = time();
+    battlefieldData.baseTime = battlefieldData.baseTime or systime;
 
     -- Iterate Battlefield Instances
     local numInstances = GetNumBattlefields();

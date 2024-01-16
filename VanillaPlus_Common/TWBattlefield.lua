@@ -180,7 +180,7 @@ local function OnBattlefieldsShow()
     for instanceIndex = 1, numInstances do
         local expectID = instanceIndex + offset;
         local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
-        local instanceTime = battlefieldData.exist[instanceID
+        local instanceTime = battlefieldData.exist[instanceID];
 
         if(instanceTime == nil) then
             instanceTime = systime;

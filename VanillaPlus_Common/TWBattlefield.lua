@@ -186,7 +186,7 @@ local function OnBattlefieldsShow()
             instanceTime = systime;
 
             if(instanceTime ~= battlefieldData.baseTime) then
-                Logger:Info(RED_FONT_COLOR_CODE, battlefieldName, " ", instanceID, " occurred at ", instanceTime, ".");
+                Logger:Info(RED_FONT_COLOR_CODE, battlefieldName, " ", instanceID, " occurred at ", date("%H:%M:%S", instanceTime), ".");
             end
         end
         

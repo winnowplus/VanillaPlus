@@ -165,18 +165,30 @@ end
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function OnBattlefieldsShow()
+    -- Set Base Time
+    local systime = time();
+    battlefieldData.baseTime = battlefieldData.baseTime or systime;
+
+    -- Get Battlefield Info
     local battlefieldName = GetBattlefieldInfo();
     local battlefieldData = GetBattlefieldData(battlefieldName);
 
     -- Iterate Battlefield Instances
-    local systime = time();
     local numInstances = GetNumBattlefields();
     local indexMap, exist, miss, offset = {}, {}, {}, 0;
 
     for instanceIndex = 1, numInstances do
         local expectID = instanceIndex + offset;
         local instanceID = GetBattlefieldInstanceInfo(instanceIndex);
-        local instanceTime = battlefieldData.exist[instanceID] or systime;
+        local instanceTime = battlefieldData.exist[instanceID
+
+        if(instanceTime == nil) then
+            instanceTime = systime;
+
+            if(instanceTime ~= battlefieldData.baseTime) then
+                Logger:Info(RED_FONT_COLOR_CODE, battlefieldName, " ", instanceID, " occurred at ", instanceTime, ".");
+            end
+        end
         
         indexMap[instanceID] = instanceIndex;
         exist[instanceID] = instanceTime;
@@ -204,21 +216,15 @@ local function OnBattlefieldsShow()
     local estimate = table.concat(miss, ", ") .. "...";
 
     -- Report
-    if(battlefieldData.report) then
-        if(estimate ~= battlefieldData.estimate) then
-            Logger:Info("New Instance would be ", battlefieldName, " ", RED_FONT_COLOR_CODE, estimate);
-            battlefieldData.reportedAt = systime;
-        elseif(systime - battlefieldData.reportedAt > battlefieldData.reportInterval) then
-            Logger:Info("New Instance would be ", battlefieldName, " ", estimate);
-            battlefieldData.reportedAt = systime;
-        end
+    if(battlefieldData.report and (estimate ~= battlefieldData.estimate or systime - battlefieldData.reportedAt > battlefieldData.reportInterval)) then
+        Logger:Info("New Instance would be ", battlefieldName, " ", estimate);
+        battlefieldData.reportedAt = systime;
     end
 
     -- Save Battlefield Instances Data
     battlefieldData.indexMap = indexMap;
     battlefieldData.exist = exist;
     battlefieldData.estimate = estimate;
-    battlefieldData.baseTime = battlefieldData.baseTime or systime;
 end
 
 EventRegistry:RegisterFrameEventAndCallback("BATTLEFIELDS_SHOW", OnBattlefieldsShow);

@@ -25,7 +25,8 @@ local function GetBattlefieldData(battlefieldName)
     if(type(battlefieldData) ~= "table") then
         battlefieldData = {
             indexMap = {},
-            exist   = {},
+            exist = {},
+            expect = {},
             estimate = "",
             report = false,
             reportInterval = 10,
@@ -186,7 +187,8 @@ local function OnBattlefieldsShow()
             instanceTime = systime;
 
             if(instanceTime ~= battlefieldData.baseTime) then
-                Logger:Info(RED_FONT_COLOR_CODE, battlefieldName, " ", instanceID, " occurred at ", date("%H:%M:%S", instanceTime), ".");
+                local color = battlefieldData.expect[instanceID] and battlefieldData.expect[instanceID] > systime - 100 and RED_FONT_COLOR_CODE or "";
+                Logger:Info(color, battlefieldName, " ", instanceID, " occurred at ", date("%H:%M:%S", instanceTime), ".");
             end
         end
         
@@ -205,6 +207,7 @@ local function OnBattlefieldsShow()
         -- Collect MissID
         if(expectID < instanceID) then
             for missID = expectID, instanceID - 1 do
+                battlefieldData.expect[missID] = systime;
                 table.insert(miss, missID);
                 offset = offset + 1;
             end
@@ -212,6 +215,7 @@ local function OnBattlefieldsShow()
     end
 
     local lastMissID = numInstances + offset + 1;
+    battlefieldData.expect[lastMissID] = systime;
     table.insert(miss, lastMissID);
     local estimate = table.concat(miss, ", ") .. "...";
 

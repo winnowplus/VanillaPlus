@@ -196,13 +196,13 @@ local function OnBattlefieldsShow()
         exist[instanceID] = instanceTime;
 
         -- Update BattlefieldZone Text
-        if(battlefieldData.baseTime and instanceTime > battlefieldData.baseTime) then
-            local instanceButton = _G["BattlefieldZone" .. tostring(instanceIndex + 1)];
+        --if(battlefieldData.baseTime and instanceTime > battlefieldData.baseTime) then
+            --local instanceButton = _G["BattlefieldZone" .. tostring(instanceIndex + 1)];
 
-            if(instanceButton) then
-                instanceButton:SetText(string.format("%s %d (%s)", battlefieldName, instanceID, date("%H:%M:%S", instanceTime)));
-            end
-        end
+            --if(instanceButton) then
+                --instanceButton:SetText(string.format("%s %d (%s)", battlefieldName, instanceID, date("%H:%M:%S", instanceTime)));
+            --end
+        --end
 
         -- Collect MissID
         if(expectID < instanceID) then

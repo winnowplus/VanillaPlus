@@ -1,7 +1,6 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace				    = VanillaPlus;
-local EQUALS 					= Namespace.Predicates.EQUALS;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -21,7 +20,7 @@ local function GenerateInternalOwner()
 end
 
 local function IsInternalOwner(owner)
-	return type(owner) == "string" and EQUALS(owner, string.match(owner, INTERNAL_OWNER_PATTERN));
+	return type(owner) == "string" and owner == string.match(owner, INTERNAL_OWNER_PATTERN);
 end
 
 function CallbackRegistryMixin:Init()

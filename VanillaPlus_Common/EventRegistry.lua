@@ -1,9 +1,9 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace				= VanillaPlus;
-local CallbackRegistryMixin = Namespace.CallbackRegistryMixin;
 local CreateFromMixins      = Namespace.CreateFromMixins;
 local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
+local CallbackRegistryMixin = Namespace.CallbackRegistryMixin;
 
 local GetTime               = GetTime;
 

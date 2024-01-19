@@ -12,11 +12,12 @@
 
 	<Script file="VanillaPlus_Common.lua"/>
 
-	<Include file = "mixin\Mixin.lua/>
-	<Script file="Predicates.lua"/>
-	<Script file="Log.lua"/>
+	<Script file="Mixin.lua"/>
 	<Script file="CallbackRegistry.lua"/>
 	<Script file="EventRegistry.lua"/>
+	
+	<Script file="Predicates.lua"/>
+	<Script file="Log.lua"/>
 
 	<Script file="TWBattlefield.lua"/>
 </Ui>

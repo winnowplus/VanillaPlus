@@ -62,7 +62,7 @@ function Namespace.GetBattlefieldStatusByName(battlefieldShortName)
     for index = 1, MAX_BATTLEFIELD_QUEUES do
         local status, battlefieldName, instanceID = GetBattlefieldStatus(index);
 
-        if(STRING_CONTAINS(battlefieldName, battlefieldShortName)) then
+        if(battlefieldName and STRING_CONTAINS(battlefieldName, battlefieldShortName)) then
             return index, status, battlefieldName, instanceID;
         end
     end

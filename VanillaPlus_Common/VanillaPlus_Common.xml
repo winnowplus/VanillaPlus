@@ -12,7 +12,7 @@
 
 	<Script file="VanillaPlus_Common.lua"/>
 
-	<Script file="mixin\Mixin.lua"/>
+	<Script file="..\mixin\Mixin.lua"/>
 	<Script file="Predicates.lua"/>
 	<Script file="Log.lua"/>
 	<Script file="CallbackRegistry.lua"/>

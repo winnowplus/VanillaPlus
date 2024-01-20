@@ -186,7 +186,7 @@ local function OnBattlefieldsShow()
         if(instanceTime == nil) then
             instanceTime = systime;
 
-            if(instanceTime ~= battlefieldData.baseTime) then
+            if(battlefieldData.report and instanceTime ~= battlefieldData.baseTime) then
                 local color = battlefieldData.expect[instanceID] and battlefieldData.expect[instanceID] > systime - 100 and RED_FONT_COLOR_CODE or "";
                 Logger:Info(color, battlefieldName, " ", instanceID, " occurred at ", date("%H:%M:%S", instanceTime), ".");
             end

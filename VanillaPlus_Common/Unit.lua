@@ -78,7 +78,7 @@ Namespace.GetUnitBuff = PrivateGetUnitBuff;
 Namespace.GetUnitDebuff = PrivateGetUnitDebuff;
 
 function Namespace.FindPlayerAura(filter, predicate, ...)
-    assert(type(unit) == "string", "Illegal unit: " .. tostring(unit) .. ", a string is required.");
+    assert(type(filter) == "string", "Illegal filter: " .. tostring(filter) .. ", a string is required.");
 	assert(type(predicate) == "function", "Illegal predicate: " .. tostring(predicate) .. ", a function is required.");
 
     local slot, aura = 0, nil;
@@ -94,7 +94,7 @@ function Namespace.FindPlayerAura(filter, predicate, ...)
 end
 
 function Namespace.ListPlayerAura(filter, predicate, ...)
-    assert(type(unit) == "string", "Illegal unit: " .. tostring(unit) .. ", a string is required.");
+    assert(type(filter) == "string", "Illegal filter: " .. tostring(filter) .. ", a string is required.");
 	assert(type(predicate) == "function", "Illegal predicate: " .. tostring(predicate) .. ", a function is required.");
 
     local result, slot, aura = {}, 0, nil;

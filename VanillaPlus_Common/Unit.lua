@@ -31,7 +31,7 @@ local function PrivateGetPlayerAura(slot, filter)
         icon        = GetPlayerBuffTexture(auraIndex),
         count       = GetPlayerBuffApplications(auraIndex),
         dispelType  = GetPlayerBuffDispelType(auraIndex),
-        timeLeft    = untilCancelled and math.huge or GetPlayerBuffTimeLeft(auraIndex),
+        timeLeft    = GetPlayerBuffTimeLeft(auraIndex) or math.huge,
         index       = auraIndex
     };
 end

@@ -22,3 +22,11 @@
   - Logger:Info(...) - Output info message.
   - Logger:Warn(...) - Output warn message.
   - Logger:Error(...) - Output error message.
+
+## EventRegistry
+
+- VanillaPlus.EventRegistry:RegisterCallback(event, func, owner) - Register callback for customize event.
+- VanillaPlus.EventRegistry:RegisterFrameEventAndCallback(frameEvent, func, owner) - Register callback for WoW frame event.
+- VanillaPlus.EventRegistry:UnregisterCallback(event, owner) - Unregister callback for customize event.
+- VanillaPlus.EventRegistry:UnregisterFrameEventAndCallback(frameEvent, owner) - Unregister callback for WoW frame event.
+- VanillaPlus.EventRegistry:TriggerEvent(event, ...) - Trigger customize event.

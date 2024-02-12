@@ -30,3 +30,15 @@
 - VanillaPlus.EventRegistry:UnregisterCallback(event, owner) - Unregister callback for customize event.
 - VanillaPlus.EventRegistry:UnregisterFrameEventAndCallback(frameEvent, owner) - Unregister callback for WoW frame event.
 - VanillaPlus.EventRegistry:TriggerEvent(event, ...) - Trigger customize event.
+
+## Unit
+
+- VanillaPlus.GetPlayerAura(slot, filter) - Get player's aura by given slot and filter.
+- VanillaPlus.FindPlayerAura(filter, predicate, ...) - Find player's aura by given filter and predicate.
+- VanillaPlus.ListPlayerAura(filter, predicate, ...) - List player's aura by given filter and predicate.
+- VanillaPlus.GetUnitBuff(unit, slot) - Get buff by given unit and slot.
+- VanillaPlus.FindUnitBuff(unit, predicate, ...) - Find buff by given unit and predicate.
+- VanillaPlus.ListUnitBuff(unit, predicate, ...) - List buff by given unit and predicate.
+- VanillaPlus.GetUnitDebuff(unit, slot) - Get debuff by given unit and slot.
+- VanillaPlus.FindUnitDebuff(unit, predicate, ...) - Find debuff by given unit and predicate.
+- VanillaPlus.ListUnitDebuff(unit, predicate, ...) - List debuff by given unit and predicate.

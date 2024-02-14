@@ -9,8 +9,6 @@ local GetSpellName      = GetSpellName;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local SPELL_NAME_FORMAT	= "%s (" .. LEVEL .. " %d)";
-
 local SPELL_CACHE       = nil;
 local PET_SPELL_CACHE   = nil;
 
@@ -23,14 +21,15 @@ local function GetSpellCahce()
         for tabIndex = GetNumSpellTabs(), 1, -1 do
             local _, _, offset, numSpells = GetSpellTabInfo(tabIndex);
 
-            for spellSlot = offset + numSpells, offset + 1, -1 do
-                local spellName, spellRank = GetSpellName(spellSlot, BOOKTYPE_SPELL);
+            for slot = offset + numSpells, offset + 1, -1 do
+                local name, rank = GetSpellName(slot, BOOKTYPE_SPELL);
 
-                if(spellName ~= nil) then
-                    local spell = {name = spellName, rank = spellRank, fullname = spellName .. "(" .. spellRank .. ")", slot = spellSlot, bookType = BOOKTYPE_SPELL};
+                if(name ~= nil) then
+                    local fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
+                    local spell = {name = name, rank = rank, fullname = fullname, slot = slot, bookType = BOOKTYPE_SPELL};
 
-                    SPELL_CACHE[spell.fullname] = spell;
-                    SPELL_CACHE[spell.name] = SPELL_CACHE[spell.name] or spell;
+                    SPELL_CACHE[fullname] = spell;
+                    SPELL_CACHE[name] = SPELL_CACHE[name] or spell;
                 end
             end
         end

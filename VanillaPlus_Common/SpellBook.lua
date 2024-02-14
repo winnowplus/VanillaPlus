@@ -17,26 +17,26 @@ local PET_SPELL_CACHE   = nil;
 -------------------------------------------------  Functions  -------------------------------------------------
 
 local function GetSpellCahce()
-    if(SPELL_CACHE ~= nil) then
-        return SPELL_CACHE;
-    end
+    if(SPELL_CACHE == nil) then
+        SPELL_CACHE = {};
 
-    SPELL_CACHE = {};
+        for tabIndex = GetNumSpellTabs(), 1, -1 do
+            local _, _, offset, numSpells = GetSpellTabInfo(tabIndex);
 
-    for tabIndex = GetNumSpellTabs(), 1, -1 do
-        local _, _, offset, numSpells = GetSpellTabInfo(tabIndex);
+            for spellSlot = offset + numSpells, offset + 1, -1 do
+                local spellName, spellRank = GetSpellName(spellSlot, BOOKTYPE_SPELL);
 
-        for spellSlot = offset + numSpells, offset + 1, -1 do
-            local spellName, spellRank = GetSpellName(spellSlot, BOOKTYPE_SPELL);
+                if(spellName ~= nil) then
+                    local spell = {name = spellName, rank = spellRank, fullname = spellName .. "(" .. spellRank .. ")", slot = spellSlot, bookType = BOOKTYPE_SPELL};
 
-            if(spellName ~= nil) then
-                local spell = {name = spellName, rank = spellRank, fullname = spellName .. "(" .. spellRank .. ")", slot = spellSlot, bookType = BOOKTYPE_SPELL};
-
-                SPELL_CACHE[spell.fullname] = spell;
-                SPELL_CACHE[spell.name] = SPELL_CACHE[spell.name] or spell;
+                    SPELL_CACHE[spell.fullname] = spell;
+                    SPELL_CACHE[spell.name] = SPELL_CACHE[spell.name] or spell;
+                end
             end
         end
     end
+
+    return SPELL_CACHE;
 end
 
 function Namespace.GetSpellSlot(fullname)

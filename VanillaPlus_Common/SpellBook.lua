@@ -32,8 +32,8 @@ local function GetSpellCahce()
             if(spellName ~= nil) then
                 local spell = {name = spellName, rank = spellRank, fullname = spellName .. "(" .. spellRank .. ")", slot = spellSlot, bookType = BOOKTYPE_SPELL};
 
-                SPELL_CACHE[fullname] = spell;
-                SPELL_CACHE[name] = SPELL_CACHE[name] or spell;
+                SPELL_CACHE[spell.fullname] = spell;
+                SPELL_CACHE[spell.name] = SPELL_CACHE[spell.name] or spell;
             end
         end
     end

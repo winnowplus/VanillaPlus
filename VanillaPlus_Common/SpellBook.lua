@@ -38,6 +38,16 @@ local function GetSpellCahce()
     return SPELL_CACHE;
 end
 
+local function GetPetSpellCahce()
+    if(PET_SPELL_CACHE == nil) then
+        PET_SPELL_CACHE = {};
+
+        --TODO
+    end
+
+    return PET_SPELL_CACHE;
+end
+
 function Namespace.GetSpellSlot(fullname)
     local spell = GetSpellCahce()[fullname];
 
@@ -46,9 +56,11 @@ function Namespace.GetSpellSlot(fullname)
     end
 end
 
-function Namespace.ListSpells()
-    for key, value in pairs(GetSpellCahce()) do
-        DEFAULT_CHAT_FRAME:AddMessage(key .. ": " .. tostring(value.slot));
+function Namespace.GetPetSpellSlot(fullname)
+    local spell = GetPetSpellCahce()[fullname];
+
+    if(spell ~= nil) then
+        return spell.slot, spell.bookType;
     end
 end
 
@@ -56,6 +68,10 @@ end
 
 local function CleanSpellCahce()
     SPELL_CACHE = nil;
+end
+
+local function CleanPetSpellCahce()
+    PET_SPELL_CACHE = nil;
 end
 
 EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", CleanSpellCahce);

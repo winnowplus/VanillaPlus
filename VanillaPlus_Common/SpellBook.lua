@@ -46,6 +46,12 @@ function Namespace.GetSpellSlot(fullname)
     end
 end
 
+function Namespace.ListSpells()
+    for key, value in pairs(GetSpellCahce()) do
+        DEFAULT_CHAT_FRAME:AddMessage(key .. ": " .. tostring(value.slot));
+    end
+end
+
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function CleanSpellCahce()

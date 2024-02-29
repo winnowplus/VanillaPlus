@@ -17,7 +17,7 @@
 
 ## Log
 
-- VanillaPlus.GetLogger(name, level) - Return a Logger with specific name (string) and level (number).
+- VanillaPlus.GetLogger(name, level) - Return a Logger with specific name (string) and level (0: DEBUG, 1: INFO, 2: WARN, 3: ERROR).
   - Logger:Debug(...) - Output debug message.
   - Logger:Info(...) - Output info message.
   - Logger:Warn(...) - Output warn message.
@@ -30,6 +30,12 @@
 - VanillaPlus.EventRegistry:UnregisterCallback(event, owner) - Unregister callback for customize event.
 - VanillaPlus.EventRegistry:UnregisterFrameEventAndCallback(frameEvent, owner) - Unregister callback for WoW frame event.
 - VanillaPlus.EventRegistry:TriggerEvent(event, ...) - Trigger customize event.
+
+## Spell
+
+- VanillaPlus.GetPlayerSpellSlot(spellName) - Return slot, bookType by given player spell name.
+- VanillaPlus.GetPetSpellSlot(spellName) - Return slot, bookType by given pet spell name.
+- VanillaPlus.GetSpellSlot(spellName) - Return slot, bookType by given spell name.
 
 ## Unit
 

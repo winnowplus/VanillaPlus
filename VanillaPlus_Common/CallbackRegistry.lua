@@ -9,7 +9,7 @@ local INTERNAL_OWNER_FORMAT		= "VP_INTERNAL_CALLBACK_OWNER_%d";
 local INTERNAL_OWNER_PATTERN	= "VP_INTERNAL_CALLBACK_OWNER_%d+";
 
 local CallbackRegistryMixin     = {};
-Namespace.CallbackRegistryMixin = CallbackRegistryMixin;
+Namespace.CallbackRegistryMixin	= CallbackRegistryMixin;
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
@@ -51,19 +51,20 @@ function CallbackRegistryMixin:UnregisterCallback(event, owner)
 	assert(type(event) == "string", "Illegal event: " .. tostring(event) .. ", a string is required.");
 	assert(owner ~= nil, "Illegal owner: " .. tostring(owner) .. ".");
 
-	if(self.callbackTable[event]) then
-		if(self.callbackTable[event][owner] ~= nil) then
-			self.callbackCount[event] = self.callbackCount[event] - 1;
-		end
-
+	if(self.callbackTable[event] ~= nil and self.callbackTable[event][owner] ~= nil) then
 		self.callbackTable[event][owner] = nil;
+		self.callbackCount[event] = self.callbackCount[event] - 1;
+
+		if(self.callbackCount[event] == 0) then
+			self.callbackTable[event] = nil;
+		end
 	end
 end
 
 function CallbackRegistryMixin:TriggerEvent(event, ...)
 	assert(type(event) == "string", "Illegal event: " .. tostring(event) .. ", a string is required.");
 
-	if(self.callbackTable[event]) then
+	if(self.callbackTable[event] ~= nil) then
 		for owner, func in pairs(self.callbackTable[event]) do
 			if(IsInternalOwner(owner)) then
 				func(unpack(arg));

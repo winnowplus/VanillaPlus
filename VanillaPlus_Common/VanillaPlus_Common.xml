@@ -18,8 +18,10 @@
 	<Script file="CallbackRegistry.lua"/>
 	<Script file="EventRegistry.lua"/>
 
+	<Script file="Spell.lua"/>
 	<Script file="Unit.lua"/>
-	<Script file="SpellBook.lua"/>
+
+	<Script file="VanillaPlus_Common_Test.lua"/>
 
 	<Script file="TWBattlefield.lua"/>
 </Ui>

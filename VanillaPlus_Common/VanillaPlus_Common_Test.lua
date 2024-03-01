@@ -2,8 +2,11 @@
 
 local Namespace     = VanillaPlus;
 local Predicates    = Namespace.Predicates;
+local GetLogger     = Namespace.GetLogger;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
+
+local Logger        = GetLogger();
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
@@ -58,6 +61,6 @@ function Namespace.TestSpell()
 end
 
 function Namespace.TestCommon()
-    Namespace.TestPredicates();
-    Namespace.TestSpell();
+    Namespace.TestPredicates(); Logger:INfo("TestPredicates Pass");
+    Namespace.TestSpell();      Logger:INfo("TestSpell Pass");
 end

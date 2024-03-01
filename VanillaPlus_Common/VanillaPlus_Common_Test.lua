@@ -61,6 +61,6 @@ function Namespace.TestSpell()
 end
 
 function Namespace.TestCommon()
-    Namespace.TestPredicates(); Logger:INfo("TestPredicates Pass");
-    Namespace.TestSpell();      Logger:INfo("TestSpell Pass");
+    Namespace.TestPredicates(); Logger:Info("TestPredicates Pass");
+    Namespace.TestSpell();      Logger:Info("TestSpell Pass");
 end

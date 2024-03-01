@@ -23,7 +23,7 @@ function Namespace.TestPredicates()
     assert(not Predicates.AURA_NAME_CONTAINS(aura, notsubstr));
 end
 
-local function TestGetSpellSlot(bookType)
+local function TestGetSpell(bookType)
     local slot, name, rank, fullName, lastName = 0, nil, nil, nil, nil;
 
     repeat
@@ -31,30 +31,30 @@ local function TestGetSpellSlot(bookType)
         name, rank = GetSpellName(slot, bookType);
 
         if(lastName ~= nil and lastName ~= name) then
-            local name_slot, name_bookType = Namespace.GetPlayerSpellSlot(lastName);
-            local name_slot1, name_bookType1 = Namespace.GetSpellSlot(lastName);
-            assert(name_slot == slot);
-            assert(name_bookType == bookType);
-            assert(name_slot1 == slot);
-            assert(name_bookType1 == bookType);
+            local spell = bookType == BOOKTYPE_SPELL and Namespace.GetPlayerSpell(lastName) or Namespace.GetPetSpell(lastName);
+            local spell1 = Namespace.GetSpell(lastName);
+
+            assert(spell ~= nil and spell.name == lastName and spell.slot == slot - 1 and spell.bookType == bookType);
+            assert(spell1 ~= nil and spell1.name == lastName and spell1.slot == slot - 1 and spell1.bookType == bookType);
         end
 
         if(name ~= nil) then
             fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
 
-            local fullname_slot, fullname_bookType = Namespace.GetPlayerSpellSlot(fullname);
-            local fullname_slot1, fullname_bookType1 = Namespace.GetSpellSlot(fullname);
-            assert(fullname_slot == slot);
-            assert(fullname_bookType == bookType);
-            assert(fullname_slot1 == slot);
-            assert(fullname_bookType1 == bookType);
+            local spell = bookType == BOOKTYPE_SPELL and Namespace.GetPlayerSpell(fullname) or Namespace.GetPetSpell(fullname);
+            local spell1 = Namespace.GetSpell(fullname);
+
+            assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname and spell.slot == slot and spell.bookType == bookType);
+            assert(spell1 ~= nil and spell1.name == name and spell1.rank == rank and spell1.fullname == fullname and spell1.slot == slot and spell1.bookType == bookType);
+
+            lastName = name;
         end
     until(name == nil)
 end
 
 function Namespace.TestSpell()
-    TestGetSpellSlot(BOOKTYPE_SPELL);
-    TestGetSpellSlot(BOOKTYPE_PET);
+    TestGetSpell(BOOKTYPE_SPELL);
+    TestGetSpell(BOOKTYPE_PET);
 end
 
 function Namespace.TestCommon()

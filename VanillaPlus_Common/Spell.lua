@@ -59,28 +59,16 @@ local function GetPetSpellCahce()
     return PET_SPELL_CACHE;
 end
 
-function Namespace.GetPlayerSpellSlot(spellName)
-    local spell = GetPlayerSpellCahce()[spellName];
-
-    if(spell ~= nil) then
-        return spell.slot, spell.bookType;
-    end
+function Namespace.GetPlayerSpell(spellName)
+    return GetPlayerSpellCahce()[spellName];
 end
 
-function Namespace.GetPetSpellSlot(spellName)
-    local spell = GetPetSpellCahce()[spellName];
-
-    if(spell ~= nil) then
-        return spell.slot, spell.bookType;
-    end
+function Namespace.GetPetSpell(spellName)
+    return GetPetSpellCahce()[spellName];
 end
 
-function Namespace.GetSpellSlot(spellName)
-    local spell = GetPlayerSpellCahce()[spellName] or GetPetSpellCahce()[spellName];
-
-    if(spell ~= nil) then
-        return spell.slot, spell.bookType;
-    end
+function Namespace.GetSpell(spellName)
+    return GetPlayerSpellCahce()[spellName] or GetPetSpellCahce()[spellName];
 end
 
 ----------------------------------------------  Event Callbacks  ----------------------------------------------

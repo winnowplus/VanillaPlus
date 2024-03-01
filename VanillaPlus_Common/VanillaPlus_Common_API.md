@@ -33,9 +33,9 @@
 
 ## Spell
 
-- VanillaPlus.GetPlayerSpellSlot(spellName) - Return slot, bookType by given player spell name.
-- VanillaPlus.GetPetSpellSlot(spellName) - Return slot, bookType by given pet spell name.
-- VanillaPlus.GetSpellSlot(spellName) - Return slot, bookType by given spell name.
+- VanillaPlus.GetPlayerSpell(spellName) - Return spell by given player spell name.
+- VanillaPlus.GetPetSpell(spellName) - Return spell by given pet spell name.
+- VanillaPlus.GetSpell(spellName) - Return spell by given spell name.
 
 ## Unit
 

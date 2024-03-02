@@ -10,7 +10,7 @@ local GetSpellTabInfo   = GetSpellTabInfo;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local Logger            = GetLogger();
+local Logger            = GetLogger(nil, 0);
 local PLAYER_SPELL_CACHE= nil;
 local PET_SPELL_CACHE   = nil;
 

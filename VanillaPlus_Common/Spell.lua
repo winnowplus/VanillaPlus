@@ -77,7 +77,7 @@ end
 
 local function ON_LEARNED_SPELL_IN_TAB()
     Logger:Debug("LEARNED_SPELL_IN_TAB ", arg1);
-    
+
     PLAYER_SPELL_CACHE = nil;
 end
 
@@ -85,4 +85,4 @@ local function CleanPetSpellCahce()
     PET_SPELL_CACHE = nil;
 end
 
-EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", OnLearnedSpellInTab);
+EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", ON_LEARNED_SPELL_IN_TAB);

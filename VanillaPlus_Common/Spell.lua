@@ -1,6 +1,7 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace         = VanillaPlus;
+local GetLogger         = Namespace.GetLogger;
 local EventRegistry     = Namespace.EventRegistry;
 
 local GetSpellName      = GetSpellName;
@@ -9,6 +10,7 @@ local GetSpellTabInfo   = GetSpellTabInfo;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
+local Logger            = GetLogger();
 local PLAYER_SPELL_CACHE= nil;
 local PET_SPELL_CACHE   = nil;
 
@@ -73,7 +75,9 @@ end
 
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
-local function CleanPlayerSpellCahce()
+local function ON_LEARNED_SPELL_IN_TAB()
+    Logger:Debug("LEARNED_SPELL_IN_TAB ", arg1);
+    
     PLAYER_SPELL_CACHE = nil;
 end
 
@@ -81,5 +85,4 @@ local function CleanPetSpellCahce()
     PET_SPELL_CACHE = nil;
 end
 
-EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", CleanPlayerSpellCahce);
---EventRegistry:RegisterFrameEventAndCallback("SPELLS_CHANGED", TestSpellChange);
+EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", OnLearnedSpellInTab);

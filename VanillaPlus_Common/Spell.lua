@@ -17,7 +17,7 @@ local GetTime                   = GetTime;
 
 local Logger                    = GetLogger("VanillaPlus", 0);
 local SpellMixin		        = {};
-local SPELL_CACHE               = nil;
+local SPELL_CACHE               = {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
 

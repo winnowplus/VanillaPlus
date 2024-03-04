@@ -25,13 +25,13 @@ function SpellMixin:Init(slot, bookType)
     self.slot, self.bookType = slot, bookType;
     self.name, self.rank = GetSpellName(slot, bookType);
 
-    Logger:Debug("SpellMixin ", self.name, self.rank);
-
     if(self.name ~= nil) then
         self.fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
-
+        
         SPELL_CACHE[bookType][self.fullname] = self;
         SPELL_CACHE[bookType][self.name] = self;
+
+        Logger:Debug("Add ", bookType, " ", self.fullname);
     end
 end
 

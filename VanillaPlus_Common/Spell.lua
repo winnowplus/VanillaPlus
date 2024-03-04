@@ -22,16 +22,13 @@ local SPELL_CACHE               = {};
 -------------------------------------------------  Functions  -------------------------------------------------
 
 function SpellMixin:Init(slot, bookType)
-    self.slot, self.bookType = slot, bookType;
-    self.name, self.rank = GetSpellName(slot, bookType);
+    self.slot, self.bookType, self.name, self.rank = slot, bookType, GetSpellName(slot, bookType);
 
     if(self.name ~= nil) then
         self.fullname = (self.rank == nil or self.rank == "") and self.name or self.name .. "(" .. self.rank .. ")";
 
         SPELL_CACHE[bookType][self.fullname] = self;
         SPELL_CACHE[bookType][self.name] = self;
-
-        Logger:Debug("Add ", bookType, " ", self.fullname);
     end
 end
 

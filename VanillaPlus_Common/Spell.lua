@@ -44,7 +44,11 @@ function SpellMixin:GetCooldown(uptime)
     local start, duration, enabled = GetSpellCooldown(self.slot, self.bookType);
     uptime = uptime or GetTime();
 
-    return duration ~= 0 and start + duration - uptime or 0, duration, enabled == 0;
+    if(duration == 0) then
+        return 0, duration, enabled == 0;
+    else
+        return math.max(start + duration - uptime, 0), duration, enabled == 0;
+    end
 end
 
 local function GetPlayerSpellCahce()

@@ -1,8 +1,13 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace     = VanillaPlus;
-local Predicates    = Namespace.Predicates;
 local GetLogger     = Namespace.GetLogger;
+
+local Predicates    = Namespace.Predicates;
+
+local GetPlayerSpell= Namespace.GetPlayerSpell;
+local GetPetSpell   = Namespace.GetPetSpell;
+local GetSpell      = Namespace.GetSpell;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -27,6 +32,16 @@ function Namespace.TestPredicates()
 end
 
 local function TestGetSpell(bookType)
+    local spellFunc;
+
+    if(bookType == BOOKTYPE_SPELL) then
+        spellFunc = GetPlayerSpell;
+    elseif(bookType == BOOKTYPE_PET) then
+        spellFunc = GetSpell;
+    else
+        Logger:Error("Illegal bookType: ", bookType, ".");
+    end
+
     local slot, name, rank, fullName, lastName = 0, nil, nil, nil, nil;
 
     repeat
@@ -34,8 +49,8 @@ local function TestGetSpell(bookType)
         name, rank = GetSpellName(slot, bookType);
 
         if(lastName ~= nil and lastName ~= name) then
-            local spell = bookType == BOOKTYPE_SPELL and Namespace.GetPlayerSpell(lastName) or Namespace.GetPetSpell(lastName);
-            local spell1 = Namespace.GetSpell(lastName);
+            local spell = spellFunc(lastName);
+            local spell1 = GetSpell(lastName);
 
             assert(spell ~= nil and spell.name == lastName and spell.slot == slot - 1 and spell.bookType == bookType);
             assert(spell1 ~= nil and spell1.name == lastName and spell1.slot == slot - 1 and spell1.bookType == bookType);
@@ -44,8 +59,8 @@ local function TestGetSpell(bookType)
         if(name ~= nil) then
             fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
 
-            local spell = bookType == BOOKTYPE_SPELL and Namespace.GetPlayerSpell(fullname) or Namespace.GetPetSpell(fullname);
-            local spell1 = Namespace.GetSpell(fullname);
+            local spell = spellFunc(fullname);
+            local spell1 = GetSpell(fullname);
 
             assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname and spell.slot == slot and spell.bookType == bookType);
             assert(spell1 ~= nil and spell1.name == name and spell1.rank == rank and spell1.fullname == fullname and spell1.slot == slot and spell1.bookType == bookType);

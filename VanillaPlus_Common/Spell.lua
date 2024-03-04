@@ -1,64 +1,85 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
-local Namespace         = VanillaPlus;
-local GetLogger         = Namespace.GetLogger;
-local EventRegistry     = Namespace.EventRegistry;
+local Namespace                 = VanillaPlus;
+local GetLogger                 = Namespace.GetLogger;
+local CreateAndInitFromMixin    = Namespace.CreateAndInitFromMixin;
+local EventRegistry             = Namespace.EventRegistry;
 
-local GetSpellName      = GetSpellName;
-local GetNumSpellTabs   = GetNumSpellTabs;
-local GetSpellTabInfo   = GetSpellTabInfo;
+local GetSpellName              = GetSpellName;
+local GetSpellCooldown          = GetSpellCooldown;
+local GetNumSpellTabs           = GetNumSpellTabs;
+local GetSpellTabInfo           = GetSpellTabInfo;
+
+local GetTime                   = GetTime;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local Logger            = GetLogger(nil, 0);
-local PLAYER_SPELL_CACHE= nil;
-local PET_SPELL_CACHE   = nil;
+local Logger                    = GetLogger("VanillaPlus", 0);
+local SpellMixin		        = {};
+local SPELL_CACHE               = nil;
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
-local function CollectSpell(collection, slot, bookType)
-    local name, rank = GetSpellName(slot, bookType);
+function SpellMixin:Init(slot, bookType)
+    self.slot, self.bookType = slot, bookType;
+    self.name, self.rank = GetSpellName(slot, bookType);
 
-    if(name ~= nil) then
-        local fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
-        local spell = {name = name, rank = rank, fullname = fullname, slot = slot, bookType = bookType};
-        
-        collection[fullname] = spell;
-        collection[name] = spell;
+    if(self.name ~= nil) then
+        self.fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
 
-        return spell;
+        SPELL_CACHE[bookType][self.fullname] = self;
+        SPELL_CACHE[bookType][self.name] = self;
+    end
+end
+
+function SpellMixin:GetTexture()
+    if(self.texture == nil) then
+        self.texture = GetSpellTexture(self.slot, self.bookType);
+    end
+
+    return self.texture;
+end
+
+function SpellMixin:GetCooldown()
+    local start, duration, enabled = GetSpellCooldown(self.slot, self.bookType);
+
+    if(enabled == 0) then
+        return 0, true;
+    else
+        local rdySeconds = startTime == 0 and 0 or (start + duration - GetTime());
+        return rdySeconds, false;
     end
 end
 
 local function GetPlayerSpellCahce()
-    if(PLAYER_SPELL_CACHE == nil) then
-        PLAYER_SPELL_CACHE = {};
+    if(SPELL_CACHE[BOOKTYPE_SPELL] == nil) then
+        SPELL_CACHE[BOOKTYPE_SPELL] = {};
 
         for tabIndex = 1, GetNumSpellTabs() do
             local _, _, offset, numSpells = GetSpellTabInfo(tabIndex);
 
             for slot = offset + 1, offset + numSpells do
-                CollectSpell(PLAYER_SPELL_CACHE, slot, BOOKTYPE_SPELL);
+                CreateAndInitFromMixin(SpellMixin, slot, BOOKTYPE_SPELL);
             end
         end
     end
 
-    return PLAYER_SPELL_CACHE;
+    return SPELL_CACHE[BOOKTYPE_SPELL];
 end
 
 local function GetPetSpellCahce()
-    if(PET_SPELL_CACHE == nil) then
-        PET_SPELL_CACHE = {};
+    if(SPELL_CACHE[BOOKTYPE_PET] == nil) then
+        SPELL_CACHE[BOOKTYPE_PET] = {};
 
         local slot, spell = 0, nil;
 
         repeat
             slot = slot + 1;
-            spell = CollectSpell(PET_SPELL_CACHE, slot, BOOKTYPE_PET);
-        until(spell == nil)
+            spell = CreateAndInitFromMixin(SpellMixin, slot, BOOKTYPE_PET);
+        until(spell.name == nil)
     end
 
-    return PET_SPELL_CACHE;
+    return SPELL_CACHE[BOOKTYPE_PET];
 end
 
 function Namespace.GetPlayerSpell(spellName)
@@ -78,11 +99,11 @@ end
 local function ON_LEARNED_SPELL_IN_TAB()
     Logger:Debug("LEARNED_SPELL_IN_TAB ", arg1);
 
-    PLAYER_SPELL_CACHE = nil;
+    SPELL_CACHE[BOOKTYPE_SPELL] = nil;
 end
 
 local function CleanPetSpellCahce()
-    PET_SPELL_CACHE = nil;
+    SPELL_CACHE[BOOKTYPE_PET] = nil;
 end
 
 EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", ON_LEARNED_SPELL_IN_TAB);

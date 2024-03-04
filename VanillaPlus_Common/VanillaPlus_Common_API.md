@@ -12,8 +12,8 @@
 ## Mixin
 
 - VanillaPlus.Mixin(object, ...) - Mixin attributes from ... (one or more tables) to object (table).
-- VanillaPlus.CreateFromMixins(...) - Create a table from one or more mixins.
-- VanillaPlus.CreateAndInitFromMixin(mixin, ...) - Create a table from mixin, and then call its Init method with given parameters (...).
+- VanillaPlus.CreateFromMixins(...) - Create a table from ... (one or more mixins).
+- VanillaPlus.CreateAndInitFromMixin(mixin, ...) - Create a table from mixin, and then call its Init method with ... (zero or more parameters).
 
 ## Log
 
@@ -33,9 +33,12 @@
 
 ## Spell
 
-- VanillaPlus.GetPlayerSpell(spellName) - Return spell by given player spell name.
-- VanillaPlus.GetPetSpell(spellName) - Return spell by given pet spell name.
-- VanillaPlus.GetSpell(spellName) - Return spell by given spell name.
+- VanillaPlus.GetPlayerSpell(spellName) - Return Spell by given player spell name.
+  - A Spell has attributes: slot, bookType, name, rank, fullname.
+  - Spell:GetTexture() - Return the texture path of the Spell.
+  - Spell:GetCooldown() - Return cooldown (readySeconds and IsActive) of the Spell.
+- VanillaPlus.GetPetSpell(spellName) - Return Spell by given pet spell name.
+- VanillaPlus.GetSpell(spellName) - Return Spell by given spell name.
 
 ## Unit
 

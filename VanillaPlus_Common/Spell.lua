@@ -40,16 +40,11 @@ function SpellMixin:GetTexture()
     return self.texture;
 end
 
-function SpellMixin:GetCooldown()
+function SpellMixin:GetCooldown(uptime)
     local start, duration, enabled = GetSpellCooldown(self.slot, self.bookType);
+    uptime = uptime or GetTime();
 
-    if(enabled == 0) then
-        return 0, true;
-    elseif(start == 0) then
-        return 0, false;
-    else
-        return start + duration - GetTime(), false;
-    end
+    return duration ~= 0 and start + duration - uptime or 0, duration, enabled == 0;
 end
 
 local function GetPlayerSpellCahce()

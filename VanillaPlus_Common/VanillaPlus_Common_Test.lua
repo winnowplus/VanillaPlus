@@ -42,7 +42,7 @@ local function TestGetSpell(bookType)
         Logger:Error("Illegal bookType: ", bookType, ".");
     end
 
-    local slot, name, rank, fullName, lastName = 0, nil, nil, nil, nil;
+    local slot, name, rank, fullName, lastName = 0;
 
     repeat
         slot = slot + 1;
@@ -50,20 +50,28 @@ local function TestGetSpell(bookType)
 
         if(lastName ~= nil and lastName ~= name) then
             local spell = spellFunc(lastName);
-            local spell1 = GetSpell(lastName);
+            assert(spell ~= nil and spell.name == lastName);
+            assert(spell.slot == slot - 1 and spell.bookType == bookType);
+            assert(spell:GetTexture() == GetSpellTexture(slot - 1, bookType));
 
-            assert(spell ~= nil and spell.name == lastName and spell.slot == slot - 1 and spell.bookType == bookType);
-            assert(spell1 ~= nil and spell1.name == lastName and spell1.slot == slot - 1 and spell1.bookType == bookType);
+            spell = GetSpell(lastName);
+            assert(spell ~= nil and spell.name == lastName);
+            assert(spell.slot == slot - 1 and spell.bookType == bookType);
+            assert(spell:GetTexture() == GetSpellTexture(slot - 1, bookType));
         end
 
         if(name ~= nil) then
             fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
 
             local spell = spellFunc(fullname);
-            local spell1 = GetSpell(fullname);
+            assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname);
+            assert(spell.slot == slot and spell.bookType == bookType);
+            assert(spell:GetTexture() == GetSpellTexture(slot, bookType));
 
-            assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname and spell.slot == slot and spell.bookType == bookType);
-            assert(spell1 ~= nil and spell1.name == name and spell1.rank == rank and spell1.fullname == fullname and spell1.slot == slot and spell1.bookType == bookType);
+            spell = GetSpell(fullname);
+            assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname);
+            assert(spell.slot == slot and spell.bookType == bookType);
+            assert(spell:GetTexture() == GetSpellTexture(slot, bookType));
 
             lastName = name;
         end

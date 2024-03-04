@@ -45,9 +45,10 @@ function SpellMixin:GetCooldown()
 
     if(enabled == 0) then
         return 0, true;
+    elseif(startTime == 0) then
+        return 0, false;
     else
-        local rdySeconds = startTime == 0 and 0 or (start + duration - GetTime());
-        return rdySeconds, false;
+        return start + duration - GetTime(), false;
     end
 end
 

@@ -26,8 +26,8 @@ function SpellMixin:Init(slot, bookType)
     self.name, self.rank = GetSpellName(slot, bookType);
 
     if(self.name ~= nil) then
-        self.fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
-        
+        self.fullname = (self.rank == nil or self.rank == "") and self.name or self.name .. "(" .. self.rank .. ")";
+
         SPELL_CACHE[bookType][self.fullname] = self;
         SPELL_CACHE[bookType][self.name] = self;
 

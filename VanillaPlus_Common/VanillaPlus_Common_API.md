@@ -17,7 +17,7 @@
 
 ## Log
 
-- VanillaPlus.GetLogger(name, level) - Return a Logger with specific name (string) and level (number - 0: DEBUG, 1: INFO, 2: WARN, 3: ERROR).
+- VanillaPlus.GetLogger(name, level) - Return a Logger of given name (string) and level (number - 0: DEBUG, 1: INFO, 2: WARN, 3: ERROR).
   - Logger:Debug(...) - Log debug message.
   - Logger:Info(...) - Log info message.
   - Logger:Warn(...) - Log warn message.

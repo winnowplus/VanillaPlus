@@ -11,17 +11,17 @@
 
 ## Mixin
 
-- VanillaPlus.Mixin(object, ...) - Mixin attributes from ... (one or more tables) to object (a table).
+- VanillaPlus.Mixin(object, ...) - Mixin attributes from ... (one or more tables) to object (table).
 - VanillaPlus.CreateFromMixins(...) - Create a table from ... (one or more mixins).
 - VanillaPlus.CreateAndInitFromMixin(mixin, ...) - Create a table from mixin, and then call its Init method with ... (zero or more parameters).
 
 ## Log
 
-- VanillaPlus.GetLogger(name, level) - Return a Logger with specific name (string) and level (0: DEBUG, 1: INFO, 2: WARN, 3: ERROR).
-  - Logger:Debug(...) - Output debug message.
-  - Logger:Info(...) - Output info message.
-  - Logger:Warn(...) - Output warn message.
-  - Logger:Error(...) - Output error message.
+- VanillaPlus.GetLogger(name, level) - Return a Logger with specific name (string) and level (number - 0: DEBUG, 1: INFO, 2: WARN, 3: ERROR).
+  - Logger:Debug(...) - Log debug message.
+  - Logger:Info(...) - Log info message.
+  - Logger:Warn(...) - Log warn message.
+  - Logger:Error(...) - Log error message.
 
 ## EventRegistry
 

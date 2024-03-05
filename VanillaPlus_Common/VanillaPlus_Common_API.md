@@ -11,7 +11,7 @@
 
 ## Mixin
 
-- VanillaPlus.Mixin(object, ...) - Mixin attributes from ... (one or more tables) to object (table).
+- VanillaPlus.Mixin(object, ...) - Mixin attributes from ... (one or more tables) to object (a table).
 - VanillaPlus.CreateFromMixins(...) - Create a table from ... (one or more mixins).
 - VanillaPlus.CreateAndInitFromMixin(mixin, ...) - Create a table from mixin, and then call its Init method with ... (zero or more parameters).
 

@@ -1,9 +1,9 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace				= VanillaPlus;
+local CallbackRegistryMixin = Namespace.CallbackRegistryMixin;
 local CreateFromMixins      = Namespace.CreateFromMixins;
 local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
-local CallbackRegistryMixin = Namespace.CallbackRegistryMixin;
 
 local GetTime               = GetTime;
 
@@ -15,9 +15,7 @@ Namespace.EventRegistryMixin= EventRegistryMixin;
 -------------------------------------------------  Functions  -------------------------------------------------
 
 function EventRegistryMixin:Init(eventFrame)
-    assert(type(eventFrame) == "table", "Illegal eventFrame: " .. tostring(eventFrame) .. ", a Frame is required.");
-    assert(type(eventFrame.IsObjectType) == "function", "Illegal eventFrame: " .. tostring(eventFrame) .. ", a Frame is required.");
-    assert(eventFrame:IsObjectType("Frame") == 1, "Illegal eventFrame: " .. tostring(eventFrame) .. ", a Frame is required.");
+    assert(type(eventFrame) == "table" and type(eventFrame.IsObjectType) == "function" and eventFrame:IsObjectType("Frame") == 1, "Illegal eventFrame: " .. tostring(eventFrame) .. ", a Frame is required.");
 
     CallbackRegistryMixin.Init(self);
     self.eventFrame = eventFrame;

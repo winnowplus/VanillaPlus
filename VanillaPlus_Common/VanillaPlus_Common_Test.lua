@@ -4,9 +4,6 @@ local Namespace     = VanillaPlus;
 local GetLogger     = Namespace.GetLogger;
 
 local Predicates    = Namespace.Predicates;
-
-local GetPlayerSpell= Namespace.GetPlayerSpell;
-local GetPetSpell   = Namespace.GetPetSpell;
 local GetSpell      = Namespace.GetSpell;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
@@ -32,16 +29,6 @@ function Namespace.TestPredicates()
 end
 
 local function TestGetSpell(bookType)
-    local spellFunc;
-
-    if(bookType == BOOKTYPE_SPELL) then
-        spellFunc = GetPlayerSpell;
-    elseif(bookType == BOOKTYPE_PET) then
-        spellFunc = GetSpell;
-    else
-        Logger:Error("Illegal bookType: ", bookType, ".");
-    end
-
     local slot, name, rank, fullName, lastName = 0;
 
     repeat
@@ -49,7 +36,7 @@ local function TestGetSpell(bookType)
         name, rank = GetSpellName(slot, bookType);
 
         if(lastName ~= nil and lastName ~= name) then
-            local spell = spellFunc(lastName);
+            local spell = GetSpell(lastName, bookType);
             assert(spell ~= nil and spell.name == lastName);
             assert(spell.slot == slot - 1 and spell.bookType == bookType);
             assert(spell:GetTexture() == GetSpellTexture(slot - 1, bookType));
@@ -63,7 +50,7 @@ local function TestGetSpell(bookType)
         if(name ~= nil) then
             fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
 
-            local spell = spellFunc(fullname);
+            local spell = GetSpell(lastName, bookType);
             assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname);
             assert(spell.slot == slot and spell.bookType == bookType);
             assert(spell:GetTexture() == GetSpellTexture(slot, bookType));

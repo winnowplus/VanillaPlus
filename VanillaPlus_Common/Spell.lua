@@ -82,16 +82,14 @@ local function GetPetSpellCahce()
     return SPELL_CACHE[BOOKTYPE_PET];
 end
 
-function Namespace.GetPlayerSpell(spellName)
-    return GetPlayerSpellCahce()[spellName];
-end
-
-function Namespace.GetPetSpell(spellName)
-    return GetPetSpellCahce()[spellName];
-end
-
-function Namespace.GetSpell(spellName)
-    return GetPlayerSpellCahce()[spellName] or GetPetSpellCahce()[spellName];
+function Namespace.GetSpell(spellName, bookType)
+    if(bookType == nil) then
+        return GetPlayerSpellCahce()[spellName] or GetPetSpellCahce()[spellName];
+    elseif(bookType == BOOKTYPE_SPELL) then
+        return GetPlayerSpellCahce()[spellName];
+    elseif(bookType == BOOKTYPE_PET) then
+        return GetPetSpellCahce()[spellName];
+    end
 end
 
 ----------------------------------------------  Event Callbacks  ----------------------------------------------

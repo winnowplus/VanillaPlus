@@ -11,7 +11,7 @@
 
 ## Mixin
 
-- VanillaPlus.Mixin(object, ...) - Mixin attributes from ... (one or more tables) to object (table).
+- VanillaPlus.Mixin(object, ...) - Mixin attributes from ... (one or more tables) to object (a table).
 - VanillaPlus.CreateFromMixins(...) - Create a table from ... (one or more mixins).
 - VanillaPlus.CreateAndInitFromMixin(mixin, ...) - Create a table from mixin, and then call its Init method with ... (zero or more parameters).
 
@@ -33,21 +33,19 @@
 
 ## Spell
 
-- VanillaPlus.GetPlayerSpell(spellName) - Return Spell by given player spell name.
+- VanillaPlus.GetSpell(spellName, bookType) - Return Spell by name and bookType.
   - A Spell has attributes: slot, bookType, name, rank, fullname.
   - Spell:GetTexture() - Return the texture path of the Spell.
-  - Spell:GetCooldown() - Return cooldown (readySeconds and IsActive) of the Spell.
-- VanillaPlus.GetPetSpell(spellName) - Return Spell by given pet spell name.
-- VanillaPlus.GetSpell(spellName) - Return Spell by given spell name.
+  - Spell:GetCooldown() - Return cooldown data (readySeconds, duration, isActive) of the Spell.
 
 ## Unit
 
-- VanillaPlus.GetPlayerAura(slot, filter) - Get player's aura by given slot and filter.
-- VanillaPlus.FindPlayerAura(filter, predicate, ...) - Find player's aura by given filter and predicate.
-- VanillaPlus.ListPlayerAura(filter, predicate, ...) - List player's aura by given filter and predicate.
-- VanillaPlus.GetUnitBuff(unit, slot) - Get buff by given unit and slot.
-- VanillaPlus.FindUnitBuff(unit, predicate, ...) - Find buff by given unit and predicate.
-- VanillaPlus.ListUnitBuff(unit, predicate, ...) - List buff by given unit and predicate.
-- VanillaPlus.GetUnitDebuff(unit, slot) - Get debuff by given unit and slot.
-- VanillaPlus.FindUnitDebuff(unit, predicate, ...) - Find debuff by given unit and predicate.
-- VanillaPlus.ListUnitDebuff(unit, predicate, ...) - List debuff by given unit and predicate.
+- VanillaPlus.GetPlayerAura(slot, filter) - Get player's aura by slot and filter.
+- VanillaPlus.FindPlayerAura(filter, predicate, ...) - Find player's aura by filter and predicate.
+- VanillaPlus.ListPlayerAura(filter, predicate, ...) - List player's aura by filter and predicate.
+- VanillaPlus.GetUnitBuff(unit, slot) - Get buff by unit and slot.
+- VanillaPlus.FindUnitBuff(unit, predicate, ...) - Find buff by unit and predicate.
+- VanillaPlus.ListUnitBuff(unit, predicate, ...) - List buff by unit and predicate.
+- VanillaPlus.GetUnitDebuff(unit, slot) - Get debuff by unit and slot.
+- VanillaPlus.FindUnitDebuff(unit, predicate, ...) - Find debuff by unit and predicate.
+- VanillaPlus.ListUnitDebuff(unit, predicate, ...) - List debuff by unit and predicate.

@@ -41,12 +41,10 @@ end
 function SpellMixin:GetCooldown()
     local start, duration, enabled = GetSpellCooldown(self.slot, self.bookType);
 
-    if(enabled == 0) then
-        return start, duration, true;
-    elseif(duration == 0) then
-        return 0, 0, false;
+    if(duration == 0) then
+        return 0, 0, enabled == 0;
     else
-        return start + duration - GetTime(), duration, false;
+        return start + duration - GetTime(), duration, enabled == 0;
     end
 end
 

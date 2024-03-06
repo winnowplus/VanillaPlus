@@ -50,7 +50,7 @@ local function TestGetSpell(bookType)
         if(name ~= nil) then
             fullname = (rank == nil or rank == "") and name or name .. "(" .. rank .. ")";
 
-            local spell = GetSpell(lastName, bookType);
+            local spell = GetSpell(fullname, bookType);
             assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname);
             assert(spell.slot == slot and spell.bookType == bookType);
             assert(spell:GetTexture() == GetSpellTexture(slot, bookType));

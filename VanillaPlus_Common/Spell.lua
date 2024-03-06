@@ -56,6 +56,8 @@ function SpellMixin:GetCost()
     VanillaPlusTooltip:SetSpell(self.slot, self.bookType);
 
     local costText = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
+
+    return costText;
 end
 
 local function GetPlayerSpellCahce()

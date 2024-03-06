@@ -1,7 +1,6 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace                 = VanillaPlus;
-local GetLogger                 = Namespace.GetLogger;
 local CreateAndInitFromMixin    = Namespace.CreateAndInitFromMixin;
 local EventRegistry             = Namespace.EventRegistry;
 
@@ -15,7 +14,6 @@ local GetTime                   = GetTime;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local Logger                    = GetLogger("VanillaPlus", 0);
 local SpellMixin		        = {};
 local SPELL_CACHE               = {};
 
@@ -40,15 +38,24 @@ function SpellMixin:GetTexture()
     return self.texture;
 end
 
-function SpellMixin:GetCooldown(uptime)
+function SpellMixin:GetCooldown()
     local start, duration, enabled = GetSpellCooldown(self.slot, self.bookType);
-    uptime = uptime or GetTime();
 
-    if(duration == 0) then
-        return 0, duration, enabled == 0;
+    if(enabled == 0) then
+        return start, duration, true;
+    elseif(duration == 0) then
+        return 0, 0, false;
     else
-        return math.max(start + duration - uptime, 0), duration, enabled == 0;
+        return start + duration - GetTime(), duration, false;
     end
+end
+
+function SpellMixin:GetCost()
+    VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+    VanillaPlusTooltip:ClearLines();
+    VanillaPlusTooltip:SetSpell(self.slot, self.bookType);
+
+    local costText = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
 end
 
 local function GetPlayerSpellCahce()
@@ -95,13 +102,16 @@ end
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function ON_LEARNED_SPELL_IN_TAB()
-    Logger:Debug("LEARNED_SPELL_IN_TAB ", arg1);
+    Namespace.GetLogger("VanillaPlus", 0):Debug("LEARNED_SPELL_IN_TAB ", arg1);
 
     SPELL_CACHE[BOOKTYPE_SPELL] = nil;
 end
 
-local function CleanPetSpellCahce()
+local function ON_PLAYER_PET_CHANGED()
+    Namespace.GetLogger("VanillaPlus", 0):Debug("PLAYER_PET_CHANGED ");
+
     SPELL_CACHE[BOOKTYPE_PET] = nil;
 end
 
 EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", ON_LEARNED_SPELL_IN_TAB);
+EventRegistry:RegisterFrameEventAndCallback("PLAYER_PET_CHANGED", ON_PLAYER_PET_CHANGED);

@@ -802,15 +802,8 @@ local function OnUpdate(self)
 end
 
 local function OnEvent()
-    event == "ACTIONBAR_SLOT_CHANGED" then
-        actions[arg1] = nil
-        SendEventForAction(arg1, "ACTIONBAR_SLOT_CHANGED", arg1)
-    elseif event == "BAG_UPDATE" then
-        macros = {}
-        actions = {}
-        IndexItems()
-    end
-   
+    actions[arg1] = nil
+    SendEventForAction(arg1, "ACTIONBAR_SLOT_CHANGED", arg1)   
 end
 
 --------------------------------------------------------------------------------

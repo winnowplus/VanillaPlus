@@ -51,7 +51,7 @@ local function PrivateGetAction(slot)
 
     if(action == nil and HasAction(slot) == 1) then
         local actionText = GetActionText(slot);
-        action == actionText == nil and CreateAndInitFromMixin(StandardActionMixin, slot) or CreateAndInitFromMixin(MacroActionMixin, slot);
+        action = actionText == nil and CreateAndInitFromMixin(StandardActionMixin, slot) or CreateAndInitFromMixin(MacroActionMixin, slot);
         
         ACTIONS[slot] = action;
     end

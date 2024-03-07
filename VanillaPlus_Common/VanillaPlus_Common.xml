@@ -8,20 +8,5 @@
 				this:SetOwner(WorldFrame, "ANCHOR_NONE")
 			</OnLoad>
 		</Scripts>
-	</GameTooltip> 
-
-	<Script file="VanillaPlus_Common.lua"/>
-
-	<Script file="Predicates.lua"/>
-	<Script file="Mixin.lua"/>
-	<Script file="Log.lua"/>
-	<Script file="CallbackRegistry.lua"/>
-	<Script file="EventRegistry.lua"/>
-
-	<Script file="Spell.lua"/>
-	<Script file="Unit.lua"/>
-
-	<Script file="VanillaPlus_Common_Test.lua"/>
-
-	<Script file="TWBattlefield.lua"/>
+	</GameTooltip>
 </Ui>

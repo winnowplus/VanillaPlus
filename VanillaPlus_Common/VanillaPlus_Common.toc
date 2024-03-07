@@ -4,3 +4,16 @@
 ## Version: 1.0
 
 VanillaPlus_Common.xml
+VanillaPlus_Common.lua
+
+util\Predicates.lua
+util\Mixin.lua
+util\Log.lua
+util\CallbackRegistry.lua
+util\EventRegistry.lua
+
+Spell.lua
+Unit.lua
+
+VanillaPlus_Common_Test.lua
+TWBattlefield.lua

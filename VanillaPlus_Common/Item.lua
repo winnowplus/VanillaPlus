@@ -5,12 +5,17 @@ local EventRegistry             = Namespace.EventRegistry;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
+local InventoryItemMixin        = {};
 local ContainerItemMixin        = {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
-function ContainerItemMixin:Init(bagID, slot)
-    self.bagID, self.slot = bagID, slot;
+function InventoryItemMixin:Init(unit, slot)
+    self.unit, self.slot = unit, slot;
+end
+
+function ContainerItemMixin:Init(bag, slot)
+    self.bag, self.slot = bag, slot;
 end
 
 ----------------------------------------------  Event Callbacks  ----------------------------------------------

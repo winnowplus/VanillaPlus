@@ -2,5 +2,6 @@
 ## Title: VanillaPlus_Action v1.0
 ## Author: Winnow
 ## Version: 1.0
+## Dependencies: VanillaPlus_Common
 
 VanillaPlus_Action.lua

@@ -3,7 +3,6 @@ local actions = {}
 local macros = {}
 local actionEventHandlers = {}
 local mouseOverResolvers = {}
-local items = {}
 local CM_ScanTip
 
 --连击点
@@ -70,46 +69,6 @@ local function Compare_UnitMp(v, unit)
 			return MPPercent < tonumber(lessmp[2])
 		end
 	end
-end
-
---获取装备栏物品CD
-local function GetInventoryCooldownByName(itemName)
-    CM_ScanTip:SetOwner(UIParent, "ANCHOR_NONE")
-    for i=0, 19 do
-        CM_ScanTip:ClearLines()
-        hasItem = CM_ScanTip:SetInventoryItem("player", i)
-        
-        if hasItem then
-            local lines = CM_ScanTip:NumLines()
-            
-            local label = getglobal("CM_ScanTipTextLeft1")
-            
-            if label:GetText() == itemName then
-                local _, duration, _ = GetInventoryItemCooldown("player", i)
-                return duration
-            end
-        end
-    end
-    
-    return nil
-end
-
---获取背包物品CD
-local function GetContainerItemCooldownByName(itemName)
-    CM_ScanTip:SetOwner(WorldFrame, "ANCHOR_NONE")
-    
-    for i = 0, 4 do
-        for j = 1, GetContainerNumSlots(i) do
-            CM_ScanTip:ClearLines()
-            CM_ScanTip:SetBagItem(i, j)
-            if CM_ScanTipTextLeft1:GetText() == itemName then
-                local _, duration, _ = GetContainerItemCooldown(i, j)
-                return duration
-            end
-        end
-    end
-    
-    return nil
 end
 
 --返回CD
@@ -639,44 +598,14 @@ local function SendEventForAction(slot, event, ...)
 end
 
 local function IndexItems()
-    items = {}
     for bagID = 0, NUM_BAG_SLOTS do
         for slot = GetContainerNumSlots(bagID), 1, -1 do
             local link = GetContainerItemLink(bagID, slot)
-            if link then
-                local _, _, itemID = string.find(link, "item:(%d+)")
-                if itemID and not items[itemID] then
-                    local name, _, _, _, _, _, _, _, texture = GetItemInfo(itemID)
-                    local item = {
-                        bagID = bagID,
-                        slot = slot,
-                        id = itemID,
-                        name = name,
-                        texture = texture
-                    }
-                    _, _, item.link = string.find(link, "|H([^|]+)|h")
-                    items[itemID] = item
-                end
-            end
         end
     end
     
     for inventoryID = 0, 19 do
         local link = GetInventoryItemLink("player", inventoryID)
-        if link then
-            local _, _, itemID = string.find(link, "item:(%d+)")
-            if itemID and not items[itemID] then
-                local name, _, _, _, _, _, _, _, texture = GetItemInfo(itemID)
-                local item = {
-                    inventoryID = inventoryID,
-                    id = itemID,
-                    name = name,
-                    texture = texture
-                }
-                _, _, item.link = string.find(link, "|H([^|]+)|h")
-                items[itemID] = item
-            end
-        end
     end
 end
 
@@ -799,11 +728,6 @@ local function OnUpdate(self)
 			SendEventForAction(slot, "ACTIONBAR_SLOT_CHANGED", slot)
         end
     end
-end
-
-local function OnEvent()
-    actions[arg1] = nil
-    SendEventForAction(arg1, "ACTIONBAR_SLOT_CHANGED", arg1)   
 end
 
 --------------------------------------------------------------------------------

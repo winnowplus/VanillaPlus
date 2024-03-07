@@ -36,13 +36,7 @@ function SpellMixin:GetTexture()
 end
 
 function SpellMixin:GetCooldown()
-    local start, duration, enabled = GetSpellCooldown(self.slot, self.bookType);
-
-    if(duration == 0) then
-        return 0, 0, enabled == 0;
-    else
-        return start + duration - GetTime(), duration, enabled == 0;
-    end
+    returnn GetSpellCooldown(self.slot, self.bookType);
 end
 
 function SpellMixin:GetCost()

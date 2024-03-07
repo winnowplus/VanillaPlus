@@ -3,6 +3,12 @@
 local Namespace                 = VanillaPlus;
 local EventRegistry             = Namespace.EventRegistry;
 
+local GetInventoryItemTexture   = GetInventoryItemTexture;
+local GetInventoryItemCooldown  = GetInventoryItemCooldown;
+
+local GetContainerItemInfo      = GetContainerItemInfo;
+local GetContainerItemCooldown  = GetContainerItemCooldown;
+
 -----------------------------------------------  Declarations  ------------------------------------------------
 
 local InventoryItemMixin        = {};
@@ -11,11 +17,45 @@ local ContainerItemMixin        = {};
 -------------------------------------------------  Functions  -------------------------------------------------
 
 function InventoryItemMixin:Init(unit, slot)
+    VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+    VanillaPlusTooltip:ClearLines();
+    VanillaPlusTooltip:SetInventoryItem(unit, slot);
+
     self.unit, self.slot = unit, slot;
+    self.name = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText();
+end
+
+function InventoryItemMixin:GetTexture()
+    if(self.texture == nil) then
+        self.texture = GetInventoryItemTexture(self.unit, self.slot);
+    end
+
+    return self.texture;
+end
+
+function InventoryItemMixin:GetCooldown()
+    returnn GetInventoryItemCooldown(self.unit, self.slot);
 end
 
 function ContainerItemMixin:Init(bag, slot)
+    VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+    VanillaPlusTooltip:ClearLines();
+    VanillaPlusTooltip:SetBagItem(bag, slot);
+
     self.bag, self.slot = bag, slot;
+    self.name = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText();
+end
+
+function ContainerItemMixin:GetTexture()
+    if(self.texture == nil) then
+        self.texture = GetContainerItemInfo(self.bag, self.slot);
+    end
+
+    return self.texture;
+end
+
+function ContainerItemMixin:GetCooldown()
+    returnn GetContainerItemCooldown(self.bag, self.slot);
 end
 
 ----------------------------------------------  Event Callbacks  ----------------------------------------------

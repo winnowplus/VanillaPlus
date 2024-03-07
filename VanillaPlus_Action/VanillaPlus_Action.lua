@@ -24,6 +24,9 @@ StandardAPI.UseAction           = UseAction;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
+local SPELL                     = "SPELL";
+local ITEM                      = "ITEM";
+local MACRO                     = "MACRO";
 local ACTIONS                   = {};
 
 local StandardActionMixin       = {};
@@ -37,6 +40,10 @@ end
 
 function MacroActionMixin:Init(slot)
     self.slot = slot;
+end
+
+function MacroActionMixin:GetType()
+    return MACRO;
 end
 
 local function PrivateGetAction(slot)
@@ -54,8 +61,28 @@ end
 
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
+local lastExecutedAt = 0;
+
+local function ON_UPDATE(uptime)
+    if(uptime - lastExecutedAt < 0.1) then
+        return;
+    else
+        
+
+        lastExecutedAt = uptime;
+    end
+end
+
+local function ON_UPDATE_MACROS()
+    for slot, action in pairs(ACTIONS) do
+        
+    end
+end
+
 local function ON_ACTIONBAR_SLOT_CHANGED()
     Namespace.GetLogger("VanillaPlus", 0):Debug("ACTIONBAR_SLOT_CHANGED ", arg1);
 end
 
+EventRegistry:RegisterCallback("UPDATE", ON_UPDATE);
+EventRegistry:RegisterFrameEventAndCallback("UPDATE_MACROS", ON_UPDATE_MACROS);
 EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", ON_ACTIONBAR_SLOT_CHANGED);

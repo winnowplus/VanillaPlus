@@ -23,7 +23,7 @@ function EventRegistryMixin:Init(eventFrame)
 		self:TriggerEvent(event);
 	end);
     self.eventFrame:SetScript("OnUpdate", function()
-		self:TriggerEvent("OnUpdate", GetTime());
+		self:TriggerEvent("UPDATE", GetTime());
 	end);
 end
 

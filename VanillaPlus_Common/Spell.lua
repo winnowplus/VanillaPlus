@@ -55,6 +55,10 @@ function SpellMixin:GetCost()
 
     local costText = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
 
+    if(costText ~= nil) then
+        
+    end
+
     return costText;
 end
 

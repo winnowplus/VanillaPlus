@@ -1,7 +1,3 @@
---------------------------------------------------------------------------------
--- CleverMacro v1.3.1 by _brain    zhCN by 凡人                               --
---------------------------------------------------------------------------------
-local SEM = AceLibrary("SpecialEvents-Movement-2.0")
 local lastUpdate = 0
 local actions = {}    
 local macros = {}
@@ -798,27 +794,15 @@ end
 --------------------------------------------------------------------------------
 
 local function OnUpdate(self)
-    local time = GetTime()
-
-    -- Slow down a bit.
-    if (time - lastUpdate) < 0.1 then return end
-    lastUpdate = time
-    
     for slot, action in pairs(actions) do
         if RefreshAction(action) then
-			--if actions[arg1] then
-				SendEventForAction(slot, "ACTIONBAR_SLOT_CHANGED", slot)
-			--end
+			SendEventForAction(slot, "ACTIONBAR_SLOT_CHANGED", slot)
         end
     end
 end
 
 local function OnEvent()
-    if event == "UPDATE_MACROS" or event == "SPELLS_CHANGED" then
-        macros = {}
-        actions = {}
-        IndexItems()
-    elseif event == "ACTIONBAR_SLOT_CHANGED" then
+    event == "ACTIONBAR_SLOT_CHANGED" then
         actions[arg1] = nil
         SendEventForAction(arg1, "ACTIONBAR_SLOT_CHANGED", arg1)
     elseif event == "BAG_UPDATE" then

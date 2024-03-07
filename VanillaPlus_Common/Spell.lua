@@ -106,8 +106,6 @@ end
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function ON_LEARNED_SPELL_IN_TAB()
-    Namespace.GetLogger("VanillaPlus", 0):Debug("LEARNED_SPELL_IN_TAB ", arg1);
-
     SPELL_CACHE[BOOKTYPE_SPELL] = nil;
 end
 

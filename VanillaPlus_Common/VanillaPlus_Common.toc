@@ -12,6 +12,7 @@ util\Log.lua
 util\CallbackRegistry.lua
 util\EventRegistry.lua
 
+Item.lua
 Spell.lua
 Unit.lua
 

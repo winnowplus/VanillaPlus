@@ -37,7 +37,7 @@ function InventoryItemMixin:GetTexture()
 end
 
 function InventoryItemMixin:GetCooldown()
-    returnn GetInventoryItemCooldown(self.unit, self.slot);
+    return GetInventoryItemCooldown(self.unit, self.slot);
 end
 
 function ContainerItemMixin:Init(bag, slot)
@@ -58,13 +58,13 @@ function ContainerItemMixin:GetTexture()
 end
 
 function ContainerItemMixin:GetCooldown()
-    returnn GetContainerItemCooldown(self.bag, self.slot);
+    return GetContainerItemCooldown(self.bag, self.slot);
 end
 
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function ON_UNIT_INVENTORY_CHANGED()
-    Namespace.GetLogger("VanillaPlus", 0):Debug("BAG_UPDATE ", arg1, " ", arg2);
+    Namespace.GetLogger("VanillaPlus", 0):Debug("UNIT_INVENTORY_CHANGED ", arg1, " ", arg2);
 end
 
 local function ON_BAG_UPDATE()

@@ -36,7 +36,7 @@ function SpellMixin:GetTexture()
 end
 
 function SpellMixin:GetCooldown()
-    returnn GetSpellCooldown(self.slot, self.bookType);
+    return GetSpellCooldown(self.slot, self.bookType);
 end
 
 function SpellMixin:GetCost()

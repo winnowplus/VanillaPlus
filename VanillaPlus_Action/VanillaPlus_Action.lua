@@ -76,8 +76,8 @@ end
 local function ON_ACTIONBAR_SLOT_CHANGED()
     local logger = Namespace.GetLogger("VanillaPlus", 0);
     logger:Debug("ACTIONBAR_SLOT_CHANGED ", arg1);
+    logger:Debug(GetActionText(arg1));
     logger:Debug(GetActionTexture(arg1));
-    logger:Debug(IsEquippedAction(arg1));
 end
 
 local function ON_UPDATE_MACROS()

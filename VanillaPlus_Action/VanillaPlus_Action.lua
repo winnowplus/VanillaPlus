@@ -5,6 +5,8 @@ local StandardAPI               = Namespace.StandardAPI;
 local CreateAndInitFromMixin    = Namespace.CreateAndInitFromMixin;
 local EventRegistry             = Namespace.EventRegistry;
 
+local GetSpell                  = Namespace.GetSpell;
+
 -- GetActionText and HasAction should not be overridden.
 local GetActionText             = GetActionText;
 local HasAction                 = HasAction;
@@ -27,36 +29,69 @@ StandardAPI.UseAction           = UseAction;
 local SPELL                     = "SPELL";
 local ITEM                      = "ITEM";
 local MACRO                     = "MACRO";
-local ACTIONS                   = {};
 
-local StandardActionMixin       = {};
+local SpellActionMixin          = {};
+local ItemActionMixin           = {};
 local MacroActionMixin          = {};
+
+local ACTIONS                   = {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
-function StandardActionMixin:Init(slot)
-    self.slot = slot;
+function SpellActionMixin:Init(slot, name)
+    self.class, self.slot, self.name = SPELL, slot, name;
 end
 
-function MacroActionMixin:Init(slot)
-    self.slot = slot;
+function ItemActionMixin:Init(slot, name)
+    self.class, self.slot, self.name = ITEM, slot, name;
 end
 
-function MacroActionMixin:GetType()
-    return MACRO;
+function MacroActionMixin:Init(slot, name)
+    self.class, self.slot, self.name = MACRO, slot, name;
 end
 
-local function PrivateGetAction(slot)
+local function GetAction(slot)
     local action = ACTIONS[slot];
 
     if(action == nil and HasAction(slot) == 1) then
         local actionText = GetActionText(slot);
-        action = actionText == nil and CreateAndInitFromMixin(StandardActionMixin, slot) or CreateAndInitFromMixin(MacroActionMixin, slot);
-        
+
+        if(actionText ~= nil) then
+            action = CreateAndInitFromMixin(MacroActionMixin, slot, actionText);
+        else
+            VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
+            VanillaPlusTooltip:ClearLines();
+            VanillaPlusTooltip:SetAction(slot);
+            
+            local textLeft1 = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText();
+            local textLeft2 = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
+            
+            if(StandardAPI.IsEquippedAction(slot) == 1) then
+                action = CreateAndInitFromMixin(ItemActionMixin, slot, textLeft1);
+            else
+                local fullname = (textLeft2 == nil or textLeft2 == "") and textLeft1 or textLeft1 .. "(" .. textLeft2 .. ")";
+                local spell = GetSpell(fullname);
+
+                if(spell ~= nil) then
+                    action = CreateAndInitFromMixin(SpellActionMixin, slot, fullname);
+                else
+                    action = CreateAndInitFromMixin(ItemActionMixin, slot, textLeft1);
+                end
+            end
+        end
+
         ACTIONS[slot] = action;
     end
 
     return action;
+end
+
+local function ClearAction(slot)
+    local action = ACTIONS[slot];
+
+    if(action ~= nil) then
+        ACTIONS[slot] = nil;
+    end
 end
 
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
@@ -74,18 +109,9 @@ local function ON_UPDATE(uptime)
 end
 
 local function ON_ACTIONBAR_SLOT_CHANGED()
-    local logger = Namespace.GetLogger("VanillaPlus", 0);
-    logger:Debug("ACTIONBAR_SLOT_CHANGED ", arg1);
-    logger:Debug(GetActionText(arg1));
-    logger:Debug(GetActionTexture(arg1));
-end
-
-local function ON_UPDATE_MACROS()
-    for slot, action in pairs(ACTIONS) do
-        
-    end
+    ClearAction(arg1);
+    Namespace.GetLogger("VanillaPlus", 0):Debug(GetAction(arg1));
 end
 
 EventRegistry:RegisterCallback("UPDATE", ON_UPDATE);
 EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", ON_ACTIONBAR_SLOT_CHANGED);
-EventRegistry:RegisterFrameEventAndCallback("UPDATE_MACROS", ON_UPDATE_MACROS);

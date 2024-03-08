@@ -17,6 +17,8 @@ local GetTime                   = GetTime;
 local SpellMixin		        = {};
 local SPELL_CACHE               = {};
 
+local SPELL_COST_PATTERN        = "(%d+)%s*(%S+)";
+
 -------------------------------------------------  Functions  -------------------------------------------------
 
 function SpellMixin:Init(slot, bookType)
@@ -39,18 +41,30 @@ function SpellMixin:GetCooldown()
     return GetSpellCooldown(self.slot, self.bookType);
 end
 
+function SpellMixin:IsActive()
+    local start, duration, enabled = self:GetCooldown();
+
+    return enabled == 0;
+end
+
+function SpellMixin:IsReady(tolerance)
+    local start, duration, enabled = self:GetCooldown();
+
+    return duration == 0 or start + duration - GetTime() <= tolerance;
+end
+
 function SpellMixin:GetCost()
     VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
     VanillaPlusTooltip:ClearLines();
     VanillaPlusTooltip:SetSpell(self.slot, self.bookType);
 
-    local costText = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
+    local textLeft2 = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
 
-    if(costText ~= nil) then
-        
+    if(textLeft2 ~= nil) then
+        local _, _, cost, powerTypeString = string.find(textLeft2, SPELL_COST_PATTERN);
+
+        return cost, powerTypeString;
     end
-
-    return costText;
 end
 
 local function GetPlayerSpellCahce()

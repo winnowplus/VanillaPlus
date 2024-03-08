@@ -50,7 +50,7 @@ function MacroActionMixin:Init(slot, name)
     self.class, self.slot, self.name = MACRO, slot, name;
 end
 
-local function GetAction(slot)
+function Namespace.GetAction(slot)
     local action = ACTIONS[slot];
 
     if(action == nil and HasAction(slot) == 1) then
@@ -86,14 +86,6 @@ local function GetAction(slot)
     return action;
 end
 
-local function ClearAction(slot)
-    local action = ACTIONS[slot];
-
-    if(action ~= nil) then
-        ACTIONS[slot] = nil;
-    end
-end
-
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local lastExecutedAt = 0;
@@ -109,7 +101,7 @@ local function ON_UPDATE(uptime)
 end
 
 local function ON_ACTIONBAR_SLOT_CHANGED()
-    ClearAction(arg1);
+    ACTIONS[slot] = nil;
     Namespace.GetLogger("VanillaPlus", 0):Debug(GetAction(arg1));
 end
 

@@ -1,6 +1,7 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace                 = VanillaPlus;
+local CreateAndInitFromMixin    = Namespace.CreateAndInitFromMixin;
 local EventRegistry             = Namespace.EventRegistry;
 
 local GetInventoryItemTexture   = GetInventoryItemTexture;
@@ -14,8 +15,7 @@ local GetContainerItemCooldown  = GetContainerItemCooldown;
 local InventoryItemMixin        = {};
 local ContainerItemMixin        = {};
 
-local PLAYER_INVENTORY          = {};
-local PLAYER_INVENTORY_BY_NAME  = {};
+local PLAYER_INVENTORY_ITEMS    = nil;
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
@@ -61,10 +61,28 @@ function ContainerItemMixin:GetCooldown()
     return GetContainerItemCooldown(self.bag, self.slot);
 end
 
+local function GetPlayerInventoryCahce()
+    if(PLAYER_INVENTORY_ITEMS == nil) then
+        PLAYER_INVENTORY_ITEMS = {};
+
+        for slot = 0, 19 do
+            PLAYER_INVENTORY_ITEMS[slot] = CreateAndInitFromMixin(InventoryItemMixin, "player", slot);
+        end
+    end
+
+    return PLAYER_INVENTORY_ITEMS;
+end
+
+function Namespace.GetPlayerInventoryItem(slot)
+    return GetPlayerInventoryCahce()[slot];
+end
+
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function ON_UNIT_INVENTORY_CHANGED()
-    Namespace.GetLogger("VanillaPlus", 0):Debug("UNIT_INVENTORY_CHANGED ", arg1, " ", arg2);
+    if(arg1 == "player") then
+        PLAYER_INVENTORY_ITEMS = nil;
+    end
 end
 
 local function ON_BAG_UPDATE()

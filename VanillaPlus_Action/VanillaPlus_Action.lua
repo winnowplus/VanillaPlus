@@ -74,7 +74,10 @@ local function ON_UPDATE(uptime)
 end
 
 local function ON_ACTIONBAR_SLOT_CHANGED()
-    Namespace.GetLogger("VanillaPlus", 0):Debug("ACTIONBAR_SLOT_CHANGED ", arg1);
+    local logger = Namespace.GetLogger("VanillaPlus", 0);
+    logger:Debug("ACTIONBAR_SLOT_CHANGED ", arg1);
+    logger:Debug(GetActionTexture(arg1));
+    logger:Debug(IsEquippedAction(arg1));
 end
 
 local function ON_UPDATE_MACROS()
@@ -84,5 +87,5 @@ local function ON_UPDATE_MACROS()
 end
 
 EventRegistry:RegisterCallback("UPDATE", ON_UPDATE);
-EventRegistry:RegisterFrameEventAndCallback("UPDATE_MACROS", ON_UPDATE_MACROS);
 EventRegistry:RegisterFrameEventAndCallback("ACTIONBAR_SLOT_CHANGED", ON_ACTIONBAR_SLOT_CHANGED);
+EventRegistry:RegisterFrameEventAndCallback("UPDATE_MACROS", ON_UPDATE_MACROS);

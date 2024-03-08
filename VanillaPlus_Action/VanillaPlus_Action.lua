@@ -73,14 +73,14 @@ local function ON_UPDATE(uptime)
     end
 end
 
+local function ON_ACTIONBAR_SLOT_CHANGED()
+    Namespace.GetLogger("VanillaPlus", 0):Debug("ACTIONBAR_SLOT_CHANGED ", arg1);
+end
+
 local function ON_UPDATE_MACROS()
     for slot, action in pairs(ACTIONS) do
         
     end
-end
-
-local function ON_ACTIONBAR_SLOT_CHANGED()
-    Namespace.GetLogger("VanillaPlus", 0):Debug("ACTIONBAR_SLOT_CHANGED ", arg1);
 end
 
 EventRegistry:RegisterCallback("UPDATE", ON_UPDATE);

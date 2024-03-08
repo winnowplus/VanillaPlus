@@ -86,7 +86,7 @@ local function ON_UNIT_INVENTORY_CHANGED()
 end
 
 local function ON_BAG_UPDATE()
-    Namespace.GetLogger("VanillaPlus", 0):Debug("BAG_UPDATE ", arg1);
+    
 end
 
 EventRegistry:RegisterFrameEventAndCallback("UNIT_INVENTORY_CHANGED", ON_UNIT_INVENTORY_CHANGED);

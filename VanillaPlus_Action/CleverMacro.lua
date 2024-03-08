@@ -71,14 +71,6 @@ local function Compare_UnitMp(v, unit)
 	end
 end
 
---返回CD
-function Get_CD(name)
-	local cd = GetSpellCooldownByName(name)
-	if not cd then cd = GetInventoryCooldownByName(name) end
-	if not cd then cd = GetContainerItemCooldownByName(name) end
-	if cd then return cd > 1.5 end
-end
-
 --返回技能蓝量消耗
 local function GetSpellCost(spellSlot)
     local costText = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
@@ -602,10 +594,6 @@ local function IndexItems()
         for slot = GetContainerNumSlots(bagID), 1, -1 do
             local link = GetContainerItemLink(bagID, slot)
         end
-    end
-    
-    for inventoryID = 0, 19 do
-        local link = GetInventoryItemLink("player", inventoryID)
     end
 end
 

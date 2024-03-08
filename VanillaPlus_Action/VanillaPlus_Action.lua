@@ -64,12 +64,12 @@ local function GetAction(slot)
             VanillaPlusTooltip:SetAction(slot);
             
             local textLeft1 = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText();
-            local textLeft2 = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
+            local textRight1 = VanillaPlusTooltipTextRight1 and VanillaPlusTooltipTextRight1:GetText();
             
             if(StandardAPI.IsEquippedAction(slot) == 1) then
                 action = CreateAndInitFromMixin(ItemActionMixin, slot, textLeft1);
             else
-                local fullname = (textLeft2 == nil or textLeft2 == "") and textLeft1 or textLeft1 .. "(" .. textLeft2 .. ")";
+                local fullname = (textRight1 == nil or textRight1 == "") and textLeft1 or textLeft1 .. "(" .. textRight1 .. ")";
                 local spell = GetSpell(fullname);
 
                 if(spell ~= nil) then

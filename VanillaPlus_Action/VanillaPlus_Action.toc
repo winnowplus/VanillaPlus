@@ -5,3 +5,5 @@
 ## Dependencies: VanillaPlus_Common
 
 VanillaPlus_Action.lua
+
+VanillaPlus_Action_Test.lua

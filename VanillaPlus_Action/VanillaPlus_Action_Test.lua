@@ -21,8 +21,10 @@ function Namespace.TestGetAction()
             assert(action ~= nil and action.slot == slot);
 
             if(action.class == "SPELL") then
+                assert(actionText == nil);
                 assert(GetSpell(action.name) ~= nil);
             elseif(action.class == "ITEM") then
+                assert(actionText == nil);
                 assert(action.name ~= nil);
             elseif(action.class == "MACRO") then
                 assert(action.name == actionText);

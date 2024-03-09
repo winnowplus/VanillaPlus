@@ -25,7 +25,7 @@ function InventoryItemMixin:Init(unit, slot)
     VanillaPlusTooltip:SetInventoryItem(unit, slot);
 
     self.unit, self.slot = unit, slot;
-    self.name = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText();
+    self.name = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil;
 end
 
 function InventoryItemMixin:GetTexture()
@@ -46,7 +46,7 @@ function ContainerItemMixin:Init(bag, slot)
     VanillaPlusTooltip:SetBagItem(bag, slot);
 
     self.bag, self.slot = bag, slot;
-    self.name = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText();
+    self.name = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil;
 end
 
 function ContainerItemMixin:GetTexture()

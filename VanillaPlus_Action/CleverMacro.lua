@@ -71,13 +71,6 @@ local function Compare_UnitMp(v, unit)
 	end
 end
 
---返回技能蓝量消耗
-local function GetSpellCost(spellSlot)
-    local costText = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
-    local _, _, cost = string.find(costText, "^(%d+)")
-    return tonumber(cost)
-end
-
 --返回技能ID
 local function GetSpellSlotByName(name)
 	local spell, rank = GetSpellInfo(name, bookType)

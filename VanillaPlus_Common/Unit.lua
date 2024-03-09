@@ -27,8 +27,8 @@ local function PrivateGetPlayerAura(slot, filter)
     VanillaPlusTooltip:SetPlayerBuff(auraIndex);
 
     return {
-        name        = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText(),
-        icon        = GetPlayerBuffTexture(auraIndex),
+        name        = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil,
+        texture     = GetPlayerBuffTexture(auraIndex),
         count       = GetPlayerBuffApplications(auraIndex),
         dispelType  = GetPlayerBuffDispelType(auraIndex),
         timeLeft    = untilCancelled == 1 and math.huge or GetPlayerBuffTimeLeft(auraIndex),
@@ -37,8 +37,8 @@ local function PrivateGetPlayerAura(slot, filter)
 end
 
 local function PrivateGetUnitBuff(unit, slot)
-    local icon, count = UnitBuff(unit, slot);
-    if(icon == nil) then
+    local texture, count = UnitBuff(unit, slot);
+    if(texture == nil) then
         return;
     end
 
@@ -47,16 +47,16 @@ local function PrivateGetUnitBuff(unit, slot)
     VanillaPlusTooltip:SetUnitBuff(unit, slot);
 
     return {
-        name    = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText(),
-        icon    = icon,
+        name    = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil,
+        texture = texture,
         count   = count,
         slot    = slot
     };
 end
 
 local function PrivateGetUnitDebuff(unit, slot)
-    local icon, count, dispelType = UnitDebuff(unit, slot);
-    if(icon == nil) then
+    local texture, count, dispelType = UnitDebuff(unit, slot);
+    if(texture == nil) then
         return;
     end
 
@@ -65,8 +65,8 @@ local function PrivateGetUnitDebuff(unit, slot)
     VanillaPlusTooltip:SetUnitDebuff(unit, slot);
 
     return {
-        name        = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText(),
-        icon        = icon,
+        name        = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil,
+        texture     = texture,
         count       = count,
         dispelType  = dispelType,
         slot        = slot

@@ -61,10 +61,10 @@ function Namespace.GetAction(slot)
         else
             VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
             VanillaPlusTooltip:ClearLines();
-            VanillaPlusTooltip:SetAction(slot);if(slot == 11) then Namespace.GetLogger("VanillaPlus", 0):Debug(VanillaPlusTooltip:GetSpell()); end
+            VanillaPlusTooltip:SetAction(slot);
             
-            local textLeft1 = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText();
-            local textRight1 = VanillaPlusTooltipTextRight1 and VanillaPlusTooltipTextRight1:GetText();
+            local textLeft1 = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil;
+            local textRight1 = VanillaPlusTooltipTextRight1 and VanillaPlusTooltipTextRight1:IsShown() and VanillaPlusTooltipTextRight1:GetText() or nil;
             
             if(StandardAPI.IsEquippedAction(slot) == 1) then
                 action = CreateAndInitFromMixin(ItemActionMixin, slot, textLeft1);

@@ -58,7 +58,7 @@ function SpellMixin:GetCost()
     VanillaPlusTooltip:ClearLines();
     VanillaPlusTooltip:SetSpell(self.slot, self.bookType);
 
-    local textLeft2 = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:GetText();
+    local textLeft2 = VanillaPlusTooltipTextLeft2 and VanillaPlusTooltipTextLeft2:IsShown() and VanillaPlusTooltipTextLeft2:GetText() or nil;
 
     if(textLeft2 ~= nil) then
         local _, _, cost, powerTypeString = string.find(textLeft2, SPELL_COST_PATTERN);

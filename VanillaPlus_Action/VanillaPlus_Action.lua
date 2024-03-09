@@ -101,7 +101,7 @@ local function ON_UPDATE(uptime)
 end
 
 local function ON_ACTIONBAR_SLOT_CHANGED()
-    ACTIONS[slot] = nil;
+    ACTIONS[arg1] = nil;
     Namespace.GetLogger("VanillaPlus", 0):Debug(GetAction(arg1));
 end
 

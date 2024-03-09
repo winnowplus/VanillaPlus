@@ -61,7 +61,7 @@ function Namespace.GetAction(slot)
         else
             VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
             VanillaPlusTooltip:ClearLines();
-            VanillaPlusTooltip:SetAction(slot);
+            VanillaPlusTooltip:SetAction(slot);if(slot == 11) then Namespace.GetLogger("VanillaPlus", 0):Debug(VanillaPlusTooltip:GetSpell()); end
             
             local textLeft1 = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:GetText();
             local textRight1 = VanillaPlusTooltipTextRight1 and VanillaPlusTooltipTextRight1:GetText();
@@ -70,7 +70,7 @@ function Namespace.GetAction(slot)
                 action = CreateAndInitFromMixin(ItemActionMixin, slot, textLeft1);
             else
                 local fullname = (textRight1 == nil or textRight1 == "") and textLeft1 or textLeft1 .. "(" .. textRight1 .. ")";
-                local spell = GetSpell(fullname); if(slot == 11) then Namespace.GetLogger("VanillaPlus", 0):Debug(fullname, " ", spell);end
+                local spell = GetSpell(fullname);
 
                 if(spell ~= nil) then
                     action = CreateAndInitFromMixin(SpellActionMixin, slot, fullname);

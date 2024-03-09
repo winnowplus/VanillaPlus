@@ -70,7 +70,7 @@ function Namespace.GetAction(slot)
                 action = CreateAndInitFromMixin(ItemActionMixin, slot, textLeft1);
             else
                 local fullname = (textRight1 == nil or textRight1 == "") and textLeft1 or textLeft1 .. "(" .. textRight1 .. ")";
-                local spell = GetSpell(fullname);--Namespace.GetLogger("VanillaPlus", 0):Debug(fullname, " ", spell);
+                local spell = GetSpell(fullname); if(slot == 11) then Namespace.GetLogger("VanillaPlus", 0):Debug(fullname, " ", spell);end
 
                 if(spell ~= nil) then
                     action = CreateAndInitFromMixin(SpellActionMixin, slot, fullname);

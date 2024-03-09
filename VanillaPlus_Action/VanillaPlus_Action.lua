@@ -102,7 +102,6 @@ end
 
 local function ON_ACTIONBAR_SLOT_CHANGED()
     ACTIONS[arg1] = nil;
-    Namespace.GetLogger("VanillaPlus", 0):Debug(Namespace.GetAction(arg1));
 end
 
 EventRegistry:RegisterCallback("UPDATE", ON_UPDATE);

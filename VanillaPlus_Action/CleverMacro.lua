@@ -71,13 +71,6 @@ local function Compare_UnitMp(v, unit)
 	end
 end
 
---返回技能ID
-local function GetSpellSlotByName(name)
-	local spell, rank = GetSpellInfo(name, bookType)
-	local id = GetSpellIndex(spell, rank)
-	return id
-end
-
 local function GetCurrentShapeshiftForm()
     for index = 1, GetNumShapeshiftForms() do 
         local _, _, active = GetShapeshiftFormInfo(index)

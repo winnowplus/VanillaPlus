@@ -1,28 +1,28 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace                 = VanillaPlus;
-local StandardAPI               = Namespace.StandardAPI;
 local CreateAndInitFromMixin    = Namespace.CreateAndInitFromMixin;
 local EventRegistry             = Namespace.EventRegistry;
 
 local GetSpell                  = Namespace.GetSpell;
 
 -- GetActionText and HasAction should not be overridden.
-local GetActionText             = GetActionText;
-local HasAction                 = HasAction;
+local StandardAPI               = Namespace.StandardAPI;
+StandardAPI.GetActionText       = StandardAPI.GetActionText or GetActionText;
+StandardAPI.HasAction           = StandardAPI.HasAction or HasAction;
 
-StandardAPI.ActionHasRange      = ActionHasRange;
-StandardAPI.GetActionCooldown   = GetActionCooldown;
-StandardAPI.GetActionCount      = GetActionCount;
-StandardAPI.GetActionTexture    = GetActionTexture;
-StandardAPI.IsActionInRange     = IsActionInRange;
-StandardAPI.IsAttackAction      = IsAttackAction;
-StandardAPI.IsAutoRepeatAction  = IsAutoRepeatAction;
-StandardAPI.IsCurrentAction     = IsCurrentAction;
-StandardAPI.IsUsableAction      = IsUsableAction;
-StandardAPI.IsConsumableAction  = IsConsumableAction;
-StandardAPI.IsEquippedAction    = IsEquippedAction;
-StandardAPI.UseAction           = UseAction;
+StandardAPI.ActionHasRange      = StandardAPI.ActionHasRange or ActionHasRange;
+StandardAPI.GetActionCooldown   = StandardAPI.GetActionCooldown or GetActionCooldown;
+StandardAPI.GetActionCount      = StandardAPI.GetActionCount or GetActionCount;
+StandardAPI.GetActionTexture    = StandardAPI.GetActionTexture or GetActionTexture;
+StandardAPI.IsActionInRange     = StandardAPI.IsActionInRange or IsActionInRange;
+StandardAPI.IsAttackAction      = StandardAPI.IsAttackAction or IsAttackAction;
+StandardAPI.IsAutoRepeatAction  = StandardAPI.IsAutoRepeatAction or IsAutoRepeatAction;
+StandardAPI.IsCurrentAction     = StandardAPI.IsCurrentAction or IsCurrentAction;
+StandardAPI.IsUsableAction      = StandardAPI.IsUsableAction or IsUsableAction;
+StandardAPI.IsConsumableAction  = StandardAPI.IsConsumableAction or IsConsumableAction;
+StandardAPI.IsEquippedAction    = StandardAPI.IsEquippedAction or IsEquippedAction;
+StandardAPI.UseAction           = StandardAPI.UseAction or UseAction;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -53,8 +53,8 @@ end
 function Namespace.GetAction(slot)
     local action = ACTIONS[slot];
 
-    if(action == nil and HasAction(slot) == 1) then
-        local actionText = GetActionText(slot);
+    if(action == nil and StandardAPI.HasAction(slot) == 1) then
+        local actionText = StandardAPI.GetActionText(slot);
 
         if(actionText ~= nil) then
             action = CreateAndInitFromMixin(MacroActionMixin, slot, actionText);

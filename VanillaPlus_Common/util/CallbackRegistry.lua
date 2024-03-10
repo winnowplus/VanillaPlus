@@ -62,8 +62,6 @@ function CallbackRegistryMixin:UnregisterCallback(event, owner)
 end
 
 function CallbackRegistryMixin:TriggerEvent(event, ...)
-	assert(type(event) == "string", "Illegal event: " .. tostring(event) .. ", a string is required.");
-
 	if(self.callbackTable[event] ~= nil) then
 		for owner, func in pairs(self.callbackTable[event]) do
 			if(IsInternalOwner(owner)) then

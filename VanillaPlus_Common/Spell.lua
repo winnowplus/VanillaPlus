@@ -4,25 +4,25 @@ local Namespace                 = VanillaPlus;
 local CreateAndInitFromMixin    = Namespace.CreateAndInitFromMixin;
 local EventRegistry             = Namespace.EventRegistry;
 
-local GetSpellName              = GetSpellName;
-local GetSpellTexture           = GetSpellTexture;
-local GetSpellCooldown          = GetSpellCooldown;
-local GetNumSpellTabs           = GetNumSpellTabs;
-local GetSpellTabInfo           = GetSpellTabInfo;
-
-local GetTime                   = GetTime;
+local StandardAPI               = Namespace.StandardAPI;
+StandardAPI.GetSpellName        = StandardAPI.GetSpellName or GetSpellName;
+StandardAPI.GetSpellTexture     = StandardAPI.GetSpellTexture or GetSpellTexture;
+StandardAPI.GetSpellCooldown    = StandardAPI.GetSpellCooldown or GetSpellCooldown;
+StandardAPI.GetNumSpellTabs     = StandardAPI.GetNumSpellTabs or GetNumSpellTabs;
+StandardAPI.GetSpellTabInfo     = StandardAPI.GetSpellTabInfo or GetSpellTabInfo;
+StandardAPI.GetTime             = StandardAPI.GetTime or GetTime;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local SpellMixin		        = {};
+local SPELL_COST_PATTERN        = "(%d+)%s*(%S+)";
 local SPELL_CACHE               = {};
 
-local SPELL_COST_PATTERN        = "(%d+)%s*(%S+)";
+local SpellMixin		        = {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
 function SpellMixin:Init(slot, bookType)
-    self.slot, self.bookType, self.name, self.rank = slot, bookType, GetSpellName(slot, bookType);
+    self.slot, self.bookType, self.name, self.rank = slot, bookType, StandardAPI.GetSpellName(slot, bookType);
 
     if(self.name ~= nil) then
         self.fullname = (self.rank == nil or self.rank == "") and self.name or self.name .. "(" .. self.rank .. ")";
@@ -31,14 +31,14 @@ end
 
 function SpellMixin:GetTexture()
     if(self.texture == nil) then
-        self.texture = GetSpellTexture(self.slot, self.bookType);
+        self.texture = StandardAPI.GetSpellTexture(self.slot, self.bookType);
     end
 
     return self.texture;
 end
 
 function SpellMixin:GetCooldown()
-    return GetSpellCooldown(self.slot, self.bookType);
+    return StandardAPI.GetSpellCooldown(self.slot, self.bookType);
 end
 
 function SpellMixin:IsActive()
@@ -50,7 +50,7 @@ end
 function SpellMixin:IsReady(tolerance)
     local start, duration, enabled = self:GetCooldown();
 
-    return duration == 0 or start + duration - GetTime() <= tolerance;
+    return enabled ~= 0 and (duration == 0 or start + duration - StandardAPI.GetTime() <= tolerance);
 end
 
 function SpellMixin:GetCost()
@@ -73,8 +73,8 @@ local function GetPlayerSpellCahce()
     if(SPELL_CACHE[bookType] == nil) then
         SPELL_CACHE[bookType] = {};
 
-        for tabIndex = 1, GetNumSpellTabs() do
-            local _, _, offset, numSpells = GetSpellTabInfo(tabIndex);
+        for tabIndex = 1, StandardAPI.GetNumSpellTabs() do
+            local _, _, offset, numSpells = StandardAPI.GetSpellTabInfo(tabIndex);
 
             for slot = offset + 1, offset + numSpells do
                 local spell = CreateAndInitFromMixin(SpellMixin, slot, bookType);

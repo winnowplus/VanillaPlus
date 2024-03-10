@@ -33,10 +33,12 @@
 
 ## Spell
 
-- VanillaPlus.GetSpell(spellName, bookType) - Return Spell by name and bookType.
-  - A Spell has attributes: slot, bookType, name, rank, fullname.
-  - Spell:GetTexture() - Return the texture path of the Spell.
-  - Spell:GetCooldown() - Return cooldown data (readySeconds, duration, isActive) of the Spell.
+- VanillaPlus.GetSpell(spellName, bookType) - Return spell by name and bookType.
+  - A spell has attributes: slot, bookType, name, rank, fullname.
+  - Spell:GetTexture() - Return the texture path of the spell.
+  - Spell:GetCooldown() - Return the cooldown data of the spell.
+  - Spell:IsActive() - Return true if the spell is active (Stealth, Shadowmeld, Presence of Mind, etc).
+  - Spell:IsReady(tolerance) - Return true if the spell will be ready in tolerance seconds (always return false if the spell is active).
 
 ## Unit
 

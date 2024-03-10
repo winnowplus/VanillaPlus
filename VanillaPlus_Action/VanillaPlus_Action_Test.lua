@@ -1,10 +1,14 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
-local Namespace     = VanillaPlus;
-local GetLogger     = Namespace.GetLogger;
+local Namespace             = VanillaPlus;
+local GetLogger             = Namespace.GetLogger;
 
-local GetAction     = Namespace.GetAction;
-local GetSpell      = Namespace.GetSpell;
+local GetSpell              = Namespace.GetSpell;
+local GetAction             = Namespace.GetAction;
+
+local StandardAPI           = Namespace.StandardAPI;
+StandardAPI.GetActionText   = StandardAPI.GetActionText or GetActionText;
+StandardAPI.HasAction       = StandardAPI.HasAction or HasAction;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -14,9 +18,9 @@ local Logger        = GetLogger();
 
 function Namespace.TestGetAction()
     for slot = 1, 120 do
-        if(HasAction(slot) == 1) then
+        if(StandardAPI.HasAction(slot) == 1) then
             local action = GetAction(slot);
-            local actionText = GetActionText(slot);
+            local actionText = StandardAPI.GetActionText(slot);
 
             assert(action ~= nil and action.slot == slot);
 

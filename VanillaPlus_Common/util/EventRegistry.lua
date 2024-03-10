@@ -1,11 +1,12 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
 local Namespace				= VanillaPlus;
-local CallbackRegistryMixin = Namespace.CallbackRegistryMixin;
 local CreateFromMixins      = Namespace.CreateFromMixins;
 local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
+local CallbackRegistryMixin = Namespace.CallbackRegistryMixin;
 
-local GetTime               = GetTime;
+local StandardAPI           = Namespace.StandardAPI;
+StandardAPI.GetTime         = StandardAPI.GetTime or GetTime;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -23,7 +24,7 @@ function EventRegistryMixin:Init(eventFrame)
 		self:TriggerEvent(event);
 	end);
     self.eventFrame:SetScript("OnUpdate", function()
-		self:TriggerEvent("UPDATE", GetTime());
+		self:TriggerEvent("UPDATE", StandardAPI.GetTime());
 	end);
 end
 

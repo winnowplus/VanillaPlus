@@ -43,7 +43,6 @@
   - Spell:GetTexture() - Returns the texture path of the spell.
   - Spell:GetCooldown() - Returns the cooldown data of the spell.
   - Spell:IsActive() - Returns true if the spell is active (Stealth, Shadowmeld, Presence of Mind, etc).
-  - Spell:IsReady(tolerance) - Returns true if the spell will be ready in tolerance seconds (always returns false if the spell is active).
 
 ## Unit
 

@@ -47,12 +47,6 @@ function SpellMixin:IsActive()
     return enabled == 0;
 end
 
-function SpellMixin:IsReady(tolerance)
-    local start, duration, enabled = self:GetCooldown();
-
-    return enabled ~= 0 and (duration == 0 or start + duration - StandardAPI.GetTime() <= tolerance);
-end
-
 function SpellMixin:GetCost()
     VanillaPlusTooltip:SetOwner(WorldFrame, "ANCHOR_NONE");
     VanillaPlusTooltip:ClearLines();

@@ -3,6 +3,7 @@
 ## Strings
 
 - VanillaPlus.Strings.Trim(str) - Trims any leading or trailing white space from the given string.
+- VanillaPlus.Strings.Split(str) - Splits the given string into a list of sub-strings.
 
 ## Predicates
 

@@ -26,7 +26,27 @@ function Namespace.TestStrings()
     assert(Strings.Trim("   xyz123 ") == "xyz123");
     assert(Strings.Trim("  xyz123     ") == "xyz123");
 
+    local tbl = {"foo", "bar", "baz", "test"};
 
+    local splitted = Strings.Split("foo/bar/baz/test","/");
+    for key, value in ipairs(tbl) do assert(splitted[key] == value); end
+    assert(splitted[5] == nil);
+
+    splitted = Strings.Split("/foo/bar/baz/test","/");
+    for key, value in ipairs(tbl) do assert(splitted[key] == value); end
+    assert(splitted[5] == nil);
+
+    splitted = Strings.Split("/foo/bar/baz/test/","/");
+    for key, value in ipairs(tbl) do assert(splitted[key] == value); end
+    assert(splitted[5] == nil);
+
+    splitted = Strings.Split("//foo////bar/baz///test///","/+");
+    for key, value in ipairs(tbl) do assert(splitted[key] == value); end
+    assert(splitted[5] == nil);
+
+    splitted = Strings.Split("/foo/bar//baz/test///","/");
+    for key, value in ipairs(tbl) do assert(splitted[key] == value); end
+    assert(splitted[5] == "" and splitted[6] == "");
 end
 
 function Namespace.TestPredicates()

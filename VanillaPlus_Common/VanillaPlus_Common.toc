@@ -6,6 +6,7 @@
 VanillaPlus_Common.xml
 VanillaPlus_Common.lua
 
+util\Strings.lua
 util\Predicates.lua
 util\Mixin.lua
 util\Log.lua

@@ -3,6 +3,7 @@
 local Namespace             = VanillaPlus;
 local GetLogger             = Namespace.GetLogger;
 
+local Strings               = Namespace.Strings;
 local Predicates            = Namespace.Predicates;
 local GetSpell              = Namespace.GetSpell;
 
@@ -15,6 +16,18 @@ StandardAPI.GetSpellTexture = StandardAPI.GetSpellTexture or GetSpellTexture;
 local Logger                = GetLogger();
 
 -------------------------------------------------  Functions  -------------------------------------------------
+
+function Namespace.TestStrings()
+    assert(Strings.Trim("xyz123") == "xyz123");
+    assert(Strings.Trim(" xyz123") == "xyz123");
+    assert(Strings.Trim("  xyz123") == "xyz123");
+    assert(Strings.Trim(" xyz123 ") == "xyz123");
+    assert(Strings.Trim("  xyz123  ") == "xyz123");
+    assert(Strings.Trim("   xyz123 ") == "xyz123");
+    assert(Strings.Trim("  xyz123     ") == "xyz123");
+
+
+end
 
 function Namespace.TestPredicates()
     local str, substr, notsubstr = "命令圣印", "圣印", "光环";
@@ -75,6 +88,7 @@ function Namespace.TestSpell()
 end
 
 function Namespace.TestCommon()
+    Namespace.TestStrings();    Logger:Info("TestStrings Pass");
     Namespace.TestPredicates(); Logger:Info("TestPredicates Pass");
     Namespace.TestSpell();      Logger:Info("TestSpell Pass");
 end

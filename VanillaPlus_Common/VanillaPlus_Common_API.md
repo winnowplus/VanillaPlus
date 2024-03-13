@@ -1,13 +1,17 @@
 # VanillaPlus_Common API
 
+## Strings
+
+- VanillaPlus.Strings.Trim(str) - Returns a string whose value is str, with any leading and trailing whitespace removed.
+
 ## Predicates
 
-- VanillaPlus.Predicates.ALWAYS_TRUE(...) - Always return true.
-- VanillaPlus.Predicates.ALWAYS_FALSE(...) - Always return false.
-- VanillaPlus.Predicates.EQUALS(one, another) - Return true if one == another.
-- VanillaPlus.Predicates.STRING_CONTAINS(str, substr) - Return true if str contains substr.
-- VanillaPlus.Predicates.AURA_NAME_EQUALS(aura, expect) - Return true if aura.name == expect.
-- VanillaPlus.Predicates.AURA_NAME_CONTAINS(aura, expect) - Return true if aura.name contains expect.
+- VanillaPlus.Predicates.ALWAYS_TRUE(...) - Always returns true.
+- VanillaPlus.Predicates.ALWAYS_FALSE(...) - Always returns false.
+- VanillaPlus.Predicates.EQUALS(one, another) - Returns true if one == another.
+- VanillaPlus.Predicates.STRING_CONTAINS(str, substr) - Returns true if str contains substr.
+- VanillaPlus.Predicates.AURA_NAME_EQUALS(aura, expect) - Returns true if aura.name == expect.
+- VanillaPlus.Predicates.AURA_NAME_CONTAINS(aura, expect) - Returns true if aura.name contains expect.
 
 ## Mixin
 
@@ -17,7 +21,7 @@
 
 ## Log
 
-- VanillaPlus.GetLogger(name, level) - Return a Logger of given name (string) and level (number - 0: DEBUG, 1: INFO, 2: WARN, 3: ERROR).
+- VanillaPlus.GetLogger(name, level) - Returns a Logger of given name (string) and level (number - 0: DEBUG, 1: INFO, 2: WARN, 3: ERROR).
   - Logger:Debug(...) - Log debug message.
   - Logger:Info(...) - Log info message.
   - Logger:Warn(...) - Log warn message.
@@ -33,12 +37,12 @@
 
 ## Spell
 
-- VanillaPlus.GetSpell(spellName, bookType) - Return spell by name and bookType.
+- VanillaPlus.GetSpell(spellName, bookType) - Returns spell by name and bookType.
   - A spell has attributes: slot, bookType, name, rank, fullname.
-  - Spell:GetTexture() - Return the texture path of the spell.
-  - Spell:GetCooldown() - Return the cooldown data of the spell.
-  - Spell:IsActive() - Return true if the spell is active (Stealth, Shadowmeld, Presence of Mind, etc).
-  - Spell:IsReady(tolerance) - Return true if the spell will be ready in tolerance seconds (always return false if the spell is active).
+  - Spell:GetTexture() - Returns the texture path of the spell.
+  - Spell:GetCooldown() - Returns the cooldown data of the spell.
+  - Spell:IsActive() - Returns true if the spell is active (Stealth, Shadowmeld, Presence of Mind, etc).
+  - Spell:IsReady(tolerance) - Returns true if the spell will be ready in tolerance seconds (always returns false if the spell is active).
 
 ## Unit
 

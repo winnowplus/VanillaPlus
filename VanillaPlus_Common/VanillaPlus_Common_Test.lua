@@ -45,8 +45,7 @@ function Namespace.TestStrings()
     assert(splitted[5] == nil);
 
     splitted = Strings.Split("/foo/bar//baz/test///","/");
-    for key, value in ipairs(tbl) do assert(splitted[key] == value); end
-    assert(splitted[5] == "" and splitted[6] == "");
+    assert(splitted[1] == "foo" and splitted[2] == "bar" and splitted[3] == "" and splitted[4] == "baz" and splitted[5] == "test" and splitted[6] == "" and splitted[7] == "");
 end
 
 function Namespace.TestPredicates()

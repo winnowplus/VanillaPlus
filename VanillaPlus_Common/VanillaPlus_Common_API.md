@@ -2,7 +2,7 @@
 
 ## Strings
 
-- VanillaPlus.Strings.Trim(str) - Returns a string whose value is str, with any leading and trailing whitespace removed.
+- VanillaPlus.Strings.Trim(str) - Trims any leading or trailing white space from the given string.
 
 ## Predicates
 

@@ -7,10 +7,10 @@ local EventRegistry             = Namespace.EventRegistry;
 local GetSpell                  = Namespace.GetSpell;
 
 -- GetActionText and HasAction should not be overridden.
-local StandardAPI               = Namespace.StandardAPI;
-StandardAPI.GetActionText       = StandardAPI.GetActionText or GetActionText;
-StandardAPI.HasAction           = StandardAPI.HasAction or HasAction;
+local GetActionText             = GetActionText;
+local HasAction                 = HasAction;
 
+local StandardAPI               = Namespace.StandardAPI;
 StandardAPI.ActionHasRange      = StandardAPI.ActionHasRange or ActionHasRange;
 StandardAPI.GetActionCooldown   = StandardAPI.GetActionCooldown or GetActionCooldown;
 StandardAPI.GetActionCount      = StandardAPI.GetActionCount or GetActionCount;
@@ -53,8 +53,8 @@ end
 function Namespace.GetAction(slot)
     local action = ACTIONS[slot];
 
-    if(action == nil and StandardAPI.HasAction(slot) == 1) then
-        local actionText = StandardAPI.GetActionText(slot);
+    if(action == nil and HasAction(slot) == 1) then
+        local actionText = GetActionText(slot);
 
         if(actionText ~= nil) then
             action = CreateAndInitFromMixin(MacroActionMixin, slot, actionText);

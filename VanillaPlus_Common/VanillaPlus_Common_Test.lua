@@ -1,15 +1,14 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
-local Namespace             = VanillaPlus;
-local GetLogger             = Namespace.GetLogger;
+local Namespace         = VanillaPlus;
+local GetLogger         = Namespace.GetLogger;
 
-local Strings               = Namespace.Strings;
-local Predicates            = Namespace.Predicates;
-local GetSpell              = Namespace.GetSpell;
+local Strings           = Namespace.Strings;
+local Predicates        = Namespace.Predicates;
+local GetSpell          = Namespace.GetSpell;
 
-local StandardAPI           = Namespace.StandardAPI;
-StandardAPI.GetSpellName    = StandardAPI.GetSpellName or GetSpellName;
-StandardAPI.GetSpellTexture = StandardAPI.GetSpellTexture or GetSpellTexture;
+local GetSpellName      = GetSpellName;
+local GetSpellTexture   = GetSpellTexture;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -69,18 +68,18 @@ local function TestGetSpell(bookType)
 
     repeat
         slot = slot + 1;
-        name, rank = StandardAPI.GetSpellName(slot, bookType);
+        name, rank = GetSpellName(slot, bookType);
 
         if(lastName ~= nil and lastName ~= name) then
             local spell = GetSpell(lastName, bookType);
             assert(spell ~= nil and spell.name == lastName);
             assert(spell.slot == slot - 1 and spell.bookType == bookType);
-            assert(spell:GetTexture() == StandardAPI.GetSpellTexture(slot - 1, bookType));
+            assert(spell:GetTexture() == GetSpellTexture(slot - 1, bookType));
 
             spell = GetSpell(lastName);
             assert(spell ~= nil and spell.name == lastName);
             assert(spell.slot == slot - 1 and spell.bookType == bookType);
-            assert(spell:GetTexture() == StandardAPI.GetSpellTexture(slot - 1, bookType));
+            assert(spell:GetTexture() == GetSpellTexture(slot - 1, bookType));
         end
 
         if(name ~= nil) then
@@ -89,12 +88,12 @@ local function TestGetSpell(bookType)
             local spell = GetSpell(fullname, bookType);
             assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname);
             assert(spell.slot == slot and spell.bookType == bookType);
-            assert(spell:GetTexture() == StandardAPI.GetSpellTexture(slot, bookType));
+            assert(spell:GetTexture() == GetSpellTexture(slot, bookType));
 
             spell = GetSpell(fullname);
             assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname);
             assert(spell.slot == slot and spell.bookType == bookType);
-            assert(spell:GetTexture() == StandardAPI.GetSpellTexture(slot, bookType));
+            assert(spell:GetTexture() == GetSpellTexture(slot, bookType));
 
             lastName = name;
         end

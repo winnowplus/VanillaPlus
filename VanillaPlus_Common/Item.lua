@@ -1,15 +1,14 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
-local Namespace                         = VanillaPlus;
-local CreateAndInitFromMixin            = Namespace.CreateAndInitFromMixin;
-local EventRegistry                     = Namespace.EventRegistry;
+local Namespace                 = VanillaPlus;
+local CreateAndInitFromMixin    = Namespace.CreateAndInitFromMixin;
+local EventRegistry             = Namespace.EventRegistry;
 
-local StandardAPI                       = Namespace.StandardAPI;
-StandardAPI.GetInventoryItemTexture     = StandardAPI.GetInventoryItemTexture or GetInventoryItemTexture;
-StandardAPI.GetInventoryItemCooldown    = StandardAPI.GetInventoryItemCooldown or GetInventoryItemCooldown;
+local GetInventoryItemTexture   = GetInventoryItemTexture;
+local GetInventoryItemCooldown  = GetInventoryItemCooldown;
 
-StandardAPI.GetContainerItemInfo        = StandardAPI.GetContainerItemInfo or GetContainerItemInfo;
-StandardAPI.GetContainerItemCooldown    = StandardAPI.GetContainerItemCooldown or GetContainerItemCooldown;
+local GetContainerItemInfo      = GetContainerItemInfo;
+local GetContainerItemCooldown  = GetContainerItemCooldown;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -31,14 +30,14 @@ end
 
 function InventoryItemMixin:GetTexture()
     if(self.texture == nil) then
-        self.texture = StandardAPI.GetInventoryItemTexture(self.unit, self.slot);
+        self.texture = GetInventoryItemTexture(self.unit, self.slot);
     end
 
     return self.texture;
 end
 
 function InventoryItemMixin:GetCooldown()
-    return StandardAPI.GetInventoryItemCooldown(self.unit, self.slot);
+    return GetInventoryItemCooldown(self.unit, self.slot);
 end
 
 function ContainerItemMixin:Init(bag, slot)
@@ -52,14 +51,14 @@ end
 
 function ContainerItemMixin:GetTexture()
     if(self.texture == nil) then
-        self.texture = StandardAPI.GetContainerItemInfo(self.bag, self.slot);
+        self.texture = GetContainerItemInfo(self.bag, self.slot);
     end
 
     return self.texture;
 end
 
 function ContainerItemMixin:GetCooldown()
-    return StandardAPI.GetContainerItemCooldown(self.bag, self.slot);
+    return GetContainerItemCooldown(self.bag, self.slot);
 end
 
 local function GetPlayerInventoryCahce()

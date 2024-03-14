@@ -13,34 +13,8 @@ local function GetCP(cp)
 	return false
 end
 
-local function Trim(s)
-    if s == nil then return nil end
-    local _, b = string.find(s, "^%s*")
-    local e = string.find(s, "%s*$", b + 1)
-    return string.sub(s, b + 1, e - 1)
-end
-
 local function Seq(_, i)
     return (i or 0) + 1
-end
-
-local function Split(s, p, trim)
-    local r, o = {}, 1
-    repeat
-        local b, e = string.find(s, p, o)
-        if b == nil then
-            local sub = string.sub(s, o)
-            table.insert(r, trim and Trim(sub) or sub)
-            return r
-        end
-        if b > 1 then
-            local sub = string.sub(s, o, b - 1)
-            table.insert(r, trim and Trim(sub) or sub)
-        else
-            table.insert(r, "")
-        end
-        o = e + 1
-    until false
 end
 
 --比较HP
@@ -90,18 +64,6 @@ local function TestConditions(conditions, target)
         local _, no = string.find(k, "^no")
         local mod = no and string.sub(k, no + 1) or k
 
-        if mod == "help" then 
-            result = UnitCanAssist("player", target) 
-        elseif mod == "exists" then
-            result = UnitExists(target)
-        elseif mod == "harm" then
-            result = UnitCanAttack("player", target)
-        elseif mod == "dead" then
-            result = UnitIsDead(target) or UnitIsGhost(target)
-        elseif mod == "combat" then
-            result = UnitAffectingCombat("player")
-        elseif mod == "stealth" then
-            -- cool down active
         elseif mod == "isnpc" then
             result = not UnitIsPlayer(target)
         elseif mod == "mod" or mod == "modifier" then
@@ -171,16 +133,6 @@ local function TestConditions(conditions, target)
 			if v then
 				result = Compare_UnitMp(v, "target")
 			end
-			
-        -- Conditions that are NOT a part of the official implementation.
-        elseif mod == "shift" then
-             result = IsShiftKeyDown()
-        elseif mod == "alt" then
-            result = IsAltKeyDown()
-        elseif mod == "ctrl" then
-            result = IsControlKeyDown()
-        elseif mod == "alive" then
-             result = not (UnitIsDead(target) or UnitIsGhost())
              
         else
             return false

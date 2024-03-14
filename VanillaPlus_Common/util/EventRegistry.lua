@@ -5,8 +5,7 @@ local CreateFromMixins      = Namespace.CreateFromMixins;
 local CreateAndInitFromMixin= Namespace.CreateAndInitFromMixin;
 local CallbackRegistryMixin = Namespace.CallbackRegistryMixin;
 
-local StandardAPI           = Namespace.StandardAPI;
-StandardAPI.GetTime         = StandardAPI.GetTime or GetTime;
+local GetTime               = GetTime;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
@@ -24,7 +23,7 @@ function EventRegistryMixin:Init(eventFrame)
 		self:TriggerEvent(event);
 	end);
     self.eventFrame:SetScript("OnUpdate", function()
-		self:TriggerEvent("UPDATE", StandardAPI.GetTime());
+		self:TriggerEvent("UPDATE", GetTime());
 	end);
 end
 

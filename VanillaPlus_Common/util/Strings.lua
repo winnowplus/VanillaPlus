@@ -14,23 +14,22 @@ function Strings.Trim(str)
 end
 
 function Strings.Split(str, seperatorPattern)
-    local tbl = {};
+    local tbl, lastEnd = {}, 1;
     local pattern = "(.-)" .. seperatorPattern;
-    local lastEnd = 1;
-    local s, e, cap = string.find(str, pattern, 1);
-   
-    while(s ~= nil) do
-        if(s ~= 1 or cap ~= "") then
-            table.insert(tbl, cap);
+    local startIndex, endIndex, capture = string.find(str, pattern, lastEnd);
+    
+    while(startIndex ~= nil) do
+        if(startIndex ~= 1 or capture ~= "") then
+            table.insert(tbl, capture);
         end
 
-        lastEnd = e + 1;
-        s, e, cap = string.find(str, pattern, lastEnd);
+        lastEnd = endIndex + 1;
+        startIndex, endIndex, capture = string.find(str, pattern, lastEnd);
     end
     
     if(lastEnd <= string.len(str)) then
-        cap = string.sub(str, lastEnd);
-        table.insert(tbl, cap);
+        capture = string.sub(str, lastEnd);
+        table.insert(tbl, capture);
     end
     
     return tbl;

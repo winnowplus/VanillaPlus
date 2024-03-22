@@ -1,6 +1,6 @@
 --------------------------------------------------  Imports  --------------------------------------------------
 
-local Namespac              = VanillaPlus;
+local Namespace             = VanillaPlus;
 local EventRegistry         = Namespace.EventRegistry;
 
 local UnitAffectingCombat   = UnitAffectingCombat;

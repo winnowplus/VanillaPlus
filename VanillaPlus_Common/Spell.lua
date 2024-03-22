@@ -22,6 +22,7 @@ local SpellMixin		        = {};
 
 function SpellMixin:Init(slot, bookType)
     self.slot, self.bookType, self.name, self.rank = slot, bookType, GetSpellName(slot, bookType);
+    self.texture = nil;
 
     if(self.name ~= nil) then
         self.fullname = (self.rank == nil or self.rank == "") and self.name or self.name .. "(" .. self.rank .. ")";

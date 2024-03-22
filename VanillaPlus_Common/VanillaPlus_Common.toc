@@ -18,4 +18,3 @@ Spell.lua
 Unit.lua
 
 VanillaPlus_Common_Test.lua
-TWBattlefield.lua

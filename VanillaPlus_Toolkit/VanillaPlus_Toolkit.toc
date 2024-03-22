@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: VanillaPlus_Toolkit v1.0
+## Author: Winnow
+## Version: 1.0
+## Dependencies: VanillaPlus_Common
+
+AutoCollectGarbage.lua
+TWBattlefield.lua

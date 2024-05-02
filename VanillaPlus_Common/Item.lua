@@ -12,10 +12,10 @@ local GetContainerItemCooldown  = GetContainerItemCooldown;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local PLAYER_INVENTORY_ITEMS            = nil;
+local PLAYER_INVENTORY_ITEMS    = nil;
 
-local InventoryItemMixin                = {};
-local ContainerItemMixin                = {};
+local InventoryItemMixin        = {};
+local ContainerItemMixin        = {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
 
@@ -24,8 +24,10 @@ function InventoryItemMixin:Init(unit, slot)
     VanillaPlusTooltip:ClearLines();
     VanillaPlusTooltip:SetInventoryItem(unit, slot);
 
-    self.unit, self.slot = unit, slot;
+    self.unit = unit;
+    self.slot = slot;
     self.name = VanillaPlusTooltipTextLeft1 and VanillaPlusTooltipTextLeft1:IsShown() and VanillaPlusTooltipTextLeft1:GetText() or nil;
+    self.texture = nil;
 end
 
 function InventoryItemMixin:GetTexture()

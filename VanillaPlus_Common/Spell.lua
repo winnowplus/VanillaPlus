@@ -21,7 +21,9 @@ local SpellMixin		        = {};
 -------------------------------------------------  Functions  -------------------------------------------------
 
 function SpellMixin:Init(slot, bookType)
-    self.slot, self.bookType, self.name, self.rank = slot, bookType, GetSpellName(slot, bookType);
+    self.slot = slot;
+    self.bookType = bookType;
+    self.name, self.rank = GetSpellName(slot, bookType);
     self.texture = nil;
 
     if(self.name ~= nil) then

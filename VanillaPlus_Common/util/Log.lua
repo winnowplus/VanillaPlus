@@ -25,7 +25,8 @@ local function Serialize(data)
 	elseif(dataType == "boolean") then
 		return data and "true" or "false";
 	elseif(dataType == "table") then
-		local index, tmp = 1, {};
+		local index = 1;
+		local tmp = {};
 
 		for key, value in pairs(data) do
 			tmp[index] = string.format(type(key) == "number" and "[%s]=%s" or "%s=%s", Serialize(key), type(value) == "string" and '"' .. Serialize(value) .. '"' or Serialize(value));

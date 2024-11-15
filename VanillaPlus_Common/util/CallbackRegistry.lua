@@ -20,7 +20,11 @@ local function GenerateInternalOwner()
 end
 
 local function IsInternalOwner(owner)
-	return type(owner) == "string" and owner == string.match(owner, INTERNAL_OWNER_PATTERN);
+	if(type(owner) == "string") then
+		local startIndex, endIndex = string.find(owner, INTERNAL_OWNER_PATTERN);
+
+		return startIndex == 1 and endIndex == string.len(owner);
+	end
 end
 
 function CallbackRegistryMixin:Init()

@@ -119,7 +119,7 @@ local function ON_LEARNED_SPELL_IN_TAB()
 end
 
 local function ON_PLAYER_PET_CHANGED()
-    SPELL_CACHE[BOOKTYPE_PET] = nil;
+    SPELL_CACHE[BOOKTYPE_PET] = nil;Namespace.GetLogger("VanillaPlus", 0):Debug("PLAYER_PET_CHANGED");
 end
 
 EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", ON_LEARNED_SPELL_IN_TAB);

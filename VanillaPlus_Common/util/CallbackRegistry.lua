@@ -24,6 +24,8 @@ local function IsInternalOwner(owner)
 		local startIndex, endIndex = string.find(owner, INTERNAL_OWNER_PATTERN);
 
 		return startIndex == 1 and endIndex == string.len(owner);
+	else
+		return false;
 	end
 end
 

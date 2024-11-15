@@ -6,7 +6,6 @@ local CreateAndInitFromMixin	= Namespace.CreateAndInitFromMixin;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 
-local TempOutputTable			= {};
 local LoggerMixin				= {};
 
 -------------------------------------------------  Functions  -------------------------------------------------
@@ -44,17 +43,18 @@ local function Output(...)
 		return;
 	end
 	
-	table.wipe(TempOutputTable);
 	local numArgs = arg.n;
 	
 	if(numArgs == 0) then
 		DEFAULT_CHAT_FRAME:AddMessage("nil");
 	else
+		local outputTable = {};
+		
 		for index = 1, numArgs do
-			TempOutputTable[index] = Serialize(arg[index]);
+			outputTable[index] = Serialize(arg[index]);
 		end
 		
-		DEFAULT_CHAT_FRAME:AddMessage(table.concat(TempOutputTable));
+		DEFAULT_CHAT_FRAME:AddMessage(table.concat(outputTable));
 	end
 end
 

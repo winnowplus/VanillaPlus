@@ -14,9 +14,9 @@ function Strings.Trim(str)
 end
 
 function Strings.Split(str, seperatorPattern)
+    local tbl = {};
     local pattern = "(.-)" .. seperatorPattern;
     local lastEnd = 1;
-    local tbl = {};
     local startIndex, endIndex, capture = string.find(str, pattern, lastEnd);
     
     while(startIndex ~= nil) do

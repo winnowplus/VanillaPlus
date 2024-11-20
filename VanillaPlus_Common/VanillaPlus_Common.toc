@@ -14,5 +14,6 @@ util\CallbackRegistry.lua
 util\EventRegistry.lua
 
 Spell.lua
+Unit.lua
 
 VanillaPlus_Common_Test.lua

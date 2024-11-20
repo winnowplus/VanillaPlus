@@ -9,7 +9,7 @@
 ## Strings
 
 + VanillaPlus.Strings.Trim(str) - Trims any leading or trailing white space from the given string.
-+ VanillaPlus.Strings.Split(str, seperatorPattern) - Splits the given string into a list of sub-strings.
++ VanillaPlus.Strings.Split(str, seperatorPattern) - Splits the given string into a list of sub-strings. In particular, single matches at the beginning and end of the string do not create new elements. Multiple matches in a row create empty string elements.
 
 ## Predicates
 

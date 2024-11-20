@@ -39,8 +39,7 @@
 ## Spell
 
 + VanillaPlus.GetSpell(spellName, bookType) - Returns spell by name and bookType.
-  + A spell has attributes: slot, bookType, name, rank, fullname.
-  + Spell:GetTexture() - Returns the texture path of the spell.
+  + A spell has attributes: slot, bookType, texture, name, rank, fullname.
   + Spell:GetCooldown() - Returns the cooldown data of the spell.
   + Spell:GetCost() - Returns cost number and power type of the spell.
 

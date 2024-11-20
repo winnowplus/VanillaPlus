@@ -74,12 +74,12 @@ local function TestGetSpell(bookType)
             local spell = GetSpell(lastName, bookType);
             assert(spell ~= nil and spell.name == lastName);
             assert(spell.slot == slot - 1 and spell.bookType == bookType);
-            assert(spell:GetTexture() == GetSpellTexture(slot - 1, bookType));
+            assert(spell.texture == GetSpellTexture(slot - 1, bookType));
 
             spell = GetSpell(lastName);
             assert(spell ~= nil and spell.name == lastName);
             assert(spell.slot == slot - 1 and spell.bookType == bookType);
-            assert(spell:GetTexture() == GetSpellTexture(slot - 1, bookType));
+            assert(spell.texture == GetSpellTexture(slot - 1, bookType));
         end
 
         if(name ~= nil) then
@@ -88,12 +88,12 @@ local function TestGetSpell(bookType)
             local spell = GetSpell(fullname, bookType);
             assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname);
             assert(spell.slot == slot and spell.bookType == bookType);
-            assert(spell:GetTexture() == GetSpellTexture(slot, bookType));
+            assert(spell.texture == GetSpellTexture(slot, bookType));
 
             spell = GetSpell(fullname);
             assert(spell ~= nil and spell.name == name and spell.rank == rank and spell.fullname == fullname);
             assert(spell.slot == slot and spell.bookType == bookType);
-            assert(spell:GetTexture() == GetSpellTexture(slot, bookType));
+            assert(spell.texture == GetSpellTexture(slot, bookType));
 
             lastName = name;
         end

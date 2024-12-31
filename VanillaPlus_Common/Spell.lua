@@ -107,12 +107,17 @@ end
 ----------------------------------------------  Event Callbacks  ----------------------------------------------
 
 local function ON_LEARNED_SPELL_IN_TAB()
-    SPELL_CACHE[BOOKTYPE_SPELL] = nil;Namespace.GetLogger("VanillaPlus", 0):Debug("LEARNED_SPELL_IN_TAB", arg1);
+    SPELL_CACHE[BOOKTYPE_SPELL] = nil;Namespace.GetLogger("VanillaPlus", 0):Debug("LEARNED_SPELL_IN_TAB ", arg1);
 end
 
 local function ON_PLAYER_PET_CHANGED()
     SPELL_CACHE[BOOKTYPE_PET] = nil;Namespace.GetLogger("VanillaPlus", 0):Debug("PLAYER_PET_CHANGED");
 end
 
+local function ON_UNIT_PET()
+    SPELL_CACHE[BOOKTYPE_PET] = nil;Namespace.GetLogger("VanillaPlus", 0):Debug("UNIT_PET ", arg1);
+end
+
 EventRegistry:RegisterFrameEventAndCallback("LEARNED_SPELL_IN_TAB", ON_LEARNED_SPELL_IN_TAB);
 EventRegistry:RegisterFrameEventAndCallback("PLAYER_PET_CHANGED", ON_PLAYER_PET_CHANGED);
+EventRegistry:RegisterFrameEventAndCallback("UNIT_PET", ON_UNIT_PET);

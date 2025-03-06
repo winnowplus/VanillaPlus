@@ -4,12 +4,11 @@ local Namespace                 = VanillaPlus;
 local CreateAndInitFromMixin    = Namespace.CreateAndInitFromMixin;
 local EventRegistry             = Namespace.EventRegistry;
 
-local GetSpellName              = GetSpellName;
 local GetSpellTexture           = GetSpellTexture;
+local GetSpellName              = GetSpellName;
 local GetSpellCooldown          = GetSpellCooldown;
 local GetNumSpellTabs           = GetNumSpellTabs;
 local GetSpellTabInfo           = GetSpellTabInfo;
-local GetTime                   = GetTime;
 
 -----------------------------------------------  Declarations  ------------------------------------------------
 

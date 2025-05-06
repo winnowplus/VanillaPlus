@@ -3,5 +3,4 @@
 ## Author: Winnow
 ## Version: 1.0
 
-GearStatsExporter.lua
-GearEnchantInspector.lua
+add_pfUI_autoshift_mounts

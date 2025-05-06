@@ -3,4 +3,4 @@
 ## Author: Winnow
 ## Version: 1.0
 
-add_pfUI_autoshift_mounts
+add_pfUI_autoshift_mounts.lua

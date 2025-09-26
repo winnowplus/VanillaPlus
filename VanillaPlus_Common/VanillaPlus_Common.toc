@@ -1,0 +1,14 @@
+## Interface: 11200
+## Title: VanillaPlus_Common
+## Author: Winnow
+## Version: 1.0
+
+VanillaPlus_Common.xml
+VanillaPlus_Common.lua
+
+util\Mixin.lua
+util\Log.lua
+util\CallbackRegistry.lua
+util\EventRegistry.lua
+
+Spell.lua
